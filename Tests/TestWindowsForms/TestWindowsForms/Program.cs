@@ -9,7 +9,7 @@ namespace TestWindowsForms
     static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// Start up the program and show the form
         /// </summary>
         [STAThread]
         static void Main()
