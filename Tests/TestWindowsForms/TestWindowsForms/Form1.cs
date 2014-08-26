@@ -28,7 +28,13 @@ namespace TestWindowsForms
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            textBox1.Text = "Test";
+            textBox1.Text = Strings.GiveMeAString();
+            printStuff();
+        }
+
+        private void printStuff()
+        {
+            Console.WriteLine(Strings.GiveMeAString());
         }
     }
 }
