@@ -9,7 +9,7 @@ namespace TestWindowsForms
     static class Strings
     {
         public static String GiveMeAString(){
-            return "A String";
+            return "Here's a string!";
         }
     }
 }

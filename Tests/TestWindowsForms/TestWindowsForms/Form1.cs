@@ -17,16 +17,14 @@ namespace TestWindowsForms
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("Loaded form");
+            Console.ResetColor();
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             textBox1.Text = Strings.GiveMeAString();
             printStuff();
