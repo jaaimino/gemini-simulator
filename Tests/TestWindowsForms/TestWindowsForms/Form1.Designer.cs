@@ -87,7 +87,7 @@
             this.testToolStripMenuItem1.Name = "testToolStripMenuItem1";
             this.testToolStripMenuItem1.Size = new System.Drawing.Size(175, 24);
             this.testToolStripMenuItem1.Text = "Open";
-            this.testToolStripMenuItem1.Click += new System.EventHandler(this.testToolStripMenuItem1_Click);
+            this.testToolStripMenuItem1.Click += new System.EventHandler(this.openToolStripMenuItem1_Click);
             // 
             // closeToolStripMenuItem
             // 
@@ -141,7 +141,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "SuperText Pro Extreme Professional";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

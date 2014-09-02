@@ -22,7 +22,7 @@ namespace TestWindowsForms
         {
         }
 
-        private void testToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void openToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
             String contents = "";
@@ -45,10 +45,9 @@ namespace TestWindowsForms
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult result = saveFileDialog1.ShowDialog(); // Show the dialog.
-            String contents = "";
             if (result == DialogResult.OK) // Test result.
             {
-                String file = openFileDialog1.FileName;
+                String file = saveFileDialog1.FileName;
                 try
                 {
                     File.WriteAllText(file, textBox1.Text);
