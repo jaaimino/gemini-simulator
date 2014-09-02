@@ -16,5 +16,15 @@ namespace Project1
         {
             InitializeComponent();
         }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            Console.WriteLine("Opened " + openFileDialog1.FileName + " successfully!");
+        }
     }
 }
