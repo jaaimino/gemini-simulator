@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Project1
 {
-    class Assembler
+    static class Assembler
     {
         public static void Assemble(String fileName)
         {

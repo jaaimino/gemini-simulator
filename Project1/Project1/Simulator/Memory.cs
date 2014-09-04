@@ -8,5 +8,10 @@ namespace Project1
 {
     class Memory
     {
+        int[] addresses;
+        public Memory()
+        {
+
+        }
     }
 }

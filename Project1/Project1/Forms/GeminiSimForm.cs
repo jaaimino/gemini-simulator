@@ -19,6 +19,8 @@ namespace Project1
 {
     public partial class GeminiSimForm : Form
     {
+        Simulation sim;
+
         public GeminiSimForm()
         {
             InitializeComponent();
@@ -39,7 +41,8 @@ namespace Project1
 
         private void runAssemblyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            String fileName = ""; //Should do another open file dialog
+            Simulator.startSimulation(fileName);
         }
     }
 }
