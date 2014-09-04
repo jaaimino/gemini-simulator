@@ -1,4 +1,12 @@
-﻿using System;
+﻿/**
+ * 
+ * Author: Jacob Aimino
+ * 
+ * Desc: Controller for Assembler
+ * 
+ **/
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

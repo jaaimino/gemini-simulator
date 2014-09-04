@@ -1,4 +1,12 @@
-﻿using System;
+﻿/**
+ * 
+ * Author: Jacob Aimino
+ * 
+ * Desc: Controller for Simulation
+ * 
+ **/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
