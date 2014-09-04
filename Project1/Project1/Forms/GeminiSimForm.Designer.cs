@@ -46,9 +46,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.assembleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.runAssemblyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -263,19 +264,20 @@
             // 
             this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadToolStripMenuItem});
+            this.assembleToolStripMenuItem,
+            this.runAssemblyToolStripMenuItem});
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             this.toolStripDropDownButton1.Size = new System.Drawing.Size(45, 24);
             this.toolStripDropDownButton1.Text = "File";
             // 
-            // loadToolStripMenuItem
+            // assembleToolStripMenuItem
             // 
-            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
-            this.loadToolStripMenuItem.Text = "Load Source";
-            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            this.assembleToolStripMenuItem.Name = "assembleToolStripMenuItem";
+            this.assembleToolStripMenuItem.Size = new System.Drawing.Size(191, 24);
+            this.assembleToolStripMenuItem.Text = "Assemble Source";
+            this.assembleToolStripMenuItem.Click += new System.EventHandler(this.assembleToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -288,14 +290,21 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // Form1
+            // runAssemblyToolStripMenuItem
+            // 
+            this.runAssemblyToolStripMenuItem.Name = "runAssemblyToolStripMenuItem";
+            this.runAssemblyToolStripMenuItem.Size = new System.Drawing.Size(191, 24);
+            this.runAssemblyToolStripMenuItem.Text = "Run Assembly";
+            this.runAssemblyToolStripMenuItem.Click += new System.EventHandler(this.runAssemblyToolStripMenuItem_Click);
+            // 
+            // GeminiSimForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(724, 527);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel5);
-            this.Name = "Form1";
+            this.Name = "GeminiSimForm";
             this.Text = "Gemini Simulator";
             this.panel5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
@@ -324,7 +333,7 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
-        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem assembleToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -336,6 +345,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ToolStripMenuItem runAssemblyToolStripMenuItem;
     }
 }
 

@@ -23,6 +23,7 @@ namespace Project1
 
         public static void Output(String fileName, String data)
         {
+            //Write out all data to given new file and overwrite if it exists
             try
             {
                 File.WriteAllText(fileName, data);

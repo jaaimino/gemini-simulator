@@ -8,5 +8,6 @@ namespace Project1
 {
     class CPU
     {
+        int pc;
     }
 }

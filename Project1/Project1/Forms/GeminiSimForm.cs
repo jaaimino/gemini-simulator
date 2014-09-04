@@ -24,7 +24,7 @@ namespace Project1
             InitializeComponent();
         }
 
-        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        private void assembleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
         }
@@ -35,6 +35,11 @@ namespace Project1
             Console.WriteLine("Opened " + openFileDialog1.FileName + " successfully!");
             //Console.WriteLine("File type was " + Path.GetExtension(fileName));
             Assembler.Assemble(fileName);
+        }
+
+        private void runAssemblyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
