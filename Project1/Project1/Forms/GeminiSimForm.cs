@@ -1,8 +1,10 @@
-﻿///
-/// 
-///
-///
-///
+﻿/**
+ * 
+ * Author: Jacob Aimino
+ * 
+ * Desc: Windows Form for Gemini Simulator
+ * 
+ **/
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,8 +21,7 @@ namespace Project1
 {
     public partial class GeminiSimForm : Form
     {
-        Simulation sim;
-
+        Boolean fileOK = false;
         public GeminiSimForm()
         {
             InitializeComponent();
@@ -28,20 +29,28 @@ namespace Project1
 
         private void assembleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog1.ShowDialog();
+            while (!fileOK)
+            {
+                openFileDialog1.ShowDialog();
+            }
+            String fileName = openFileDialog1.FileName;
+            Assembler.AssembleFile(fileName);
+            fileOK = false;
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            String fileName = openFileDialog1.FileName;
-            Console.WriteLine("Opened " + openFileDialog1.FileName + " successfully!");
-            //Console.WriteLine("File type was " + Path.GetExtension(fileName));
-            Assembler.Assemble(fileName);
+            fileOK = true;
         }
 
         private void runAssemblyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String fileName = ""; //Should do another open file dialog
+            while (!fileOK)
+            {
+                openFileDialog1.ShowDialog();
+            }
+            fileOK = false;
+            String fileName = openFileDialog1.FileName; //Should do another open file dialog
             Simulator.startSimulation(fileName);
         }
     }

@@ -8,9 +8,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Project1
 {
@@ -23,6 +25,10 @@ namespace Project1
          */
         public static void startSimulation(String fileName)
         {
+            if (!Path.GetExtension(fileName).Equals(".a"))
+            {
+                MessageBox.Show("Assembly file should have extension .a", "File Error");
+            }
             sim = new Simulation();
         }
 
