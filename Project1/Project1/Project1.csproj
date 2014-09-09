@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembler\Assembler.cs" />
+    <Compile Include="Assembler\Parser.cs" />
     <Compile Include="Assembler\ProgramData.cs" />
     <Compile Include="Assembler\Translator.cs" />
     <Compile Include="Forms\GeminiSimForm.cs">

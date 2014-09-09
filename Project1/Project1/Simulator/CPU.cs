@@ -14,9 +14,44 @@ using System.Threading.Tasks;
 
 namespace Project1
 {
-    class CPU
+    public class CPU
     {
-        int pc;
+        private int pc;
+        private short inst;
+        private Boolean complete;
 
+        public CPU()
+        {
+            this.pc = 0;
+            this.complete = false;
+        }
+
+        private void fetchInstruction(int pc)
+        {
+
+        }
+
+        private void decodeInstruction()
+        {
+
+        }
+
+        public Boolean isDone()
+        {
+            return this.complete;
+        }
+
+        //
+        // Boring getters and setters below here
+        //
+        public int getPC()
+        {
+            return pc;
+        }
+
+        public void setPC(int pc)
+        {
+            this.pc = pc;
+        }
     }
 }

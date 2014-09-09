@@ -27,7 +27,10 @@ namespace Project1
 
         public void run()
         {
-
+            while (! cpu.isDone())
+            {
+                step();
+            }
         }
 
         public void step()
