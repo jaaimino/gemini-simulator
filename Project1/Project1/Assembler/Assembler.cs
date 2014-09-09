@@ -28,19 +28,20 @@ namespace Project1
             }
 
             //Read all lines in from the file
-            String data = File.ReadAllText(fileName);
+            List <String> lines = File.ReadAllLines(fileName).ToList<String>(); ;
 
             //Send parser the contents of the file and get back organized
             //program data
-            ProgramData programData = Parser.Parse(data);
+            ProgramData programData = Parser.ParseSource(lines);
 
             //Send organized data to translator to translate to binary
             //Save our new file contents to data
-            data = Translator.Translate(programData);
+            String newData;
+            newData = Translator.Translate(programData);
 
             //Create new file path for writing assembly data and dump data to file
             String newFileName = filePath + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(fileName) + ".a";
-            Assembler.Output(newFileName, data);
+            Assembler.Output(newFileName, newData);
         }
 
         public static void Output(String fileName, String data)
