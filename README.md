@@ -1,4 +1,4 @@
-Programmer's Model
+**Programmer's Model**
 Gemini is an accumulator-based processor with a single bus 
 connecting the ALU, the accumulator (ACC) and program counter (PC) 
 registers, and main memory.  The bus is used for both address and 
