@@ -51,20 +51,49 @@ namespace Project1
             int i = 0;
             foreach (String line in lines)
             {
-                Console.Write(i + " ");
-                Console.WriteLine(line);
-                //Regex labelStmtFormat = new Regex(@"^(?<label>.*?)\s*:$");
-                Regex labelStmtFormat = new Regex(@"!([^;]*)\n");
-                var labelStmtMatch = labelStmtFormat.Match(line);
-                if (labelStmtMatch.Success)
+                if (labelMatch(line))
                 {
-                    var label = labelStmtMatch.Groups["label"].Value;
-                    //Console.WriteLine(label);
+                    //Do something
                 }
+                else if (labelMatch(line)) ;
                 i++;
             }
 
             return data;
+        }
+
+        /*
+         * Include individual functions to match 
+         */
+        private static Boolean labelMatch(String line)
+        {
+            //Console.WriteLine(line);
+            Regex labelStmtFormat = new Regex(@"^(?<label>.*?)\s*:$");
+            //Regex commandStmtFormat = new Regex(@"^(?<command>.*?)\s*:$");
+            var labelStmtMatch = labelStmtFormat.Match(line);
+            if (labelStmtMatch.Success)
+            {
+                var label = labelStmtMatch.Groups["label"].Value;
+                Console.WriteLine("Found label " + label);
+            }
+            return labelStmtMatch.Success;
+        }
+
+        /*
+         * Include individual functions to match 
+         */
+        private static Boolean labelMatch(String line)
+        {
+            //Console.WriteLine(line);
+            Regex labelStmtFormat = new Regex(@"^(?<label>.*?)\s*:$");
+            //Regex commandStmtFormat = new Regex(@"^(?<command>.*?)\s*:$");
+            var labelStmtMatch = labelStmtFormat.Match(line);
+            if (labelStmtMatch.Success)
+            {
+                var label = labelStmtMatch.Groups["label"].Value;
+                Console.WriteLine("Found label " + label);
+            }
+            return labelStmtMatch.Success;
         }
     }
 }
