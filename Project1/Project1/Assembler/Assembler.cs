@@ -36,15 +36,15 @@ namespace Project1
 
             //Send organized data to translator to translate to binary
             //Save our new file contents to data
-            String newData;
-            newData = Translator.Translate(programData);
+            String newData = "";
+            //newData = Encoder.Encode(programData);
 
             //Create new file path for writing assembly data and dump data to file
             String newFileName = filePath + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(fileName) + ".a";
             Assembler.Output(newFileName, newData);
         }
 
-        public static void Output(String fileName, String data)
+        private static void Output(String fileName, String data)
         {
             //Write out all data to given new file and overwrite if it exists
             try

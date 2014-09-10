@@ -48,28 +48,50 @@ namespace Project1
         public static ProgramData ParseSource(List<String> lines)
         {
             ProgramData data = new ProgramData();
-            int i = 0;
-            foreach (String line in lines)
+
+            //Remove all
+            for (int i = 0; i < lines.Count; i++)
             {
+                String line = lines.ElementAt(i);
+                line = stripComments(line);
                 if (labelMatch(line))
                 {
                     //Do something
                 }
-                else if (labelMatch(line)) ;
-                i++;
+                else if (parseCommandWithImmediate(line))
+                {
+                    //Do something else
+                }
+                else if (parseCommandWithMemory(line))
+                {
+                    //Do something else
+                }
+                else if (parseCommandWithNoArgs(line))
+                {
+                    //Do something else
+                }
+                Console.WriteLine(i + " " + line);
             }
-
             return data;
         }
 
         /*
-         * Include individual functions to match 
+         * Finds everything after and including comment character \s*(?P<test>[!].*)
+         */
+        private static String stripComments(String line)
+        {
+            //Console.WriteLine("Before filter: " + line);
+            line = Regex.Replace(line, @"\s*[!].*", "");
+            //Console.WriteLine("After filter: " + line);
+            return line;
+        }
+
+        /*
+         * Match command with single immediate argument
          */
         private static Boolean labelMatch(String line)
         {
-            //Console.WriteLine(line);
             Regex labelStmtFormat = new Regex(@"^(?<label>.*?)\s*:$");
-            //Regex commandStmtFormat = new Regex(@"^(?<command>.*?)\s*:$");
             var labelStmtMatch = labelStmtFormat.Match(line);
             if (labelStmtMatch.Success)
             {
@@ -80,18 +102,46 @@ namespace Project1
         }
 
         /*
-         * Include individual functions to match 
+         * Match command with no argument
          */
-        private static Boolean commandMatch(String line)
+        private static Boolean parseCommandWithNoArgs(String line)
         {
-            //Console.WriteLine(line);
-            Regex labelStmtFormat = new Regex(@"^(?<label>.*?)\s*:$");
-            //Regex commandStmtFormat = new Regex(@"^(?<command>.*?)\s*:$");
-            var labelStmtMatch = labelStmtFormat.Match(line);
+            Regex labelStmtFormat = new Regex(@"^\s*(?<command>.{2,3})\s*$");
+            Match labelStmtMatch = labelStmtFormat.Match(line);
             if (labelStmtMatch.Success)
             {
-                var label = labelStmtMatch.Groups["label"].Value;
-                Console.WriteLine("Found label " + label);
+                String command = labelStmtMatch.Groups["command"].Value;
+                Console.WriteLine("Found command with no args " + command);
+            }
+            return labelStmtMatch.Success;
+        }
+
+        /*
+         * Match command with single immediate argument
+         */
+        private static Boolean parseCommandWithImmediate(String line)
+        {
+            Regex labelStmtFormat = new Regex(@"^\s*(?<command>\S{2,3})\s*(?<arg1>[#][$]\d*)\s*$");
+            Match labelStmtMatch = labelStmtFormat.Match(line);
+            if (labelStmtMatch.Success)
+            {
+                String command = labelStmtMatch.Groups["command"].Value;
+                Console.WriteLine("Found command with immediate " + command);
+            }
+            return labelStmtMatch.Success;
+        }
+
+        /*
+         * Match command with single memory argument
+         */
+        private static Boolean parseCommandWithMemory(String line)
+        {
+            Regex labelStmtFormat = new Regex(@"^\s*(?<command>\S{2,3})\s*(?<arg1>[$]\d*)\s*$");
+            Match labelStmtMatch = labelStmtFormat.Match(line);
+            if (labelStmtMatch.Success)
+            {
+                String command = labelStmtMatch.Groups["command"].Value;
+                Console.WriteLine("Found command with memory " + command);
             }
             return labelStmtMatch.Success;
         }
