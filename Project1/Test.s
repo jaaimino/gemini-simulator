@@ -1,3 +1,7 @@
+! Ignore this comment
 main:
-	mv $r1 $r2 $r1
-	ld.m $r1 $r2 $r3 ! Test
+	add #$10        ! Add 10 to the accumulator
+	
+	and $10        ! And memory address 10 with the accumulator
+	nop
+	lda      #$10
