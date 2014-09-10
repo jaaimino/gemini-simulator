@@ -82,7 +82,7 @@ namespace Project1
         /*
          * Include individual functions to match 
          */
-        private static Boolean labelMatch(String line)
+        private static Boolean commandMatch(String line)
         {
             //Console.WriteLine(line);
             Regex labelStmtFormat = new Regex(@"^(?<label>.*?)\s*:$");
