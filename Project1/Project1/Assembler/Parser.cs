@@ -54,7 +54,7 @@ namespace Project1
             {
                 String line = lines.ElementAt(i);
                 line = stripComments(line);
-                if (labelMatch(line))
+                if (parseLabel(line))
                 {
                     //Do something
                 }
@@ -69,6 +69,10 @@ namespace Project1
                 else if (parseCommandWithNoArgs(line))
                 {
                     //Do something else
+                }
+                else
+                {
+                    Console.WriteLine("Invalid line " + i);
                 }
                 Console.WriteLine(i + " " + line);
             }
@@ -89,7 +93,7 @@ namespace Project1
         /*
          * Match command with single immediate argument
          */
-        private static Boolean labelMatch(String line)
+        private static Boolean parseLabel(String line)
         {
             Regex labelStmtFormat = new Regex(@"^(?<label>.*?)\s*:$");
             var labelStmtMatch = labelStmtFormat.Match(line);
