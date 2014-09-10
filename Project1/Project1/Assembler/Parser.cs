@@ -96,10 +96,10 @@ namespace Project1
         private static Boolean parseLabel(String line)
         {
             Regex labelStmtFormat = new Regex(@"^(?<label>.*?)\s*:$");
-            var labelStmtMatch = labelStmtFormat.Match(line);
+            Match labelStmtMatch = labelStmtFormat.Match(line);
             if (labelStmtMatch.Success)
             {
-                var label = labelStmtMatch.Groups["label"].Value;
+                String label = labelStmtMatch.Groups["label"].Value;
                 Console.WriteLine("Found label " + label);
             }
             return labelStmtMatch.Success;
@@ -115,7 +115,7 @@ namespace Project1
             if (labelStmtMatch.Success)
             {
                 String command = labelStmtMatch.Groups["command"].Value;
-                Console.WriteLine("Found command with no args " + command);
+                Console.WriteLine("Found command with no args [" + command + "]");
             }
             return labelStmtMatch.Success;
         }
@@ -125,12 +125,13 @@ namespace Project1
          */
         private static Boolean parseCommandWithImmediate(String line)
         {
-            Regex labelStmtFormat = new Regex(@"^\s*(?<command>\S{2,3})\s*(?<arg1>[#][$]\d*)\s*$");
+            Regex labelStmtFormat = new Regex(@"^\s*(?<command>\S{2,3})\s*(?<arg>[#][$]\d*)\s*$");
             Match labelStmtMatch = labelStmtFormat.Match(line);
             if (labelStmtMatch.Success)
             {
                 String command = labelStmtMatch.Groups["command"].Value;
-                Console.WriteLine("Found command with immediate " + command);
+                String arg = labelStmtMatch.Groups["arg"].Value;
+                Console.WriteLine("Found command with immediate [" + command + "] with arg [" + arg + "]");
             }
             return labelStmtMatch.Success;
         }
@@ -140,12 +141,13 @@ namespace Project1
          */
         private static Boolean parseCommandWithMemory(String line)
         {
-            Regex labelStmtFormat = new Regex(@"^\s*(?<command>\S{2,3})\s*(?<arg1>[$]\d*)\s*$");
+            Regex labelStmtFormat = new Regex(@"^\s*(?<command>\S{2,3})\s*(?<arg>[$]\d*)\s*$");
             Match labelStmtMatch = labelStmtFormat.Match(line);
             if (labelStmtMatch.Success)
             {
                 String command = labelStmtMatch.Groups["command"].Value;
-                Console.WriteLine("Found command with memory " + command);
+                String arg = labelStmtMatch.Groups["arg"].Value;
+                Console.WriteLine("Found command with memory [" + command + "] with arg [" + arg + "]");
             }
             return labelStmtMatch.Success;
         }
