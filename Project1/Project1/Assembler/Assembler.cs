@@ -32,6 +32,9 @@ namespace Project1
             //Read all lines in from the file
             List <String> lines = File.ReadAllLines(fileName).ToList<String>(); ;
 
+            //Read in opcode config file
+            Opcode.readConfig();
+
             //Send parser the contents of the file and get back encoded list
             //of lines
             List<String> encodedLines = Parser.ParseSource(lines);
