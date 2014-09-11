@@ -43,40 +43,30 @@ using System.Threading.Tasks;
 
 namespace Project1
 {
-    public static class Parser
+    public class Parser
     {
-        public static ProgramData ParseSource(List<String> lines)
-        {
-            ProgramData data = new ProgramData();
+        static Dictionary<String, int> labelMap;
+        static List<String> encodedLines;
 
-            //Remove all
+        public static List<String> ParseSource(List<String> lines)
+        {
+            labelMap = new Dictionary<string, int>();
+            encodedLines = new List<String>();
             for (int i = 0; i < lines.Count; i++)
             {
                 String line = lines.ElementAt(i);
                 line = stripComments(line);
-                if (parseLabel(line))
-                {
-                    //Do something
-                }
-                else if (parseCommandWithImmediate(line))
-                {
-                    //Do something else
-                }
-                else if (parseCommandWithMemory(line))
-                {
-                    //Do something else
-                }
-                else if (parseCommandWithNoArgs(line))
-                {
-                    //Do something else
-                }
+                if (parseLabel(line)) { }
+                else if (parseCommandWithImmediate(line)) { }
+                else if (parseCommandWithMemory(line)) { }
+                else if (parseCommandWithNoArgs(line)) { }
                 else
                 {
-                    Console.WriteLine("Invalid line " + i);
+                    //Console.WriteLine("Invalid line " + i);
                 }
-                Console.WriteLine(i + " " + line);
+                //Console.WriteLine(i + " " + line);
             }
-            return data;
+            return encodedLines;
         }
 
         /*
@@ -84,10 +74,7 @@ namespace Project1
          */
         private static String stripComments(String line)
         {
-            //Console.WriteLine("Before filter: " + line);
-            line = Regex.Replace(line, @"\s*[!].*", "");
-            //Console.WriteLine("After filter: " + line);
-            return line;
+            return Regex.Replace(line, @"\s*[!].*", "");
         }
 
         /*
@@ -100,7 +87,9 @@ namespace Project1
             if (labelStmtMatch.Success)
             {
                 String label = labelStmtMatch.Groups["label"].Value;
-                Console.WriteLine("Found label " + label);
+                //Console.WriteLine("Found label " + label);
+
+                //Add to label list here
             }
             return labelStmtMatch.Success;
         }
@@ -115,7 +104,11 @@ namespace Project1
             if (labelStmtMatch.Success)
             {
                 String command = labelStmtMatch.Groups["command"].Value;
-                Console.WriteLine("Found command with no args [" + command + "]");
+                //Console.WriteLine("Found command with no args [" + command + "]");
+
+                //Call to encoder goes here
+                String encodedString = Encoder.EncodeWithNoArgs(command);
+                encodedLines.Add(encodedString);
             }
             return labelStmtMatch.Success;
         }
@@ -130,8 +123,12 @@ namespace Project1
             if (labelStmtMatch.Success)
             {
                 String command = labelStmtMatch.Groups["command"].Value;
-                String arg = labelStmtMatch.Groups["arg"].Value;
-                Console.WriteLine("Found command with immediate [" + command + "] with arg [" + arg + "]");
+                String immediate = labelStmtMatch.Groups["arg"].Value;
+                //Console.WriteLine("Found command with immediate [" + command + "] with arg [" + immediate + "]");
+
+                //Call to encoder here
+                String encodedString = Encoder.EncodeWithImmediate(command, immediate);
+                encodedLines.Add(encodedString);
             }
             return labelStmtMatch.Success;
         }
@@ -147,7 +144,11 @@ namespace Project1
             {
                 String command = labelStmtMatch.Groups["command"].Value;
                 String arg = labelStmtMatch.Groups["arg"].Value;
-                Console.WriteLine("Found command with memory [" + command + "] with arg [" + arg + "]");
+                //Console.WriteLine("Found command with memory [" + command + "] with arg [" + arg + "]");
+
+                //Call to encoder here
+                String encodedString = Encoder.EncodeWithMemory(command, arg);
+                encodedLines.Add(encodedString);
             }
             return labelStmtMatch.Success;
         }

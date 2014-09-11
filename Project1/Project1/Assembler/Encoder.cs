@@ -25,5 +25,15 @@ namespace Project1
             //Return 
             return command;
         }
+
+        public static String EncodeWithMemory(String command, String memoryAddress)
+        {
+            return command;
+        }
+
+        public static String EncodeWithNoArgs(string command)
+        {
+            return command;
+        }
     }
 }

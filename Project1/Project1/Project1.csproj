@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Project1.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,7 +49,6 @@
   <ItemGroup>
     <Compile Include="Assembler\Assembler.cs" />
     <Compile Include="Assembler\Parser.cs" />
-    <Compile Include="Assembler\ProgramData.cs" />
     <Compile Include="Assembler\Encoder.cs" />
     <Compile Include="Forms\GeminiSimForm.cs">
       <SubType>Form</SubType>

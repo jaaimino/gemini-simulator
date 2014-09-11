@@ -18,38 +18,35 @@ namespace Project1
 {
     static class Assembler
     {
+        public const String SOURCE_FILE_TYPE = ".s";
+
         public static void AssembleFile(String fileName)
         {
             String filePath = Path.GetDirectoryName(fileName);
             
-            if(! Path.GetExtension(fileName).Equals(".s"))
+            if(! Path.GetExtension(fileName).Equals(SOURCE_FILE_TYPE))
             {
-                MessageBox.Show("Assembly file must have extension .s", "File Error");
+                MessageBox.Show("Assembly file must have extension " + SOURCE_FILE_TYPE, "File Error");
             }
 
             //Read all lines in from the file
             List <String> lines = File.ReadAllLines(fileName).ToList<String>(); ;
 
-            //Send parser the contents of the file and get back organized
-            //program data
-            ProgramData programData = Parser.ParseSource(lines);
-
-            //Send organized data to translator to translate to binary
-            //Save our new file contents to data
-            String newData = "";
-            //newData = Encoder.Encode(programData);
+            //Send parser the contents of the file and get back encoded list
+            //of lines
+            List<String> encodedLines = Parser.ParseSource(lines);
 
             //Create new file path for writing assembly data and dump data to file
-            String newFileName = filePath + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(fileName) + ".a";
-            Assembler.Output(newFileName, newData);
+            String newFileName = filePath + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(fileName) + Simulator.OUTPUT_FILE_TYPE;
+            Assembler.Output(newFileName, encodedLines);
         }
 
-        private static void Output(String fileName, String data)
+        private static void Output(String fileName, List<String> lines)
         {
             //Write out all data to given new file and overwrite if it exists
             try
             {
-                File.WriteAllText(fileName, data);
+                File.WriteAllLines(fileName, lines);
             }
             catch (IOException)
             {

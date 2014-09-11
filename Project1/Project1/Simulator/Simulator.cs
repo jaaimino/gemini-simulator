@@ -18,6 +18,8 @@ namespace Project1
 {
     static class Simulator
     {
+        public const String OUTPUT_FILE_TYPE = ".out";
+
         private static Simulation sim;
 
         /*
@@ -25,11 +27,14 @@ namespace Project1
          */
         public static void startSimulation(String fileName)
         {
-            if (!Path.GetExtension(fileName).Equals(".a"))
+            if (Path.GetExtension(fileName).Equals(OUTPUT_FILE_TYPE))
             {
-                MessageBox.Show("Assembly file should have extension .a", "File Error");
+                sim = new Simulation();
             }
-            sim = new Simulation();
+            else
+            {
+                MessageBox.Show("Assembly file should have extension " + OUTPUT_FILE_TYPE, "File Error");
+            }
         }
 
         /*
