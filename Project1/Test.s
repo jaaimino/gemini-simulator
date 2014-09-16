@@ -4,6 +4,6 @@ main:
 	and $10        ! And memory address 10 with the accumulator
 ahtjkahtk	lda $0  Hey- I forgot to put !
 	nop
-	lda      #$10
+	lda      #$15
 nope:
 	HLT

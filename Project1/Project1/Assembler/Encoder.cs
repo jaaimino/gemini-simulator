@@ -6,6 +6,7 @@
  **/
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace Project1
             encodedInstruction = Encoder.encodeCommand(encodedInstruction, command);
             encodedInstruction = Encoder.encodeImmediateFlag(encodedInstruction, immediate);
             encodedInstruction = Encoder.encodeOperand(encodedInstruction, arg);
+            Console.WriteLine(Convert.ToString(encodedInstruction, 2));
             return encodedInstruction;
         }
 
@@ -60,8 +62,18 @@ namespace Project1
          */
         private static short encodeOperand(short currentEncoding, String operand)
         {
-            Console.WriteLine(operand);
-            short num = (short)Convert.ToInt16(operand);
+            short num = 0;
+            try
+            {
+                num = (short)Convert.ToInt16(operand);
+            } catch(FormatException)
+            {
+
+            }
+            catch(OverflowException)
+            {
+
+            }
             currentEncoding = (short)(currentEncoding | num);
             return currentEncoding;
         }

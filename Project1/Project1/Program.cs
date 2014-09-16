@@ -17,8 +17,7 @@ namespace Project1
             OpcodeMapper.initialize();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Console.WriteLine(Convert.ToString(Encoder.Encode("add", "", true), 2));
-            //Application.Run(new GeminiSimForm());
+            Application.Run(new GeminiSimForm());
         }
     }
 }
