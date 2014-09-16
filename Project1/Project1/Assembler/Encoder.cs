@@ -3,6 +3,7 @@
  * Author: Jacob Aimino
  * 
  * Desc: Encoder for Assembler
+ *  - Maybe stay static? (Probably not)
  * 
  **/
 

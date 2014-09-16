@@ -3,6 +3,8 @@
  * Author: Jacob Aimino
  * 
  * Desc: Controller for Assembler
+ * - Should be converted instead to an object
+ *   with a constructor
  * 
  **/
 
@@ -30,13 +32,11 @@ namespace Project1
             }
 
             //Read all lines in from the file
-            List <String> lines = File.ReadAllLines(fileName).ToList<String>(); ;
+            List <String> lines = File.ReadAllLines(fileName).ToList<String>();
+            
+            //Read in opcode config file (Not anymore)
 
-            //Read in opcode config file
-            Opcode.readConfig();
-
-            //Send parser the contents of the file and get back encoded list
-            //of lines
+            //Send parser the contents of the file and get back 
             List<String> encodedLines = Parser.ParseSource(lines);
 
             //Create new file path for writing assembly data and dump data to file
