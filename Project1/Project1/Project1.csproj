@@ -49,7 +49,7 @@
   <ItemGroup>
     <Compile Include="Assembler\Assembler.cs" />
     <Compile Include="Assembler\Encoder.cs" />
-    <Compile Include="Assembler\IPE.cs" />
+    <Compile Include="Assembler\Parser.cs" />
     <Compile Include="Forms\GeminiSimForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,7 +62,7 @@
     <Compile Include="Simulator\Memory.cs" />
     <Compile Include="Simulator\Simulation.cs" />
     <Compile Include="Simulator\Simulator.cs" />
-    <Compile Include="Assembler\Opcode.cs" />
+    <Compile Include="Assembler\OpcodeMapper.cs" />
     <EmbeddedResource Include="Forms\GeminiSimForm.resx">
       <DependentUpon>GeminiSimForm.cs</DependentUpon>
     </EmbeddedResource>

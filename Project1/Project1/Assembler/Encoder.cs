@@ -1,4 +1,10 @@
-﻿using System;
+﻿/**
+ * Author: Jacob Aimino
+ * 
+ * Desc: Utilities for encoding commands
+ *
+ **/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,21 +14,56 @@ namespace Project1
 {
     static class Encoder
     {
-        public static short encodeCommand(short currentEncoding, String command)
+        /**
+         * 
+         */
+        public static short Encode(String command, String arg, Boolean immediate)
         {
-
-            return 0;
+            short encodedInstruction = 0;
+            encodedInstruction = Encoder.encodeCommand(encodedInstruction, command);
+            encodedInstruction = Encoder.encodeImmediateFlag(encodedInstruction, immediate);
+            encodedInstruction = Encoder.encodeOperand(encodedInstruction, arg);
+            return encodedInstruction;
         }
 
-        public static short encodeImmediateFlag(short currentEncoding, Boolean immediate)
+        /**
+         * 
+         */
+        private static short encodeCommand(short currentEncoding, String command)
         {
-
-            return 0;
+            short num = 0;
+            try
+            {
+                num = OpcodeMapper.CodeToShort(command.ToUpper());
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+                Console.WriteLine("Invalid command " + command + " found.");
+            }
+            return (short)(num << 9);
         }
 
-        public static short encodeOperand(short currentEncoding, String operand)
+        /**
+         * 
+         */
+        private static short encodeImmediateFlag(short currentEncoding, Boolean immediate)
         {
-            return 0;
+            short flag = ((short)(1 << 8));
+            if(immediate){
+                currentEncoding = (short)(currentEncoding | flag);
+            }
+            return currentEncoding;
+        }
+
+        /**
+         * 
+         */
+        private static short encodeOperand(short currentEncoding, String operand)
+        {
+            Console.WriteLine(operand);
+            short num = (short)Convert.ToInt16(operand);
+            currentEncoding = (short)(currentEncoding | num);
+            return currentEncoding;
         }
     }
 }

@@ -14,9 +14,11 @@ namespace Project1
         [STAThread]
         static void Main()
         {
+            OpcodeMapper.initialize();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GeminiSimForm());
+            Console.WriteLine(Convert.ToString(Encoder.Encode("add", "", true), 2));
+            //Application.Run(new GeminiSimForm());
         }
     }
 }

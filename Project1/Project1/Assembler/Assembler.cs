@@ -30,9 +30,9 @@ namespace Project1
             }
 
             //Send parser the contents of the file and get back
-            IPE ipe = new IPE(fileName);
-            ipe.Parse();
-            List<short> encodedInstructions = ipe.getEncodedInstructions();
+            Parser parser = new Parser(fileName);
+            parser.Parse();
+            List<short> encodedInstructions = parser.getEncodedInstructions();
 
             //Write encoded instructions to new output file
             Output(fileName, encodedInstructions);
