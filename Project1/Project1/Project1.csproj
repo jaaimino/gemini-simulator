@@ -48,8 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembler\Assembler.cs" />
-    <Compile Include="Assembler\Parser.cs" />
-    <Compile Include="Assembler\Encoder.cs" />
+    <Compile Include="Assembler\IPE.cs" />
     <Compile Include="Forms\GeminiSimForm.cs">
       <SubType>Form</SubType>
     </Compile>

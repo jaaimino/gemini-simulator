@@ -1,40 +1,28 @@
-﻿/**
- * 
- * Author: Jacob Aimino
- * 
- * Desc: Encoder for Assembler
- *  - Maybe stay static? (Probably not)
- * 
- **/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Project1
 {
-    class Encoder
+    static class Encoder
     {
-        public static String EncodeWithImmediate(String command, String immediate)
+        public static short encodeCommand(short currentEncoding, String command)
         {
-            //Look up opcode and encode to binary
-            //Then encode immediate into hex
-            //Return 
-            return command;
+
+            return 0;
         }
 
-        public static String EncodeWithMemory(String command, String memoryAddress)
+        public static short encodeImmediateFlag(short currentEncoding, Boolean immediate)
         {
-            return command;
+
+            return 0;
         }
 
-        public static String EncodeWithNoArgs(string command)
+        public static short encodeOperand(short currentEncoding, String operand)
         {
-            return command;
+
         }
     }
 }

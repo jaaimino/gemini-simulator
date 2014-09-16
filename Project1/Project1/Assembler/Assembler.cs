@@ -1,5 +1,4 @@
 ﻿/**
- * 
  * Author: Jacob Aimino
  * 
  * Desc: Controller for Assembler
@@ -24,36 +23,40 @@ namespace Project1
 
         public static void AssembleFile(String fileName)
         {
-            String filePath = Path.GetDirectoryName(fileName);
-            
+            //Make sure file has correct extension
             if(! Path.GetExtension(fileName).Equals(SOURCE_FILE_TYPE))
             {
                 MessageBox.Show("Assembly file must have extension " + SOURCE_FILE_TYPE, "File Error");
             }
 
-            //Read all lines in from the file
-            List <String> lines = File.ReadAllLines(fileName).ToList<String>();
-            
-            //Read in opcode config file (Not anymore)
+            //Send parser the contents of the file and get back
+            IPE ipe = new IPE(fileName);
+            ipe.Parse();
+            List<short> encodedInstructions = ipe.getEncodedInstructions();
 
-            //Send parser the contents of the file and get back 
-            List<String> encodedLines = Parser.ParseSource(lines);
+            //Write encoded instructions to new output file
+            Output(fileName, encodedInstructions);
+        }
+
+        private static void Output(String fileName, List<short> encodedInstructions)
+        {
+            String filePath = Path.GetDirectoryName(fileName);
 
             //Create new file path for writing assembly data and dump data to file
             String newFileName = filePath + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(fileName) + Simulator.OUTPUT_FILE_TYPE;
-            Assembler.Output(newFileName, encodedLines);
-        }
 
-        private static void Output(String fileName, List<String> lines)
-        {
             //Write out all data to given new file and overwrite if it exists
             try
             {
-                File.WriteAllLines(fileName, lines);
+                BinaryWriter writer = new BinaryWriter(File.Open(newFileName, FileMode.Create));
+                foreach (short s in encodedInstructions){
+                    writer.Write(s);
+                }
+                writer.Close();
             }
             catch (IOException)
             {
-                //Console.WriteLine("Failed to write output file: " + fileName);
+                Console.WriteLine("Failed to write output file: " + fileName);
             }
             //Console.WriteLine("Wrote successfully to " + fileName + "!");
         }
