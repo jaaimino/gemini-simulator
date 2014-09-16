@@ -22,7 +22,7 @@ namespace Project1
 
         public static short encodeOperand(short currentEncoding, String operand)
         {
-
+            return 0;
         }
     }
 }

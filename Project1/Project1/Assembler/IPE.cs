@@ -100,6 +100,7 @@ namespace Project1
                 Console.WriteLine("Found command with no args [" + command + "]");
 
                 //Do call to encode here
+                Encode(command, "", false);
 
                 return;
             }
@@ -113,6 +114,7 @@ namespace Project1
                 Console.WriteLine("Found command with immediate [" + command + "] [" + immediate + "]");
 
                 //Do call to encode here
+                Encode(command, immediate, true);
 
                 return;
             }
@@ -126,6 +128,7 @@ namespace Project1
                 Console.WriteLine("Found command with memory [" + command + "] [" + arg + "]");
 
                 //Do call to encode here
+                Encode(command, arg, false);
 
                 return;
             }
