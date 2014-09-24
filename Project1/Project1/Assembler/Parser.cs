@@ -24,12 +24,14 @@ namespace Project1
         List<String> instructions;
         Dictionary<String, int> labelMap;
         List<short> encodedInstructions;
+        int lineNumber;
 
         public Parser(String fileName)
         {
             this.instructions = File.ReadAllLines(fileName).ToList<String>();
             labelMap = new Dictionary<string, int>();
             encodedInstructions = new List<short>();
+            lineNumber = 0;
         }
 
         /**
@@ -37,13 +39,19 @@ namespace Project1
          */
         public void Parse()
         {
-            for (int i = 0; i < instructions.Count; i++)
+            this.lineNumber = 0;
+            for (int i = 0; i < instructions.Count; i++ )
             {
                 String line = instructions.ElementAt(i);
                 line = stripComments(line);
-                ParseLine(line);
-                //Should clear out line if it's empty
-                //Console.WriteLine(i + " " + line);
+                if (! new Regex(@"^\s*$").Match(line).Success) //If the entire line is whitespace, ignore
+                {
+                    if (ParseLine(line))
+                    {
+                        lineNumber++;
+                        Console.WriteLine(lineNumber + " " + line);
+                    }
+                }
             }
         }
 
@@ -52,7 +60,7 @@ namespace Project1
          * - First determine what format it's in
          * - Then call encode with args
          */
-        private void ParseLine(String line)
+        private Boolean ParseLine(String line)
         {
             Match match;
 
@@ -60,8 +68,9 @@ namespace Project1
             match = new Regex(@"^(?<label>.*?)\s*:$").Match(line);
             if (match.Success)
             {
-                String command = match.Groups["label"].Value;
-                return;
+                String label = match.Groups["label"].Value;
+                labelMap.Add(label, lineNumber+1);
+                return true;
             }
 
             //Is it a command with no arguments?
@@ -72,7 +81,7 @@ namespace Project1
                 //Console.WriteLine("Found command with no args [" + command + "]");
                 //Do call to encode here
                 encodedInstructions.Add(Encoder.Encode(command, "", false));
-                return;
+                return true;
             }
 
             //Is it a command with an immediate argument?
@@ -84,7 +93,7 @@ namespace Project1
                 //Console.WriteLine("Found command with immediate [" + command + "] [" + immediate + "]");
                 //Do call to encode here
                 encodedInstructions.Add(Encoder.Encode(command, immediate, true));
-                return;
+                return true;
             }
 
             //Is it a command with a memory argument?
@@ -96,9 +105,9 @@ namespace Project1
                 //Console.WriteLine("Found command with memory [" + command + "] [" + arg + "]");
                 //Do call to encode here
                 encodedInstructions.Add(Encoder.Encode(command, arg, false));
-                return;
+                return true;
             }
-
+            return false;
             //Console.WriteLine("Invalid line");
         }
 

@@ -24,7 +24,7 @@ namespace Project1
             encodedInstruction = Encoder.encodeCommand(encodedInstruction, command);
             encodedInstruction = Encoder.encodeImmediateFlag(encodedInstruction, immediate);
             encodedInstruction = Encoder.encodeOperand(encodedInstruction, arg);
-            Console.WriteLine(Convert.ToString(encodedInstruction, 2));
+            //Console.WriteLine(Convert.ToString(encodedInstruction, 2));
             return encodedInstruction;
         }
 
@@ -66,14 +66,8 @@ namespace Project1
             try
             {
                 num = (short)Convert.ToInt16(operand);
-            } catch(FormatException)
-            {
-
-            }
-            catch(OverflowException)
-            {
-
-            }
+            } catch(FormatException){}
+            catch(OverflowException){}
             currentEncoding = (short)(currentEncoding | num);
             return currentEncoding;
         }
