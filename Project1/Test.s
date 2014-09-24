@@ -5,5 +5,6 @@ main:
 ahtjkahtk	lda $0  Hey- I forgot to put !
 	nop
 	lda      #$15
+	ba main
 nope:
 	HLT

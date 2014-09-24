@@ -74,7 +74,7 @@ namespace Project1
             }
 
             //Is it a command with no arguments?
-            match = new Regex(@"^\s*(?<command>.{2,3})\s*$").Match(line);
+            match = new Regex(@"^\s*(?<command>\S{2,3})\s*$").Match(line);
             if (match.Success)
             {
                 String command = match.Groups["command"].Value;
@@ -107,8 +107,20 @@ namespace Project1
                 encodedInstructions.Add(Encoder.Encode(command, arg, false));
                 return true;
             }
+
+            //Is it a command in branch command format?
+            match = new Regex(@"^\s*(?<command>\S{2,3})\s*(?<label>\S+)$").Match(line);
+            if (match.Success)
+            {
+                String command = match.Groups["command"].Value;
+                String label = match.Groups["label"].Value;
+                Console.WriteLine("Found command with branch [" + command + "] " + " [" + label + "]");
+                //Do call to encode here
+                encodedInstructions.Add(Encoder.Encode(command, "", false));
+                return true;
+            }
+            Console.WriteLine("Invalid line");
             return false;
-            //Console.WriteLine("Invalid line");
         }
 
         /*

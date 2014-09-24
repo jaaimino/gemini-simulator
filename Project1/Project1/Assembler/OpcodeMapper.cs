@@ -59,6 +59,7 @@ namespace Project1
 
         public static short CodeToShort(String code)
         {
+            code = code.ToUpper();
             return codeToShortMap[code];
         }
 

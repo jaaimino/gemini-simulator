@@ -21,9 +21,13 @@ namespace Project1
         public static short Encode(String command, String arg, Boolean immediate)
         {
             short encodedInstruction = 0;
-            encodedInstruction = Encoder.encodeCommand(encodedInstruction, command);
-            encodedInstruction = Encoder.encodeImmediateFlag(encodedInstruction, immediate);
-            encodedInstruction = Encoder.encodeOperand(encodedInstruction, arg);
+            if(false){ //Check to see if instruction is a branch one if so, look up target line
+
+            } else {
+                encodedInstruction = Encoder.encodeCommand(encodedInstruction, command);
+                encodedInstruction = Encoder.encodeImmediateFlag(encodedInstruction, immediate);
+                encodedInstruction = Encoder.encodeOperand(encodedInstruction, arg);
+            }
             //Console.WriteLine(Convert.ToString(encodedInstruction, 2));
             return encodedInstruction;
         }
@@ -36,7 +40,7 @@ namespace Project1
             short num = 0;
             try
             {
-                num = OpcodeMapper.CodeToShort(command.ToUpper());
+                num = OpcodeMapper.CodeToShort(command);
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
