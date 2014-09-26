@@ -33,6 +33,11 @@ namespace Project1
             cpu.cycle();
         }
 
+        public Boolean isDone()
+        {
+            return cpu.isDone(memory.getInstructionCount());
+        }
+
         public short getNextInstruction()
         {
             return memory.getInstructionAtIndex(cpu.getPC());

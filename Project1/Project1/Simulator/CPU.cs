@@ -38,12 +38,12 @@ namespace Project1
 
         public void cycle()
         {
-
+            registers[5]++;
         }
 
         public Boolean isDone(int instructionCount)
         {
-            return registers[5] >= instructionCount;
+            return registers[5] >= instructionCount-1;
         }
 
         //-------------------------------------------------

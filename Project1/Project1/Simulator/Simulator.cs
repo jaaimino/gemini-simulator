@@ -48,7 +48,7 @@ namespace Project1
 	        while (pos < length)
 	        {
                 short s = (short)reader.ReadInt16();
-                Console.WriteLine(Convert.ToString(s, 2));
+                //Console.WriteLine(Convert.ToString(s, 2));
                 lines.Add(s);
 		        pos += sizeof(short);
 	        }
@@ -68,8 +68,11 @@ namespace Project1
          */
         public static void stepSimulation()
         {
-            sim.step();
-            form.updateViewElements(sim.getNextInstruction(), sim.getRegisterValues());
+            if (null != sim && ! sim.isDone())
+            {
+                sim.step();
+                form.updateViewElements(sim.getNextInstruction(), sim.getRegisterValues());
+            }
         }
 
         private static Boolean IsValidFile(String fileName)

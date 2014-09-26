@@ -64,7 +64,7 @@
             this.registerLabel = new System.Windows.Forms.Label();
             this.labelA = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.label4 = new System.Windows.Forms.Label();
+            this.nextInstLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
@@ -530,7 +530,7 @@
             // 
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.label4, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.nextInstLabel, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(2, 286);
@@ -542,19 +542,19 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(539, 67);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
-            // label4
+            // nextInstLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(2, 33);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(535, 34);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Next Instruction: ---------";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.nextInstLabel.AutoSize = true;
+            this.nextInstLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.nextInstLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nextInstLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nextInstLabel.Location = new System.Drawing.Point(2, 33);
+            this.nextInstLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.nextInstLabel.Name = "nextInstLabel";
+            this.nextInstLabel.Size = new System.Drawing.Size(535, 34);
+            this.nextInstLabel.TabIndex = 1;
+            this.nextInstLabel.Text = "Next Instruction: ---------";
+            this.nextInstLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label3
             // 
@@ -665,7 +665,7 @@
         private System.Windows.Forms.Label valueLabel;
         private System.Windows.Forms.Label registerLabel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label nextInstLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStripMenuItem runAssemblyToolStripMenuItem;
         private System.Windows.Forms.Label labelA;

@@ -39,5 +39,10 @@ namespace Project1
         {
             return instructions.ElementAt(index);
         }
+
+        public int getInstructionCount()
+        {
+            return instructions.Count;
+        }
     }
 }

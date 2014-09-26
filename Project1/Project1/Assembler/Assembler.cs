@@ -24,18 +24,22 @@ namespace Project1
         public static void AssembleFile(String fileName)
         {
             //Make sure file has correct extension
-            if(! Path.GetExtension(fileName).Equals(SOURCE_FILE_TYPE))
+            if (Path.GetExtension(fileName).Equals(SOURCE_FILE_TYPE))
+            {
+
+
+                //Send parser the contents of the file and get back
+                Parser parser = new Parser(fileName);
+                parser.Parse();
+                List<short> encodedInstructions = parser.GetEncodedInstructions();
+
+                //Write encoded instructions to new output file
+                Output(fileName, encodedInstructions);
+            }
+            else
             {
                 MessageBox.Show("Assembly file must have extension " + SOURCE_FILE_TYPE, "File Error");
             }
-
-            //Send parser the contents of the file and get back
-            Parser parser = new Parser(fileName);
-            parser.Parse();
-            List<short> encodedInstructions = parser.GetEncodedInstructions();
-
-            //Write encoded instructions to new output file
-            Output(fileName, encodedInstructions);
         }
 
         private static void Output(String fileName, List<short> encodedInstructions)
