@@ -41,9 +41,9 @@ namespace Project1
             return this.complete;
         }
 
-        //
+        //-------------------------------------------------
         // Boring getters and setters below here
-        //
+        //-------------------------------------------------
         public int getPC()
         {
             return pc;

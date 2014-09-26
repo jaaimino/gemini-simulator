@@ -16,11 +16,22 @@ namespace Project1
 {
     class Memory
     {
-        int[] addresses; //Maybe should be shorts? I dunno
+        private short[] addresses; //Maybe should be shorts? I dunno
 
         public Memory()
         {
-            addresses = new int[256];
+            addresses = new short[256];
         }
+
+        void setMemoryLocation(short value, short address)
+        {
+            addresses[address] = value;
+        }
+
+        short getMemoryLocation(short address)
+        {
+            return addresses[address];
+        }
+
     }
 }

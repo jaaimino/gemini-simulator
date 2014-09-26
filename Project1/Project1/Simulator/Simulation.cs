@@ -18,9 +18,11 @@ namespace Project1
     {
         CPU cpu;
         Memory memory;
+        List<short> instructions;
 
-        public Simulation()
+        public Simulation(List<short> instructions)
         {
+            this.instructions = instructions;
             this.cpu = new CPU();
             this.memory = new Memory();
         }

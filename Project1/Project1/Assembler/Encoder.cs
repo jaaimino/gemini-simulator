@@ -21,13 +21,9 @@ namespace Project1
         public static short Encode(String command, String arg, Boolean immediate)
         {
             short encodedInstruction = 0;
-            if(false){ //Check to see if instruction is a branch one if so, look up target line
-
-            } else {
-                encodedInstruction = Encoder.encodeCommand(encodedInstruction, command);
-                encodedInstruction = Encoder.encodeImmediateFlag(encodedInstruction, immediate);
-                encodedInstruction = Encoder.encodeOperand(encodedInstruction, arg);
-            }
+            encodedInstruction = Encoder.encodeCommand(encodedInstruction, command);
+            encodedInstruction = Encoder.encodeImmediateFlag(encodedInstruction, immediate);
+            encodedInstruction = Encoder.encodeOperand(encodedInstruction, arg);
             //Console.WriteLine(Convert.ToString(encodedInstruction, 2));
             return encodedInstruction;
         }
@@ -55,7 +51,8 @@ namespace Project1
         private static short encodeImmediateFlag(short currentEncoding, Boolean immediate)
         {
             short flag = ((short)(1 << 8));
-            if(immediate){
+            if (immediate)
+            {
                 currentEncoding = (short)(currentEncoding | flag);
             }
             return currentEncoding;
@@ -70,8 +67,9 @@ namespace Project1
             try
             {
                 num = (short)Convert.ToInt16(operand);
-            } catch(FormatException){}
-            catch(OverflowException){}
+            }
+            catch (FormatException) { }
+            catch (OverflowException) { }
             currentEncoding = (short)(currentEncoding | num);
             return currentEncoding;
         }

@@ -32,7 +32,7 @@ namespace Project1
             //Send parser the contents of the file and get back
             Parser parser = new Parser(fileName);
             parser.Parse();
-            List<short> encodedInstructions = parser.getEncodedInstructions();
+            List<short> encodedInstructions = parser.GetEncodedInstructions();
 
             //Write encoded instructions to new output file
             Output(fileName, encodedInstructions);
