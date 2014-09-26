@@ -475,7 +475,6 @@
             this.valueA.TabIndex = 5;
             this.valueA.Text = "------";
             this.valueA.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.valueA.Click += new System.EventHandler(this.valueA_Click);
             // 
             // labelB
             // 
