@@ -20,15 +20,18 @@ namespace Project1
     {
         public const String OUTPUT_FILE_TYPE = ".out";
         private static Simulation sim;
+        private static GeminiSimForm form;
 
         /*
          * Start a new simulation
          */
-        public static void startSimulation(String fileName)
+        public static void startSimulation(String fileName, GeminiSimForm form)
         {
             if (IsValidFile(fileName))
             {
                 sim = new Simulation(readAllLines(fileName));
+                Simulator.form = form;
+                form.updateViewElements(sim.getNextInstruction(), sim.getRegisterValues());
             }
             else
             {
@@ -57,7 +60,7 @@ namespace Project1
          */
         public static void runSimulation()
         {
-            sim.run();
+            //Should just call step until sim is done
         }
 
         /* 
@@ -66,6 +69,7 @@ namespace Project1
         public static void stepSimulation()
         {
             sim.step();
+            form.updateViewElements(sim.getNextInstruction(), sim.getRegisterValues());
         }
 
         private static Boolean IsValidFile(String fileName)

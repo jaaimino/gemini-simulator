@@ -4,6 +4,8 @@
  * 
  * Desc: Model for CPU
  * 
+ * Array Indicies for registers is [0=A][1=B][2=Acc][3=Zero][4=One][5=PC]
+ * 
  **/
 
 using System;
@@ -16,42 +18,51 @@ namespace Project1
 {
     public class CPU
     {
-        private int pc;
-        private short inst;
-        private Boolean complete;
+        private int[] registers; //[0=A][1=B][2=Acc][3=Zero][4=One][5=PC][6=MAR][7=MDR][8=TEMP][9=IR][10=CC]
 
         public CPU()
         {
-            this.pc = 0;
-            this.complete = false;
+            registers = new int[11];
+            registers[0] = 0;
+            registers[1] = 0;
+            registers[2] = 0;
+            registers[3] = 0; //Should stay at 0
+            registers[4] = 1; //Should stay at 1
+            registers[5] = 0; //PC here
+            registers[6] = 0;
+            registers[7] = 0;
+            registers[8] = 0;
+            registers[9] = 0;
+            registers[10] = 0;
         }
 
-        private void fetchInstruction(int pc)
+        public void cycle()
         {
 
         }
 
-        private void decodeInstruction()
+        public Boolean isDone(int instructionCount)
         {
-
-        }
-
-        public Boolean isDone()
-        {
-            return this.complete;
+            return registers[5] >= instructionCount;
         }
 
         //-------------------------------------------------
         // Boring getters and setters below here
         //-------------------------------------------------
+
+        public int[] getRegisterValues()
+        {
+            return registers;
+        }
+
         public int getPC()
         {
-            return pc;
+            return registers[5];
         }
 
         public void setPC(int pc)
         {
-            this.pc = pc;
+            this.registers[5] = pc;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Project1
             if (fileOK)
             {
                 String fileName = openFileDialog1.FileName; //Should do another open file dialog
-                Simulator.startSimulation(fileName);
+                Simulator.startSimulation(fileName, this);
                 fileOK = false;
             }
         }
@@ -54,6 +54,22 @@ namespace Project1
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
             fileOK = true;
+        }
+
+        private void stepButton_OnClick(object sender, EventArgs e)
+        {
+            Simulator.stepSimulation();
+            //Should update view after this by getting data from Simulation class
+        }
+
+        public void updateViewElements(short nextInstruction, int[] registers)
+        {
+            this.valueA.Text = registers[0]+"";
+        }
+
+        private void updateInstructionIndex()
+        {
+
         }
     }
 }

@@ -2,10 +2,9 @@
  * 
  * Author: Jacob Aimino
  * 
- * Desc: Model for Simulation
+ * Desc: Data model for simulation. Also handles step logic
  * 
  **/
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,30 +15,32 @@ namespace Project1
 {
     class Simulation
     {
-        CPU cpu;
         Memory memory;
-        List<short> instructions;
+        CPU cpu;
 
         public Simulation(List<short> instructions)
         {
-            this.instructions = instructions;
-            this.cpu = new CPU();
-            this.memory = new Memory();
+            memory = new Memory(instructions);
+            cpu = new CPU();
         }
 
-        public void run()
-        {
-            while (! cpu.isDone())
-            {
-                step();
-            }
-        }
-
+        /**
+         * Do one step of the simulation
+         * 
+         */
         public void step()
         {
-
+            cpu.cycle();
         }
 
+        public short getNextInstruction()
+        {
+            return memory.getInstructionAtIndex(cpu.getPC());
+        }
 
+        public int[] getRegisterValues()
+        {
+            return cpu.getRegisterValues();
+        }
     }
 }

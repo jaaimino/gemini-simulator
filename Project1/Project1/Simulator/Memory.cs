@@ -16,11 +16,13 @@ namespace Project1
 {
     class Memory
     {
-        private short[] addresses; //Maybe should be shorts? I dunno
+        private int[] addresses; //Maybe should be shorts? I dunno
+        private List<short> instructions;
 
-        public Memory()
+        public Memory(List<short> instructions)
         {
-            addresses = new short[256];
+            addresses = new int[256];
+            this.instructions = instructions;
         }
 
         void setMemoryLocation(short value, short address)
@@ -28,10 +30,14 @@ namespace Project1
             addresses[address] = value;
         }
 
-        short getMemoryLocation(short address)
+        int getMemoryLocation(int address)
         {
             return addresses[address];
         }
 
+        public short getInstructionAtIndex(int index)
+        {
+            return instructions.ElementAt(index);
+        }
     }
 }
