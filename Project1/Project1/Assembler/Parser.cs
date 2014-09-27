@@ -78,7 +78,8 @@ namespace Project1
                 if (match.Success)
                 {
                     String label = match.Groups["label"].Value;
-                    labelMap.Add(label, i);
+                    //Console.WriteLine("Found label " + label +" on line " + i+1);
+                    labelMap.Add(label, i+1);
                 }
                 else
                 {
@@ -147,7 +148,7 @@ namespace Project1
             }
 
             //Is it a command in branch command format?
-            match = new Regex(@"^\s*(?<command>\S{2,3})\s*(?<label>\S+)$").Match(line);
+            match = new Regex(@"^\s*(?<command>\S{2,3})\s*(?<label>[A-Za-z0-9]+)$").Match(line);
             if (match.Success)
             {
                 String command = match.Groups["command"].Value;

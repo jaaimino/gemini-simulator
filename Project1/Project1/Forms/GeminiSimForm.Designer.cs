@@ -30,10 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GeminiSimForm));
-            this.panel5 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.RunButton = new System.Windows.Forms.Button();
+            this.StepButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -65,14 +64,14 @@
             this.labelA = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.nextInstLabel = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.instructionIndexLabel = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.assembleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runAssemblyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.panel5.SuspendLayout();
+            this.ResetButton = new System.Windows.Forms.Button();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -83,51 +82,44 @@
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.panel4);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel5.Location = new System.Drawing.Point(0, 380);
-            this.panel5.Margin = new System.Windows.Forms.Padding(2);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(543, 48);
-            this.panel5.TabIndex = 3;
-            // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.button5);
-            this.panel4.Controls.Add(this.button4);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.panel4.Controls.Add(this.ResetButton);
+            this.panel4.Controls.Add(this.StepButton);
+            this.panel4.Controls.Add(this.RunButton);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(2, 82);
             this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(176, 46);
+            this.panel4.Size = new System.Drawing.Size(535, 33);
             this.panel4.TabIndex = 5;
             // 
-            // button5
+            // RunButton
             // 
-            this.button5.AutoSize = true;
-            this.button5.Location = new System.Drawing.Point(4, 5);
-            this.button5.Margin = new System.Windows.Forms.Padding(4);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(82, 37);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "Run";
-            this.button5.UseVisualStyleBackColor = true;
+            this.RunButton.AutoSize = true;
+            this.RunButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.RunButton.Location = new System.Drawing.Point(0, 0);
+            this.RunButton.Margin = new System.Windows.Forms.Padding(4);
+            this.RunButton.Name = "RunButton";
+            this.RunButton.Size = new System.Drawing.Size(82, 33);
+            this.RunButton.TabIndex = 4;
+            this.RunButton.Text = "Run";
+            this.RunButton.UseVisualStyleBackColor = true;
+            this.RunButton.Click += new System.EventHandler(this.RunButton_OnClick);
             // 
-            // button4
+            // StepButton
             // 
-            this.button4.AutoSize = true;
-            this.button4.Location = new System.Drawing.Point(93, 6);
-            this.button4.Margin = new System.Windows.Forms.Padding(4);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(79, 37);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Step";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.stepButton_OnClick);
+            this.StepButton.AutoSize = true;
+            this.StepButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.StepButton.Location = new System.Drawing.Point(82, 0);
+            this.StepButton.Margin = new System.Windows.Forms.Padding(4);
+            this.StepButton.Name = "StepButton";
+            this.StepButton.Size = new System.Drawing.Size(79, 33);
+            this.StepButton.TabIndex = 3;
+            this.StepButton.Text = "Step";
+            this.StepButton.UseVisualStyleBackColor = true;
+            this.StepButton.Click += new System.EventHandler(this.stepButton_OnClick);
             // 
             // panel3
             // 
@@ -137,7 +129,7 @@
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(543, 380);
+            this.panel3.Size = new System.Drawing.Size(543, 428);
             this.panel3.TabIndex = 4;
             // 
             // tableLayoutPanel1
@@ -151,9 +143,9 @@
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(543, 355);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(543, 403);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // tableLayoutPanel2
@@ -170,7 +162,7 @@
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 280F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(539, 280);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(539, 278);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // pictureBox1
@@ -180,13 +172,14 @@
             this.pictureBox1.Location = new System.Drawing.Point(271, 2);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(266, 276);
+            this.pictureBox1.Size = new System.Drawing.Size(266, 274);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.tableLayoutPanel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.tableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -221,29 +214,31 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 13;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(265, 276);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(265, 274);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // valueCC
             // 
             this.valueCC.AutoSize = true;
             this.valueCC.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.valueCC.Location = new System.Drawing.Point(135, 196);
+            this.valueCC.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.valueCC.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.valueCC.Location = new System.Drawing.Point(135, 236);
             this.valueCC.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.valueCC.Name = "valueCC";
-            this.valueCC.Size = new System.Drawing.Size(127, 16);
+            this.valueCC.Size = new System.Drawing.Size(127, 20);
             this.valueCC.TabIndex = 24;
             this.valueCC.Text = "------";
             this.valueCC.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -252,10 +247,12 @@
             // 
             this.labelCC.AutoSize = true;
             this.labelCC.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelCC.Location = new System.Drawing.Point(3, 196);
+            this.labelCC.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCC.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.labelCC.Location = new System.Drawing.Point(3, 236);
             this.labelCC.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelCC.Name = "labelCC";
-            this.labelCC.Size = new System.Drawing.Size(127, 16);
+            this.labelCC.Size = new System.Drawing.Size(127, 20);
             this.labelCC.TabIndex = 23;
             this.labelCC.Text = "CC";
             this.labelCC.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -264,10 +261,12 @@
             // 
             this.valueIR.AutoSize = true;
             this.valueIR.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.valueIR.Location = new System.Drawing.Point(135, 179);
+            this.valueIR.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.valueIR.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.valueIR.Location = new System.Drawing.Point(135, 215);
             this.valueIR.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.valueIR.Name = "valueIR";
-            this.valueIR.Size = new System.Drawing.Size(127, 16);
+            this.valueIR.Size = new System.Drawing.Size(127, 20);
             this.valueIR.TabIndex = 22;
             this.valueIR.Text = "------";
             this.valueIR.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -276,10 +275,12 @@
             // 
             this.labelIR.AutoSize = true;
             this.labelIR.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelIR.Location = new System.Drawing.Point(3, 179);
+            this.labelIR.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelIR.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.labelIR.Location = new System.Drawing.Point(3, 215);
             this.labelIR.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelIR.Name = "labelIR";
-            this.labelIR.Size = new System.Drawing.Size(127, 16);
+            this.labelIR.Size = new System.Drawing.Size(127, 20);
             this.labelIR.TabIndex = 21;
             this.labelIR.Text = "IR";
             this.labelIR.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -288,10 +289,12 @@
             // 
             this.valueTEMP.AutoSize = true;
             this.valueTEMP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.valueTEMP.Location = new System.Drawing.Point(135, 162);
+            this.valueTEMP.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.valueTEMP.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.valueTEMP.Location = new System.Drawing.Point(135, 194);
             this.valueTEMP.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.valueTEMP.Name = "valueTEMP";
-            this.valueTEMP.Size = new System.Drawing.Size(127, 16);
+            this.valueTEMP.Size = new System.Drawing.Size(127, 20);
             this.valueTEMP.TabIndex = 20;
             this.valueTEMP.Text = "------";
             this.valueTEMP.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -300,10 +303,12 @@
             // 
             this.labelTEMP.AutoSize = true;
             this.labelTEMP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelTEMP.Location = new System.Drawing.Point(3, 162);
+            this.labelTEMP.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTEMP.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.labelTEMP.Location = new System.Drawing.Point(3, 194);
             this.labelTEMP.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelTEMP.Name = "labelTEMP";
-            this.labelTEMP.Size = new System.Drawing.Size(127, 16);
+            this.labelTEMP.Size = new System.Drawing.Size(127, 20);
             this.labelTEMP.TabIndex = 19;
             this.labelTEMP.Text = "TEMP";
             this.labelTEMP.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -312,10 +317,12 @@
             // 
             this.valueMDR.AutoSize = true;
             this.valueMDR.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.valueMDR.Location = new System.Drawing.Point(135, 145);
+            this.valueMDR.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.valueMDR.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.valueMDR.Location = new System.Drawing.Point(135, 173);
             this.valueMDR.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.valueMDR.Name = "valueMDR";
-            this.valueMDR.Size = new System.Drawing.Size(127, 16);
+            this.valueMDR.Size = new System.Drawing.Size(127, 20);
             this.valueMDR.TabIndex = 18;
             this.valueMDR.Text = "------";
             this.valueMDR.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -324,10 +331,12 @@
             // 
             this.labelMDR.AutoSize = true;
             this.labelMDR.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelMDR.Location = new System.Drawing.Point(3, 145);
+            this.labelMDR.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMDR.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.labelMDR.Location = new System.Drawing.Point(3, 173);
             this.labelMDR.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelMDR.Name = "labelMDR";
-            this.labelMDR.Size = new System.Drawing.Size(127, 16);
+            this.labelMDR.Size = new System.Drawing.Size(127, 20);
             this.labelMDR.TabIndex = 17;
             this.labelMDR.Text = "MDR";
             this.labelMDR.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -336,10 +345,12 @@
             // 
             this.valueMAR.AutoSize = true;
             this.valueMAR.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.valueMAR.Location = new System.Drawing.Point(135, 128);
+            this.valueMAR.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.valueMAR.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.valueMAR.Location = new System.Drawing.Point(135, 152);
             this.valueMAR.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.valueMAR.Name = "valueMAR";
-            this.valueMAR.Size = new System.Drawing.Size(127, 16);
+            this.valueMAR.Size = new System.Drawing.Size(127, 20);
             this.valueMAR.TabIndex = 16;
             this.valueMAR.Text = "------";
             this.valueMAR.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -348,10 +359,12 @@
             // 
             this.labelMAR.AutoSize = true;
             this.labelMAR.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelMAR.Location = new System.Drawing.Point(3, 128);
+            this.labelMAR.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMAR.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.labelMAR.Location = new System.Drawing.Point(3, 152);
             this.labelMAR.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelMAR.Name = "labelMAR";
-            this.labelMAR.Size = new System.Drawing.Size(127, 16);
+            this.labelMAR.Size = new System.Drawing.Size(127, 20);
             this.labelMAR.TabIndex = 15;
             this.labelMAR.Text = "MAR";
             this.labelMAR.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -360,10 +373,12 @@
             // 
             this.valuePC.AutoSize = true;
             this.valuePC.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.valuePC.Location = new System.Drawing.Point(135, 111);
+            this.valuePC.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.valuePC.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.valuePC.Location = new System.Drawing.Point(135, 131);
             this.valuePC.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.valuePC.Name = "valuePC";
-            this.valuePC.Size = new System.Drawing.Size(127, 16);
+            this.valuePC.Size = new System.Drawing.Size(127, 20);
             this.valuePC.TabIndex = 14;
             this.valuePC.Text = "------";
             this.valuePC.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -372,10 +387,12 @@
             // 
             this.labelPC.AutoSize = true;
             this.labelPC.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelPC.Location = new System.Drawing.Point(3, 111);
+            this.labelPC.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPC.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.labelPC.Location = new System.Drawing.Point(3, 131);
             this.labelPC.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelPC.Name = "labelPC";
-            this.labelPC.Size = new System.Drawing.Size(127, 16);
+            this.labelPC.Size = new System.Drawing.Size(127, 20);
             this.labelPC.TabIndex = 13;
             this.labelPC.Text = "PC";
             this.labelPC.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -384,10 +401,12 @@
             // 
             this.valueOne.AutoSize = true;
             this.valueOne.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.valueOne.Location = new System.Drawing.Point(135, 94);
+            this.valueOne.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.valueOne.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.valueOne.Location = new System.Drawing.Point(135, 110);
             this.valueOne.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.valueOne.Name = "valueOne";
-            this.valueOne.Size = new System.Drawing.Size(127, 16);
+            this.valueOne.Size = new System.Drawing.Size(127, 20);
             this.valueOne.TabIndex = 12;
             this.valueOne.Text = "------";
             this.valueOne.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -396,10 +415,12 @@
             // 
             this.labelOne.AutoSize = true;
             this.labelOne.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelOne.Location = new System.Drawing.Point(3, 94);
+            this.labelOne.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelOne.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.labelOne.Location = new System.Drawing.Point(3, 110);
             this.labelOne.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelOne.Name = "labelOne";
-            this.labelOne.Size = new System.Drawing.Size(127, 16);
+            this.labelOne.Size = new System.Drawing.Size(127, 20);
             this.labelOne.TabIndex = 11;
             this.labelOne.Text = "One";
             this.labelOne.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -408,10 +429,12 @@
             // 
             this.valueZero.AutoSize = true;
             this.valueZero.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.valueZero.Location = new System.Drawing.Point(135, 77);
+            this.valueZero.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.valueZero.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.valueZero.Location = new System.Drawing.Point(135, 89);
             this.valueZero.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.valueZero.Name = "valueZero";
-            this.valueZero.Size = new System.Drawing.Size(127, 16);
+            this.valueZero.Size = new System.Drawing.Size(127, 20);
             this.valueZero.TabIndex = 10;
             this.valueZero.Text = "------";
             this.valueZero.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -420,10 +443,12 @@
             // 
             this.labelZero.AutoSize = true;
             this.labelZero.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelZero.Location = new System.Drawing.Point(3, 77);
+            this.labelZero.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelZero.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.labelZero.Location = new System.Drawing.Point(3, 89);
             this.labelZero.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelZero.Name = "labelZero";
-            this.labelZero.Size = new System.Drawing.Size(127, 16);
+            this.labelZero.Size = new System.Drawing.Size(127, 20);
             this.labelZero.TabIndex = 9;
             this.labelZero.Text = "Zero";
             this.labelZero.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -432,10 +457,12 @@
             // 
             this.valueAcc.AutoSize = true;
             this.valueAcc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.valueAcc.Location = new System.Drawing.Point(135, 60);
+            this.valueAcc.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.valueAcc.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.valueAcc.Location = new System.Drawing.Point(135, 68);
             this.valueAcc.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.valueAcc.Name = "valueAcc";
-            this.valueAcc.Size = new System.Drawing.Size(127, 16);
+            this.valueAcc.Size = new System.Drawing.Size(127, 20);
             this.valueAcc.TabIndex = 8;
             this.valueAcc.Text = "------";
             this.valueAcc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -444,10 +471,12 @@
             // 
             this.labelAcc.AutoSize = true;
             this.labelAcc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelAcc.Location = new System.Drawing.Point(3, 60);
+            this.labelAcc.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelAcc.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.labelAcc.Location = new System.Drawing.Point(3, 68);
             this.labelAcc.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelAcc.Name = "labelAcc";
-            this.labelAcc.Size = new System.Drawing.Size(127, 16);
+            this.labelAcc.Size = new System.Drawing.Size(127, 20);
             this.labelAcc.TabIndex = 7;
             this.labelAcc.Text = "Acc";
             this.labelAcc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -456,10 +485,12 @@
             // 
             this.valueB.AutoSize = true;
             this.valueB.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.valueB.Location = new System.Drawing.Point(135, 43);
+            this.valueB.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.valueB.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.valueB.Location = new System.Drawing.Point(135, 47);
             this.valueB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.valueB.Name = "valueB";
-            this.valueB.Size = new System.Drawing.Size(127, 16);
+            this.valueB.Size = new System.Drawing.Size(127, 20);
             this.valueB.TabIndex = 6;
             this.valueB.Text = "------";
             this.valueB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -468,10 +499,12 @@
             // 
             this.valueA.AutoSize = true;
             this.valueA.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.valueA.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.valueA.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.valueA.Location = new System.Drawing.Point(135, 26);
             this.valueA.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.valueA.Name = "valueA";
-            this.valueA.Size = new System.Drawing.Size(127, 16);
+            this.valueA.Size = new System.Drawing.Size(127, 20);
             this.valueA.TabIndex = 5;
             this.valueA.Text = "------";
             this.valueA.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -480,10 +513,12 @@
             // 
             this.labelB.AutoSize = true;
             this.labelB.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelB.Location = new System.Drawing.Point(3, 43);
+            this.labelB.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelB.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.labelB.Location = new System.Drawing.Point(3, 47);
             this.labelB.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelB.Name = "labelB";
-            this.labelB.Size = new System.Drawing.Size(127, 16);
+            this.labelB.Size = new System.Drawing.Size(127, 20);
             this.labelB.TabIndex = 4;
             this.labelB.Text = "B";
             this.labelB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -492,7 +527,8 @@
             // 
             this.valueLabel.AutoSize = true;
             this.valueLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.valueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.valueLabel.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.valueLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.valueLabel.Location = new System.Drawing.Point(135, 1);
             this.valueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.valueLabel.Name = "valueLabel";
@@ -505,7 +541,8 @@
             // 
             this.registerLabel.AutoSize = true;
             this.registerLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.registerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.registerLabel.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.registerLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.registerLabel.Location = new System.Drawing.Point(3, 1);
             this.registerLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.registerLabel.Name = "registerLabel";
@@ -518,10 +555,12 @@
             // 
             this.labelA.AutoSize = true;
             this.labelA.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelA.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelA.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelA.Location = new System.Drawing.Point(3, 26);
             this.labelA.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelA.Name = "labelA";
-            this.labelA.Size = new System.Drawing.Size(127, 16);
+            this.labelA.Size = new System.Drawing.Size(127, 20);
             this.labelA.TabIndex = 2;
             this.labelA.Text = "A";
             this.labelA.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -529,46 +568,50 @@
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.ColumnCount = 1;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Controls.Add(this.nextInstLabel, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.label3, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.instructionIndexLabel, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.panel4, 0, 2);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(2, 286);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(2, 284);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(539, 67);
+            this.tableLayoutPanel4.RowCount = 3;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(539, 117);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
             // nextInstLabel
             // 
             this.nextInstLabel.AutoSize = true;
-            this.nextInstLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.nextInstLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.nextInstLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.nextInstLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nextInstLabel.Location = new System.Drawing.Point(2, 33);
+            this.nextInstLabel.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nextInstLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.nextInstLabel.Location = new System.Drawing.Point(2, 40);
             this.nextInstLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.nextInstLabel.Name = "nextInstLabel";
-            this.nextInstLabel.Size = new System.Drawing.Size(535, 34);
+            this.nextInstLabel.Size = new System.Drawing.Size(535, 40);
             this.nextInstLabel.TabIndex = 1;
             this.nextInstLabel.Text = "Next Instruction: ---------";
             this.nextInstLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label3
+            // instructionIndexLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(2, 0);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(535, 33);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Instruction Index - / 0";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.instructionIndexLabel.AutoSize = true;
+            this.instructionIndexLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.instructionIndexLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.instructionIndexLabel.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.instructionIndexLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.instructionIndexLabel.Location = new System.Drawing.Point(2, 0);
+            this.instructionIndexLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.instructionIndexLabel.Name = "instructionIndexLabel";
+            this.instructionIndexLabel.Size = new System.Drawing.Size(535, 40);
+            this.instructionIndexLabel.TabIndex = 0;
+            this.instructionIndexLabel.Text = "Instruction Index - / 0";
+            this.instructionIndexLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toolStrip1
             // 
@@ -596,15 +639,15 @@
             // assembleToolStripMenuItem
             // 
             this.assembleToolStripMenuItem.Name = "assembleToolStripMenuItem";
-            this.assembleToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.assembleToolStripMenuItem.Text = "Assemble Source";
+            this.assembleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.assembleToolStripMenuItem.Text = "Assemble";
             this.assembleToolStripMenuItem.Click += new System.EventHandler(this.assembleToolStripMenuItem_Click);
             // 
             // runAssemblyToolStripMenuItem
             // 
             this.runAssemblyToolStripMenuItem.Name = "runAssemblyToolStripMenuItem";
-            this.runAssemblyToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.runAssemblyToolStripMenuItem.Text = "Run Assembly";
+            this.runAssemblyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.runAssemblyToolStripMenuItem.Text = "Run";
             this.runAssemblyToolStripMenuItem.Click += new System.EventHandler(this.runAssemblyToolStripMenuItem_Click);
             // 
             // openFileDialog1
@@ -618,17 +661,29 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // ResetButton
+            // 
+            this.ResetButton.AutoSize = true;
+            this.ResetButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ResetButton.Location = new System.Drawing.Point(161, 0);
+            this.ResetButton.Margin = new System.Windows.Forms.Padding(4);
+            this.ResetButton.Name = "ResetButton";
+            this.ResetButton.Size = new System.Drawing.Size(79, 33);
+            this.ResetButton.TabIndex = 5;
+            this.ResetButton.Text = "Reset";
+            this.ResetButton.UseVisualStyleBackColor = true;
+            this.ResetButton.Click += new System.EventHandler(this.ResetButton_Click);
+            // 
             // GeminiSimForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(543, 428);
             this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel5);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "GeminiSimForm";
             this.Text = "Gemini Simulator";
-            this.panel5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -648,9 +703,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button RunButton;
+        private System.Windows.Forms.Button StepButton;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.ToolStrip toolStrip1;
@@ -666,7 +720,7 @@
         private System.Windows.Forms.Label registerLabel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label nextInstLabel;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label instructionIndexLabel;
         private System.Windows.Forms.ToolStripMenuItem runAssemblyToolStripMenuItem;
         private System.Windows.Forms.Label labelA;
         private System.Windows.Forms.Label valueCC;
@@ -690,6 +744,7 @@
         private System.Windows.Forms.Label valueB;
         private System.Windows.Forms.Label valueA;
         private System.Windows.Forms.Label labelB;
+        private System.Windows.Forms.Button ResetButton;
     }
 }
 

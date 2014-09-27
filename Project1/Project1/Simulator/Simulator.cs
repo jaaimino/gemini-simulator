@@ -31,11 +31,20 @@ namespace Project1
             {
                 sim = new Simulation(readAllLines(fileName));
                 Simulator.form = form;
-                form.updateViewElements(sim.getNextInstruction(), sim.getRegisterValues());
+                form.updateViewElements(sim.getNextInstruction(), sim.getRegisterValues(), sim.getInstructionCount());
             }
             else
             {
                 MessageBox.Show("Assembly file should have extension " + OUTPUT_FILE_TYPE, "File Error");
+            }
+        }
+
+        public static void reset(GeminiSimForm form)
+        {
+            {
+                sim = new Simulation(sim.getMemory().getInstructions());
+                Simulator.form = form;
+                form.updateViewElements(sim.getNextInstruction(), sim.getRegisterValues(), sim.getInstructionCount());
             }
         }
 
@@ -52,7 +61,9 @@ namespace Project1
                 lines.Add(s);
 		        pos += sizeof(short);
 	        }
+            reader.Close();
             return lines;
+
         }
 
         /*
@@ -61,6 +72,10 @@ namespace Project1
         public static void runSimulation()
         {
             //Should just call step until sim is done
+            while (null != sim && !sim.isDone())
+            {
+                stepSimulation();
+            }
         }
 
         /* 
@@ -71,7 +86,7 @@ namespace Project1
             if (null != sim && ! sim.isDone())
             {
                 sim.step();
-                form.updateViewElements(sim.getNextInstruction(), sim.getRegisterValues());
+                form.updateViewElements(sim.getNextInstruction(), sim.getRegisterValues(), sim.getInstructionCount());
             }
         }
 

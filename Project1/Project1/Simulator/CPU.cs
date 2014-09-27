@@ -18,11 +18,11 @@ namespace Project1
 {
     public class CPU
     {
-        private int[] registers; //[0=A][1=B][2=Acc][3=Zero][4=One][5=PC][6=MAR][7=MDR][8=TEMP][9=IR][10=CC]
+        private short[] registers; //[0=A][1=B][2=Acc][3=Zero][4=One][5=PC][6=MAR][7=MDR][8=TEMP][9=IR][10=CC]
 
         public CPU()
         {
-            registers = new int[11];
+            registers = new short[11];
             registers[0] = 0;
             registers[1] = 0;
             registers[2] = 0;
@@ -36,21 +36,36 @@ namespace Project1
             registers[10] = 0;
         }
 
-        public void cycle()
+        public void cycle(Simulation sim)
         {
+            short instruction = sim.getMemory().getInstructionAtIndex(registers[5]);
+            short opcode = (short)Decoder.decodeCommand(instruction);
+            Boolean immediate = Decoder.decodeImmediateFlag(instruction);
+            short operand = (short)Decoder.decodeOperand(instruction);
+            ALU.execute(sim, opcode, immediate, operand);
             registers[5]++;
         }
 
         public Boolean isDone(int instructionCount)
         {
-            return registers[5] >= instructionCount-1;
+            return registers[5] > instructionCount-1;
         }
 
         //-------------------------------------------------
         // Boring getters and setters below here
         //-------------------------------------------------
 
-        public int[] getRegisterValues()
+        public short getRegisterValue(int index)
+        {
+            return registers[index];
+        }
+
+        public void setRegisterValue(int index, short value)
+        {
+            registers[index] = value;
+        }
+
+        public short[] getRegisterValues()
         {
             return registers;
         }
@@ -60,7 +75,7 @@ namespace Project1
             return registers[5];
         }
 
-        public void setPC(int pc)
+        public void setPC(short pc)
         {
             this.registers[5] = pc;
         }

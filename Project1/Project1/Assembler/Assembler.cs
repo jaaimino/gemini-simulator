@@ -26,8 +26,6 @@ namespace Project1
             //Make sure file has correct extension
             if (Path.GetExtension(fileName).Equals(SOURCE_FILE_TYPE))
             {
-
-
                 //Send parser the contents of the file and get back
                 Parser parser = new Parser(fileName);
                 parser.Parse();
@@ -38,7 +36,7 @@ namespace Project1
             }
             else
             {
-                MessageBox.Show("Assembly file must have extension " + SOURCE_FILE_TYPE, "File Error");
+                MessageBox.Show("File extension must be .s", "Assembler Error");
             }
         }
 
@@ -57,10 +55,11 @@ namespace Project1
                     writer.Write(s);
                 }
                 writer.Close();
+                MessageBox.Show("Source file assembly successful.", "Assembler");
             }
             catch (IOException)
             {
-                Console.WriteLine("Failed to write output file: " + fileName);
+                MessageBox.Show("Unable to write output file [" + fileName + "] .", "Assembler Error");
             }
             //Console.WriteLine("Wrote successfully to " + fileName + "!");
         }

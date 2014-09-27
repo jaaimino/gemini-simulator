@@ -13,10 +13,10 @@ using System.Threading.Tasks;
 
 namespace Project1
 {
-    class Simulation
+    public class Simulation
     {
-        Memory memory;
-        CPU cpu;
+        private Memory memory;
+        private CPU cpu;
 
         public Simulation(List<short> instructions)
         {
@@ -30,7 +30,7 @@ namespace Project1
          */
         public void step()
         {
-            cpu.cycle();
+            cpu.cycle(this);
         }
 
         public Boolean isDone()
@@ -38,14 +38,34 @@ namespace Project1
             return cpu.isDone(memory.getInstructionCount());
         }
 
+        //Minus one for one indexed instruction list
         public short getNextInstruction()
         {
+            if (cpu.getPC() > memory.getInstructionCount()-1)
+            {
+                return -1;
+            }
             return memory.getInstructionAtIndex(cpu.getPC());
         }
 
-        public int[] getRegisterValues()
+        public int getInstructionCount()
+        {
+            return memory.getInstructionCount();
+        }
+
+        public short[] getRegisterValues()
         {
             return cpu.getRegisterValues();
+        }
+
+        public Memory getMemory()
+        {
+            return this.memory;
+        }
+
+        public CPU getCPU()
+        {
+            return this.cpu;
         }
     }
 }

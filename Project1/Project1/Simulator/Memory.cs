@@ -14,10 +14,15 @@ using System.Threading.Tasks;
 
 namespace Project1
 {
-    class Memory
+    public class Memory
     {
         private int[] addresses; //Maybe should be shorts? I dunno
         private List<short> instructions;
+
+        public List<short> getInstructions()
+        {
+            return this.instructions;
+        }
 
         public Memory(List<short> instructions)
         {
@@ -25,16 +30,18 @@ namespace Project1
             this.instructions = instructions;
         }
 
-        void setMemoryLocation(short value, short address)
+        public void setMemoryLocation(int address, int value)
         {
             addresses[address] = value;
         }
 
-        int getMemoryLocation(int address)
+        public int getMemoryLocation(int address)
         {
             return addresses[address];
         }
 
+        //Using 1 indexed list instead of zero indexed
+        //Makes life easier in some respects
         public short getInstructionAtIndex(int index)
         {
             return instructions.ElementAt(index);
