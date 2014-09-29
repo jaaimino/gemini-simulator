@@ -31,8 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GeminiSimForm));
             this.panel4 = new System.Windows.Forms.Panel();
-            this.RunButton = new System.Windows.Forms.Button();
+            this.ResetButton = new System.Windows.Forms.Button();
             this.StepButton = new System.Windows.Forms.Button();
+            this.RunButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -71,7 +72,6 @@
             this.runAssemblyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.ResetButton = new System.Windows.Forms.Button();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -95,18 +95,18 @@
             this.panel4.Size = new System.Drawing.Size(535, 33);
             this.panel4.TabIndex = 5;
             // 
-            // RunButton
+            // ResetButton
             // 
-            this.RunButton.AutoSize = true;
-            this.RunButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.RunButton.Location = new System.Drawing.Point(0, 0);
-            this.RunButton.Margin = new System.Windows.Forms.Padding(4);
-            this.RunButton.Name = "RunButton";
-            this.RunButton.Size = new System.Drawing.Size(82, 33);
-            this.RunButton.TabIndex = 4;
-            this.RunButton.Text = "Run";
-            this.RunButton.UseVisualStyleBackColor = true;
-            this.RunButton.Click += new System.EventHandler(this.RunButton_OnClick);
+            this.ResetButton.AutoSize = true;
+            this.ResetButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.ResetButton.Location = new System.Drawing.Point(161, 0);
+            this.ResetButton.Margin = new System.Windows.Forms.Padding(4);
+            this.ResetButton.Name = "ResetButton";
+            this.ResetButton.Size = new System.Drawing.Size(79, 33);
+            this.ResetButton.TabIndex = 5;
+            this.ResetButton.Text = "Reset";
+            this.ResetButton.UseVisualStyleBackColor = true;
+            this.ResetButton.Click += new System.EventHandler(this.ResetButton_Click);
             // 
             // StepButton
             // 
@@ -120,6 +120,19 @@
             this.StepButton.Text = "Step";
             this.StepButton.UseVisualStyleBackColor = true;
             this.StepButton.Click += new System.EventHandler(this.stepButton_OnClick);
+            // 
+            // RunButton
+            // 
+            this.RunButton.AutoSize = true;
+            this.RunButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.RunButton.Location = new System.Drawing.Point(0, 0);
+            this.RunButton.Margin = new System.Windows.Forms.Padding(4);
+            this.RunButton.Name = "RunButton";
+            this.RunButton.Size = new System.Drawing.Size(82, 33);
+            this.RunButton.TabIndex = 4;
+            this.RunButton.Text = "Run";
+            this.RunButton.UseVisualStyleBackColor = true;
+            this.RunButton.Click += new System.EventHandler(this.RunButton_OnClick);
             // 
             // panel3
             // 
@@ -161,7 +174,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 280F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 278F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(539, 278);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
@@ -534,7 +547,7 @@
             this.valueLabel.Name = "valueLabel";
             this.valueLabel.Size = new System.Drawing.Size(127, 24);
             this.valueLabel.TabIndex = 1;
-            this.valueLabel.Text = "Value";
+            this.valueLabel.Text = "Value (Hex)";
             this.valueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // registerLabel
@@ -595,7 +608,7 @@
             this.nextInstLabel.Name = "nextInstLabel";
             this.nextInstLabel.Size = new System.Drawing.Size(535, 40);
             this.nextInstLabel.TabIndex = 1;
-            this.nextInstLabel.Text = "Next Instruction: ---------";
+            this.nextInstLabel.Text = "Instruction (Binary): ---------";
             this.nextInstLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // instructionIndexLabel
@@ -610,7 +623,7 @@
             this.instructionIndexLabel.Name = "instructionIndexLabel";
             this.instructionIndexLabel.Size = new System.Drawing.Size(535, 40);
             this.instructionIndexLabel.TabIndex = 0;
-            this.instructionIndexLabel.Text = "Instruction Index - / 0";
+            this.instructionIndexLabel.Text = "Line Number - / 0";
             this.instructionIndexLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toolStrip1
@@ -639,14 +652,14 @@
             // assembleToolStripMenuItem
             // 
             this.assembleToolStripMenuItem.Name = "assembleToolStripMenuItem";
-            this.assembleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.assembleToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.assembleToolStripMenuItem.Text = "Assemble";
             this.assembleToolStripMenuItem.Click += new System.EventHandler(this.assembleToolStripMenuItem_Click);
             // 
             // runAssemblyToolStripMenuItem
             // 
             this.runAssemblyToolStripMenuItem.Name = "runAssemblyToolStripMenuItem";
-            this.runAssemblyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.runAssemblyToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.runAssemblyToolStripMenuItem.Text = "Run";
             this.runAssemblyToolStripMenuItem.Click += new System.EventHandler(this.runAssemblyToolStripMenuItem_Click);
             // 
@@ -660,19 +673,6 @@
             this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // ResetButton
-            // 
-            this.ResetButton.AutoSize = true;
-            this.ResetButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ResetButton.Location = new System.Drawing.Point(161, 0);
-            this.ResetButton.Margin = new System.Windows.Forms.Padding(4);
-            this.ResetButton.Name = "ResetButton";
-            this.ResetButton.Size = new System.Drawing.Size(79, 33);
-            this.ResetButton.TabIndex = 5;
-            this.ResetButton.Text = "Reset";
-            this.ResetButton.UseVisualStyleBackColor = true;
-            this.ResetButton.Click += new System.EventHandler(this.ResetButton_Click);
             // 
             // GeminiSimForm
             // 

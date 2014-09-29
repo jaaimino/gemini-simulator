@@ -1,4 +1,5 @@
-﻿/**
+﻿
+/**
  * 
  * Author: Jacob Aimino
  * 
@@ -71,38 +72,38 @@ namespace Project1
             //Should update view after this by getting data from Simulation class
         }
 
-        public void updateViewElements(short nextInstruction, short[] registers, int totalInstructions)
+        public void updateViewElements(short nextInstructionPreview, short[] registers, int totalInstructions, Boolean isDone)
         {
             //Base for register value view
-            int BASE = 2; //Only supports 2, 8, 10, 16
+            int BASE = 16; //Only supports 2, 8, 10, 16
             String prefix = "0x";
-            this.valueA.Text = prefix + Convert.ToString(registers[0], BASE);
-            this.valueB.Text = prefix + Convert.ToString(registers[1], BASE);
-            this.valueAcc.Text = prefix + Convert.ToString(registers[2], BASE);
-            this.valueZero.Text = prefix + Convert.ToString(registers[3], BASE);
-            this.valueOne.Text = prefix + Convert.ToString(registers[4], BASE);
-            this.valuePC.Text = prefix + Convert.ToString(registers[5], BASE);
-            this.valueMAR.Text = prefix + Convert.ToString(registers[6], BASE);
-            this.valueMDR.Text = prefix + Convert.ToString(registers[7], BASE);
-            this.valueTEMP.Text = prefix + Convert.ToString(registers[8], BASE);
-            this.valueIR.Text = prefix + Convert.ToString(registers[9], BASE);
-            this.valueCC.Text = prefix + Convert.ToString(registers[10], BASE);
+            this.valueA.Text = prefix + (Convert.ToString(registers[0], BASE).PadLeft(8, '0'));
+            this.valueB.Text = prefix + (Convert.ToString(registers[1], BASE).PadLeft(8, '0'));
+            this.valueAcc.Text = prefix + (Convert.ToString(registers[2], BASE).PadLeft(8, '0'));
+            this.valueZero.Text = prefix + (Convert.ToString(registers[3], BASE).PadLeft(8, '0'));
+            this.valueOne.Text = prefix + (Convert.ToString(registers[4], BASE).PadLeft(8, '0'));
+            this.valuePC.Text = prefix + (Convert.ToString(registers[5], BASE).PadLeft(8, '0'));
+            this.valueMAR.Text = prefix + (Convert.ToString(registers[6], BASE).PadLeft(8, '0'));
+            this.valueMDR.Text = prefix + (Convert.ToString(registers[7], BASE).PadLeft(8, '0'));
+            this.valueTEMP.Text = prefix + (Convert.ToString(registers[8], BASE).PadLeft(8, '0'));
+            this.valueIR.Text = prefix + (Convert.ToString(registers[9], BASE).PadLeft(8, '0'));
+            this.valueCC.Text = prefix + (Convert.ToString(registers[10], BASE).PadLeft(8, '0'));
 
             //Show current instruction index
             updateInstructionIndex(registers[5], totalInstructions);
 
-            //Show next instruction code
-            updateNextInstruction(nextInstruction);
+            //Show current instruction code
+            updateNextInstruction(nextInstructionPreview, isDone);
         }
 
-        private void updateInstructionIndex(int instruction, int totalInstructions)
+        private void updateInstructionIndex(int linenumber, int totalInstructions)
         {
-            this.instructionIndexLabel.Text = "Instruction Index: " + instruction + " / " + totalInstructions;
+            this.instructionIndexLabel.Text = "Line Number: " + ((linenumber + 1 > totalInstructions) ? " --- / " + totalInstructions : (linenumber + 1) + " / " + totalInstructions);
         }
 
-        private void updateNextInstruction(short instruction)
+        private void updateNextInstruction(short nextInstructionPreview, Boolean isDone)
         {
-            this.nextInstLabel.Text = "Next Instruction: " + ((instruction < 0) ? "---" : "0x"+Convert.ToString(instruction, 2));
+            this.nextInstLabel.Text = "Instruction: " + (isDone ? "---" : "0x" + Convert.ToString(nextInstructionPreview, 2).PadLeft(16, '0'));
         }
 
         private void ResetButton_Click(object sender, EventArgs e)

@@ -1,5 +1,3 @@
-! Ignore this comment
 main:
-	lda #$10
-	lda #$10
-	ba main
+  lda $0  Hey- I forgot to put !
+  add #@3

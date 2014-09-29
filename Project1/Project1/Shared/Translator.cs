@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Project1
 {
-    static class Encoder
+    static class Translator
     {
         /**
          * 
@@ -21,9 +21,9 @@ namespace Project1
         public static short Encode(String command, String arg, Boolean immediate)
         {
             short encodedInstruction = 0;
-            encodedInstruction = Encoder.encodeCommand(encodedInstruction, command);
-            encodedInstruction = Encoder.encodeImmediateFlag(encodedInstruction, immediate);
-            encodedInstruction = Encoder.encodeOperand(encodedInstruction, arg);
+            encodedInstruction = Translator.encodeCommand(encodedInstruction, command.ToUpper());
+            encodedInstruction = Translator.encodeImmediateFlag(encodedInstruction, immediate);
+            encodedInstruction = Translator.encodeOperand(encodedInstruction, arg);
             //Console.WriteLine(Convert.ToString(encodedInstruction, 2));
             return encodedInstruction;
         }
@@ -40,7 +40,7 @@ namespace Project1
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
-                Console.WriteLine("Invalid command " + command + " found.");
+                //Console.WriteLine("Invalid command " + command + " found.");
             }
             return (short)(num << 9);
         }
@@ -72,6 +72,26 @@ namespace Project1
             catch (OverflowException) { }
             currentEncoding = (short)(currentEncoding | num);
             return currentEncoding;
+        }
+
+        public static short decodeCommand(short instruction)
+        {
+            short command = (short)(instruction >> 9);
+            //Console.WriteLine(command);
+            return command;
+        }
+
+        public static Boolean decodeImmediateFlag(short instruction)
+        {
+            short flag = ((short)(1 << 8));
+            return ((instruction & flag) == flag); //Probably isn't right. Should check this
+        }
+
+        public static short decodeOperand(short instruction)
+        {
+            int comp = (short)255;
+            short operand = (short)(instruction & comp);
+            return operand;
         }
     }
 }

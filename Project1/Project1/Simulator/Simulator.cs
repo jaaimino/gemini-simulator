@@ -2,7 +2,7 @@
  * 
  * Author: Jacob Aimino
  * 
- * Desc: Controller for Simulation
+ * Desc: Controller for cpuulation
  * 
  **/
 
@@ -19,19 +19,21 @@ namespace Project1
     static class Simulator
     {
         public const String OUTPUT_FILE_TYPE = ".out";
-        private static Simulation sim;
         private static GeminiSimForm form;
+        private static Memory memory;
+        private static CPU cpu;
 
         /*
-         * Start a new simulation
+         * Start a new cpuulation
          */
         public static void startSimulation(String fileName, GeminiSimForm form)
         {
             if (IsValidFile(fileName))
             {
-                sim = new Simulation(readAllLines(fileName));
                 Simulator.form = form;
-                form.updateViewElements(sim.getNextInstruction(), sim.getRegisterValues(), sim.getInstructionCount());
+                memory = new Memory(readAllLines(fileName));
+                cpu = new CPU(memory);
+                form.updateViewElements(nextInstructionPreview(), cpu.getRegisterValues(), memory.getInstructionCount(), cpu.isDone());
             }
             else
             {
@@ -41,11 +43,10 @@ namespace Project1
 
         public static void reset(GeminiSimForm form)
         {
-            {
-                sim = new Simulation(sim.getMemory().getInstructions());
-                Simulator.form = form;
-                form.updateViewElements(sim.getNextInstruction(), sim.getRegisterValues(), sim.getInstructionCount());
-            }
+            memory = new Memory(memory.getInstructions());
+            cpu = new CPU(memory);
+            Simulator.form = form;
+            form.updateViewElements(nextInstructionPreview(), cpu.getRegisterValues(), memory.getInstructionCount(), cpu.isDone());
         }
 
         private static List<short> readAllLines(String fileName)
@@ -67,12 +68,12 @@ namespace Project1
         }
 
         /*
-         * Run simulation through to the end
+         * Run cpuulation through to the end
          */
         public static void runSimulation()
         {
-            //Should just call step until sim is done
-            while (null != sim && !sim.isDone())
+            //Should just call step until cpu is done
+            while (null != cpu && null != memory && !cpu.isDone())
             {
                 stepSimulation();
             }
@@ -83,10 +84,29 @@ namespace Project1
          */
         public static void stepSimulation()
         {
-            if (null != sim && ! sim.isDone())
+            if (null != cpu && null != memory && !cpu.isDone())
             {
-                sim.step();
-                form.updateViewElements(sim.getNextInstruction(), sim.getRegisterValues(), sim.getInstructionCount());
+                try
+                {
+                    cpu.Cycle();
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    MessageBox.Show("Segmentation fault on line " + cpu.getPC()+1, "RunTime Exception");
+                }
+                form.updateViewElements(nextInstructionPreview(), cpu.getRegisterValues(), memory.getInstructionCount(), cpu.isDone());
+            }
+        }
+
+        private static short nextInstructionPreview()
+        {
+            if ((cpu.getPC()) < memory.getInstructionCount())
+            {
+                return memory.getInstructionAtIndex(cpu.getPC());
+            }
+            else
+            {
+                return -1;
             }
         }
 

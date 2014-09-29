@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembler\Assembler.cs" />
-    <Compile Include="Assembler\Encoder.cs" />
+    <Compile Include="Shared\Translator.cs" />
     <Compile Include="Assembler\Parser.cs" />
     <Compile Include="Forms\GeminiSimForm.cs">
       <SubType>Form</SubType>
@@ -60,11 +60,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Simulator\ALU.cs" />
     <Compile Include="Simulator\CPU.cs" />
-    <Compile Include="Simulator\Decoder.cs" />
     <Compile Include="Simulator\Memory.cs" />
-    <Compile Include="Simulator\Simulation.cs" />
     <Compile Include="Simulator\Simulator.cs" />
-    <Compile Include="Assembler\OpcodeMapper.cs" />
+    <Compile Include="Shared\OpcodeMapper.cs" />
     <EmbeddedResource Include="Forms\GeminiSimForm.resx">
       <DependentUpon>GeminiSimForm.cs</DependentUpon>
     </EmbeddedResource>

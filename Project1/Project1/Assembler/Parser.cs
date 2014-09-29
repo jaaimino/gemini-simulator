@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Project1
 {
@@ -58,7 +59,16 @@ namespace Project1
                     filteredList.Add(line);
                 }
             }
-            this.instructions = filteredList;
+            instructions = filteredList;
+        }
+
+        /*
+         * Finds everything after and including comment character \s*(?P<test>[!].*)
+         */
+        private static String StripComments(String line)
+        {
+            line = Regex.Replace(line, @"\s*!.*", "");
+            return line;
         }
 
         /**
@@ -78,8 +88,7 @@ namespace Project1
                 if (match.Success)
                 {
                     String label = match.Groups["label"].Value;
-                    //Console.WriteLine("Found label " + label +" on line " + i+1);
-                    labelMap.Add(label, i+1);
+                    labelMap.Add(label, i);
                 }
                 else
                 {
@@ -98,10 +107,10 @@ namespace Project1
             for (int i = 0; i < instructions.Count; i++)
             {
                 String line = instructions.ElementAt(i);
-                //Console.WriteLine(line);
-                if (ParseLine(line))
+                if (! ParseLine(line))
                 {
-                    Console.WriteLine(i + " " + line);
+                    MessageBox.Show("Invalid instruction on line " + (i + 1) + ". Skipping..", "Assembler Error");
+                    //Console.WriteLine(i + " " + line);
                 }
             }
         }
@@ -120,53 +129,45 @@ namespace Project1
             {
                 String command = match.Groups["command"].Value;
                 //Console.WriteLine("Found command with no args [" + command + "]");
-                encodedInstructions.Add(Encoder.Encode(command, "", false)); //Do call to encode here
+                encodedInstructions.Add(Translator.Encode(command, "", false)); //Do call to encode here
                 return true;
             }
 
             //Is it a command with an immediate argument?
-            match = new Regex(@"^\s*(?<command>\S{2,3})\s*[#][$](?<arg>\d*)\s*$").Match(line);
+            match = new Regex(@"^\s*(?<command>\S{2,3})\s+[#][$](?<arg>\d*)\s*$").Match(line);
             if (match.Success)
             {
                 String command = match.Groups["command"].Value;
                 String immediate = match.Groups["arg"].Value;
                 //Console.WriteLine("Found command with immediate [" + command + "] [" + immediate + "]"); 
-                encodedInstructions.Add(Encoder.Encode(command, immediate, true)); //Do call to encode here
+                encodedInstructions.Add(Translator.Encode(command, immediate, true)); //Do call to encode here
                 return true;
             }
 
             //Is it a command with a memory argument?
-            match = new Regex(@"^\s*(?<command>\S{2,3})\s*[$](?<arg>\d*)\s*$").Match(line);
+            match = new Regex(@"^\s*(?<command>\S{2,3})\s+[$](?<arg>\d*)\s*$").Match(line);
             if (match.Success)
             {
                 String command = match.Groups["command"].Value;
                 String arg = match.Groups["arg"].Value;
                 //Console.WriteLine("Found command with memory [" + command + "] [" + arg + "]");
                 //Do call to encode here
-                encodedInstructions.Add(Encoder.Encode(command, arg, false));
+                encodedInstructions.Add(Translator.Encode(command, arg, false));
                 return true;
             }
 
             //Is it a command in branch command format?
-            match = new Regex(@"^\s*(?<command>\S{2,3})\s*(?<label>[A-Za-z0-9]+)$").Match(line);
+            match = new Regex(@"^\s*(?<command>\S{2,3})\s+(?<label>[A-Za-z0-9]+)$").Match(line);
             if (match.Success)
             {
                 String command = match.Groups["command"].Value;
                 String label = match.Groups["label"].Value;
-                //Console.WriteLine("Found command with branch [" + command + "] " + " [" + label + "] Associated line number: " + labelMap[label]);
-                encodedInstructions.Add(Encoder.Encode(command, labelMap[label]+"", false)); //Do call to encode here
+                //Console.WriteLine("Found command with branch [" + command + "] " + " [" + label + "]");
+                encodedInstructions.Add(Translator.Encode(command, labelMap[label]+"", false)); //Do call to encode here
                 return true;
             }
-            Console.WriteLine("Invalid line"); //Should probably throw an exception if this happens
+            //Console.WriteLine("Invalid line"); //Should probably throw an exception if this happens
             return false;
-        }
-
-        /*
-         * Finds everything after and including comment character \s*(?P<test>[!].*)
-         */
-        private static String StripComments(String line)
-        {
-            return Regex.Replace(line, @"\s*[!].*", "");
         }
 
         public List<short> GetEncodedInstructions()

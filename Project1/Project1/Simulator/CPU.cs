@@ -6,6 +6,20 @@
  * 
  * Array Indicies for registers is [0=A][1=B][2=Acc][3=Zero][4=One][5=PC]
  * 
+ *- A:  ALU input, target of ACC, TEMP, MAR, MDR, and PC
+  - B:  ALU input, target of ZERO or ONE
+  - ACC:  ALU output
+
+  - ZERO:constant zero, used for LDA instruction
+  - ONE:  constant one, used to increment PC and MAR
+  - PC: program counter
+  - MAR:  memory address register
+  - MDR:  memory data register
+  - TEMP:temporary ACC storage while updating PC and MAR
+  - IR: instruction register, the source of the starting
+      address for each machine instruction's microprogram
+  - CC: Condition Code Register
+ * 
  **/
 
 using System;
@@ -19,41 +33,63 @@ namespace Project1
     public class CPU
     {
         private short[] registers; //[0=A][1=B][2=Acc][3=Zero][4=One][5=PC][6=MAR][7=MDR][8=TEMP][9=IR][10=CC]
+        private Memory memory;
 
-        public CPU()
+        public CPU(Memory memory)
         {
+            this.memory = memory;
             registers = new short[11];
-            registers[0] = 0;
-            registers[1] = 0;
-            registers[2] = 0;
-            registers[3] = 0; //Should stay at 0
-            registers[4] = 1; //Should stay at 1
-            registers[5] = 0; //PC here
-            registers[6] = 0;
-            registers[7] = 0;
-            registers[8] = 0;
-            registers[9] = 0;
-            registers[10] = 0;
+            registers[0] = 0; //A
+            registers[1] = 0; //B
+            registers[2] = 0; //Acc
+            registers[3] = 0; //ZERO
+            registers[4] = 1; //ONE
+            registers[5] = 0; //PC
+            registers[6] = 0; //MAR
+            registers[7] = 0; //MDR
+            registers[8] = 0; //TEMP
+            registers[9] = 0; //IR (Get first instruction ready to process)
+            registers[10] = 0; //CC
         }
 
-        public void cycle(Simulation sim)
+        public void Cycle()
         {
-            short instruction = sim.getMemory().getInstructionAtIndex(registers[5]);
-            short opcode = (short)Decoder.decodeCommand(instruction);
-            Boolean immediate = Decoder.decodeImmediateFlag(instruction);
-            short operand = (short)Decoder.decodeOperand(instruction);
-            ALU.execute(sim, opcode, immediate, operand);
+            FetchInstruction();
+            short instruction = registers[9];
+
+            //Break apart short value to parts
+            short opcode = (short)Translator.decodeCommand(instruction);
+            Boolean immediate = Translator.decodeImmediateFlag(instruction);
+            short operand = (short)Translator.decodeOperand(instruction);
+
+            //Add one to PC
             registers[5]++;
+
+            //Carry out instruction
+            ALU.execute(this, opcode, immediate, operand);
         }
 
-        public Boolean isDone(int instructionCount)
+        /**
+         * Fetch the next instruction to be done based on PC
+         * and memory input
+         */
+        public void FetchInstruction()
         {
-            return registers[5] > instructionCount-1;
+            registers[9] = memory.getInstructionAtIndex(getPC());
+        }
+
+        public Boolean isDone()
+        {
+            return registers[5] > memory.getInstructionCount()-1;
         }
 
         //-------------------------------------------------
         // Boring getters and setters below here
         //-------------------------------------------------
+        public Memory getMemory()
+        {
+            return this.memory;
+        }
 
         public short getRegisterValue(int index)
         {
