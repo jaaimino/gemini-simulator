@@ -67,7 +67,7 @@ namespace Project1
                     NOP();
                     break;
                 case 15:
-                    HLT();
+                    HLT(cpu);
                     break;
             }
         }
@@ -278,9 +278,9 @@ namespace Project1
         /*
          * - HLT           Quit the program (not needed if the last line of the program is the end)
          */
-        private static void HLT()
+        private static void HLT(CPU cpu)
         {
-
+            cpu.setPC((short)(cpu.getMemory().getInstructionCount()+1));
         }
 
     }

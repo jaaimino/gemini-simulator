@@ -24,7 +24,7 @@ namespace Project1
             encodedInstruction = Translator.encodeCommand(encodedInstruction, command.ToUpper());
             encodedInstruction = Translator.encodeImmediateFlag(encodedInstruction, immediate);
             encodedInstruction = Translator.encodeOperand(encodedInstruction, arg);
-            Console.WriteLine(Convert.ToString(encodedInstruction, 2).PadLeft(16, '0'));
+            //Console.WriteLine(Convert.ToString(encodedInstruction, 2).PadLeft(16, '0'));
             return encodedInstruction;
         }
 
@@ -68,7 +68,7 @@ namespace Project1
         public static short decodeCommand(short instruction)
         {
             short command = (short)(instruction >> OPCODE_OFFSET);
-            Console.Write(OpcodeMapper.ShortToCode(command));
+            //Console.Write(OpcodeMapper.ShortToCode(command));
             return command;
         }
 
@@ -76,14 +76,14 @@ namespace Project1
         {
             short flag = ((short)(1 << IMMEDIATE_FLAG_OFFSET));
             Boolean hasFlag = ((instruction & flag) == flag); //Probably isn't right. Should check this
-            Console.Write(" " + hasFlag);
+            //Console.Write(" " + hasFlag);
             return hasFlag;
         }
 
         public static short decodeOperand(short instruction)
         {
             short operand = (short)LowOrderBits(instruction, 10);
-            Console.WriteLine(" " + operand);
+            //Console.WriteLine(" " + operand);
             return operand;
         }
 
