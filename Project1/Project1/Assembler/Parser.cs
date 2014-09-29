@@ -73,13 +73,12 @@ namespace Project1
 
         /**
          * Go through each line adding any labels found to label map
-         * Should add one to label line number to make sure PC
-         * gets to the right location
          */
         private void BuildLabelMap()
         {
             Match match;
             List<String> filteredList = new List<String>();
+            int offset = 0;
             for (int i = 0; i < instructions.Count; i++)
             {
                 String line = instructions.ElementAt(i);
@@ -88,7 +87,9 @@ namespace Project1
                 if (match.Success)
                 {
                     String label = match.Groups["label"].Value;
-                    labelMap.Add(label, i);
+                    labelMap.Add(label, i-offset);
+                    //Console.WriteLine("Label " + label + " is going to jump to line " + (i - offset) + " because offset is " + offset);
+                    offset++;
                 }
                 else
                 {

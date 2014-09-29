@@ -5,7 +5,6 @@ main:
   sta $0        ! i is in Stack[0]
   lda #$10    
   sta $1        ! constant 10 pushed to stack (Stack[1])
-
 check:
   lda $1
   sub $0
@@ -14,7 +13,6 @@ luup:
   lda $0
   add #$1       ! i++
   sta $0
-
   lda $2        ! x
   add #$2       ! x += 2;
   and $0        ! x = x & i;
