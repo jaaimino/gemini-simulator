@@ -77,7 +77,7 @@ namespace Project1
         public static short decodeCommand(short instruction)
         {
             short command = (short)(instruction >> 9);
-            //Console.Write(OpcodeMapper.ShortToCode(command));
+            Console.Write(OpcodeMapper.ShortToCode(command));
             return command;
         }
 
@@ -85,7 +85,7 @@ namespace Project1
         {
             short flag = ((short)(1 << 8));
             Boolean hasFlag = ((instruction & flag) == flag); //Probably isn't right. Should check this
-            //Console.Write(" " + hasFlag);
+            Console.Write(" " + hasFlag);
             return hasFlag;
         }
 
@@ -93,7 +93,7 @@ namespace Project1
         {
             int comp = (short)255;
             short operand = (short)(instruction & comp);
-            //Console.WriteLine(" " + operand);
+            Console.WriteLine(" " + operand);
             return operand;
         }
     }
