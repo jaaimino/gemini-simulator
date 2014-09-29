@@ -15,22 +15,19 @@ namespace Project1
 {
     static class Translator
     {
-        /**
-         * 
-         */
+        private const int OPCODE_OFFSET = 11;
+        private const int IMMEDIATE_FLAG_OFFSET = 10;
+
         public static short Encode(String command, String arg, Boolean immediate)
         {
             short encodedInstruction = 0;
             encodedInstruction = Translator.encodeCommand(encodedInstruction, command.ToUpper());
             encodedInstruction = Translator.encodeImmediateFlag(encodedInstruction, immediate);
             encodedInstruction = Translator.encodeOperand(encodedInstruction, arg);
-            //Console.WriteLine(Convert.ToString(encodedInstruction, 2));
+            Console.WriteLine(Convert.ToString(encodedInstruction, 2).PadLeft(16, '0'));
             return encodedInstruction;
         }
 
-        /**
-         * 
-         */
         private static short encodeCommand(short currentEncoding, String command)
         {
             short num = 0;
@@ -42,15 +39,12 @@ namespace Project1
             {
                 //Console.WriteLine("Invalid command " + command + " found.");
             }
-            return (short)(num << 9);
+            return (short)(num << OPCODE_OFFSET);
         }
 
-        /**
-         * 
-         */
         private static short encodeImmediateFlag(short currentEncoding, Boolean immediate)
         {
-            short flag = ((short)(1 << 8));
+            short flag = ((short)(1 << IMMEDIATE_FLAG_OFFSET));
             if (immediate)
             {
                 currentEncoding = (short)(currentEncoding | flag);
@@ -58,9 +52,6 @@ namespace Project1
             return currentEncoding;
         }
 
-        /**
-         * 
-         */
         private static short encodeOperand(short currentEncoding, String operand)
         {
             short num = 0;
@@ -76,14 +67,14 @@ namespace Project1
 
         public static short decodeCommand(short instruction)
         {
-            short command = (short)(instruction >> 9);
+            short command = (short)(instruction >> OPCODE_OFFSET);
             Console.Write(OpcodeMapper.ShortToCode(command));
             return command;
         }
 
         public static Boolean decodeImmediateFlag(short instruction)
         {
-            short flag = ((short)(1 << 8));
+            short flag = ((short)(1 << IMMEDIATE_FLAG_OFFSET));
             Boolean hasFlag = ((instruction & flag) == flag); //Probably isn't right. Should check this
             Console.Write(" " + hasFlag);
             return hasFlag;
@@ -91,10 +82,16 @@ namespace Project1
 
         public static short decodeOperand(short instruction)
         {
-            int comp = (short)255;
-            short operand = (short)(instruction & comp);
+            short operand = (short)LowOrderBits(instruction, 10);
             Console.WriteLine(" " + operand);
             return operand;
+        }
+
+        //Thanks stackoverflow
+        public static int LowOrderBits(int value, int bits)
+        {
+            if (bits < 0 || bits > 32) throw new ArgumentOutOfRangeException("bits");
+            return (int)(((uint)value) & (0xFFFFFFFF >> (32 - bits)));
         }
     }
 }

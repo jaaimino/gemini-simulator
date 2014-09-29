@@ -108,7 +108,7 @@ namespace Project1
 
         private void ResetButton_Click(object sender, EventArgs e)
         {
-            Simulator.reset(this);
+            Simulator.resetSimulation(this);
         }
     }
 }

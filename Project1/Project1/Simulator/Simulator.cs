@@ -41,7 +41,42 @@ namespace Project1
             }
         }
 
-        public static void reset(GeminiSimForm form)
+        /* 
+         * Take one step in simulation
+         */
+        public static Boolean stepSimulation()
+        {
+            if (null != cpu && null != memory && !cpu.isDone())
+            {
+                try
+                {
+                    cpu.Cycle();
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    MessageBox.Show("Segmentation fault on line " + cpu.getPC() + ". Resetting simulation.", "RunTime Exception");
+                    resetSimulation(Simulator.form);
+                    return false;
+                }
+            }
+            form.updateViewElements(nextInstructionPreview(), cpu.getRegisterValues(), memory.getInstructionCount(), cpu.isDone());
+            return true;
+        }
+
+        /*
+         * Run cpuulation through to the end
+         */
+        public static void runSimulation()
+        {
+            //Should just call step until cpu is done
+            while (null != cpu && null != memory && !cpu.isDone())
+            {
+                if (!stepSimulation())
+                    break;
+            }
+        }
+
+        public static void resetSimulation(GeminiSimForm form)
         {
             if (null != memory && null != cpu)
             {
@@ -56,49 +91,18 @@ namespace Project1
         {
             List<short> lines = new List<short>();
             BinaryReader reader = new BinaryReader(File.Open(fileName, FileMode.Open));
-	        int pos = 0;
+            int pos = 0;
             short length = (short)reader.BaseStream.Length;
-	        while (pos < length)
-	        {
+            while (pos < length)
+            {
                 short s = (short)reader.ReadInt16();
                 //Console.WriteLine(Convert.ToString(s, 2));
                 lines.Add(s);
-		        pos += sizeof(short);
-	        }
+                pos += sizeof(short);
+            }
             reader.Close();
             return lines;
 
-        }
-
-        /*
-         * Run cpuulation through to the end
-         */
-        public static void runSimulation()
-        {
-            //Should just call step until cpu is done
-            while (null != cpu && null != memory && !cpu.isDone())
-            {
-                stepSimulation();
-            }
-        }
-
-        /* 
-         * Take one step in simulation
-         */
-        public static void stepSimulation()
-        {
-            if (null != cpu && null != memory && !cpu.isDone())
-            {
-                try
-                {
-                    cpu.Cycle();
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    MessageBox.Show("Segmentation fault on line " + cpu.getPC()+1, "RunTime Exception");
-                }
-                form.updateViewElements(nextInstructionPreview(), cpu.getRegisterValues(), memory.getInstructionCount(), cpu.isDone());
-            }
         }
 
         private static short nextInstructionPreview()
