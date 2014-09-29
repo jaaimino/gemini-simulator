@@ -77,20 +77,23 @@ namespace Project1
         public static short decodeCommand(short instruction)
         {
             short command = (short)(instruction >> 9);
-            //Console.WriteLine(command);
+            //Console.Write(OpcodeMapper.ShortToCode(command));
             return command;
         }
 
         public static Boolean decodeImmediateFlag(short instruction)
         {
             short flag = ((short)(1 << 8));
-            return ((instruction & flag) == flag); //Probably isn't right. Should check this
+            Boolean hasFlag = ((instruction & flag) == flag); //Probably isn't right. Should check this
+            //Console.Write(" " + hasFlag);
+            return hasFlag;
         }
 
         public static short decodeOperand(short instruction)
         {
             int comp = (short)255;
             short operand = (short)(instruction & comp);
+            //Console.WriteLine(" " + operand);
             return operand;
         }
     }

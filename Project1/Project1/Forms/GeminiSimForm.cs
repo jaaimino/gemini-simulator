@@ -75,7 +75,7 @@ namespace Project1
         public void updateViewElements(short nextInstructionPreview, short[] registers, int totalInstructions, Boolean isDone)
         {
             //Base for register value view
-            int BASE = 16; //Only supports 2, 8, 10, 16
+            int BASE = 10; //Only supports 2, 8, 10, 16
             String prefix = "0x";
             this.valueA.Text = prefix + (Convert.ToString(registers[0], BASE).PadLeft(8, '0'));
             this.valueB.Text = prefix + (Convert.ToString(registers[1], BASE).PadLeft(8, '0'));

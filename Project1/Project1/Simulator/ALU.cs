@@ -93,7 +93,7 @@ namespace Project1
          */
         private static void STA(CPU cpu, short operand)
         {
-            int acc = (int)(cpu.getRegisterValue(0)); //Get accumulator value
+            int acc = (int)(cpu.getRegisterValue(2)); //Get accumulator value
             cpu.getMemory().setMemoryLocation(operand, acc);
         }
 

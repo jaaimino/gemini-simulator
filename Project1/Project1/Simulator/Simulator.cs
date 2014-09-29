@@ -43,10 +43,13 @@ namespace Project1
 
         public static void reset(GeminiSimForm form)
         {
-            memory = new Memory(memory.getInstructions());
-            cpu = new CPU(memory);
-            Simulator.form = form;
-            form.updateViewElements(nextInstructionPreview(), cpu.getRegisterValues(), memory.getInstructionCount(), cpu.isDone());
+            if (null != memory && null != cpu)
+            {
+                memory = new Memory(memory.getInstructions());
+                cpu = new CPU(memory);
+                Simulator.form = form;
+                form.updateViewElements(nextInstructionPreview(), cpu.getRegisterValues(), memory.getInstructionCount(), cpu.isDone());
+            }
         }
 
         private static List<short> readAllLines(String fileName)
