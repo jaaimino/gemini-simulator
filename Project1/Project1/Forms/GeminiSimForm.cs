@@ -103,7 +103,7 @@ namespace Project1
 
         private void updateNextInstruction(short nextInstructionPreview, Boolean isDone)
         {
-            this.nextInstLabel.Text = "Instruction: " + (isDone ? "---" : "0x" + Convert.ToString(nextInstructionPreview, 2).PadLeft(16, '0'));
+            this.nextInstLabel.Text = "Instruction: " + (isDone ? "---" : Convert.ToString(nextInstructionPreview, 2).PadLeft(16, '0'));
         }
 
         private void ResetButton_Click(object sender, EventArgs e)

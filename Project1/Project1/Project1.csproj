@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembler\Assembler.cs" />
+    <Compile Include="Assembler\InvalidLineException.cs" />
     <Compile Include="Shared\Translator.cs" />
     <Compile Include="Assembler\Parser.cs" />
     <Compile Include="Forms\GeminiSimForm.cs">

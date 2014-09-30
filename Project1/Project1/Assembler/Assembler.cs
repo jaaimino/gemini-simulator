@@ -28,11 +28,18 @@ namespace Project1
             {
                 //Send parser the contents of the file and get back
                 Parser parser = new Parser(fileName);
-                parser.Parse();
-                List<short> encodedInstructions = parser.GetEncodedInstructions();
+                List<short> encodedInstructions = null;
+                try
+                {
+                    parser.Parse();
+                    encodedInstructions = parser.GetEncodedInstructions();
+                    //Write encoded instructions to new output file
+                    Output(fileName, encodedInstructions);
+                }
+                catch (InvalidLineException)
+                {
 
-                //Write encoded instructions to new output file
-                Output(fileName, encodedInstructions);
+                }
             }
             else
             {

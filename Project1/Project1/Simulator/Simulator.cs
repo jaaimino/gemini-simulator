@@ -58,8 +58,8 @@ namespace Project1
                     resetSimulation(Simulator.form);
                     return false;
                 }
+                form.updateViewElements(nextInstructionPreview(), cpu.getRegisterValues(), memory.getInstructionCount(), cpu.isDone());
             }
-            form.updateViewElements(nextInstructionPreview(), cpu.getRegisterValues(), memory.getInstructionCount(), cpu.isDone());
             return true;
         }
 

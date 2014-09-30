@@ -110,8 +110,8 @@ namespace Project1
                 String line = instructions.ElementAt(i);
                 if (! ParseLine(line))
                 {
-                    MessageBox.Show("Invalid instruction on line " + (i + 1) + ". Skipping..", "Assembler Error");
-                    //Console.WriteLine(i + " " + line);
+                    MessageBox.Show("Invalid instruction on line " + (i + 1) + "\n[" + line + "]\nHalting assembly..", "Assembler Error");
+                    throw new InvalidLineException();
                 }
             }
         }
@@ -125,7 +125,7 @@ namespace Project1
         {
             Match match;
             //Is it a command with no arguments?
-            match = new Regex(@"^\s*(?<command>\S{2,3})\s*$").Match(line);
+            match = new Regex(@"^\s*(?<command>\S{2,4})\s*$").Match(line);
             if (match.Success)
             {
                 String command = match.Groups["command"].Value;
