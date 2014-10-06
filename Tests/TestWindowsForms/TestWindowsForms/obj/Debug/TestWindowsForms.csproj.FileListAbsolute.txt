@@ -1,9 +1,0 @@
-Z:\Repos\cisc360\Tests\TestWindowsForms\TestWindowsForms\bin\Debug\TestWindowsForms.exe.config
-Z:\Repos\cisc360\Tests\TestWindowsForms\TestWindowsForms\bin\Debug\TestWindowsForms.exe
-Z:\Repos\cisc360\Tests\TestWindowsForms\TestWindowsForms\bin\Debug\TestWindowsForms.pdb
-Z:\Repos\cisc360\Tests\TestWindowsForms\TestWindowsForms\obj\Debug\TestWindowsForms.csprojResolveAssemblyReference.cache
-Z:\Repos\cisc360\Tests\TestWindowsForms\TestWindowsForms\obj\Debug\TestWindowsForms.Form1.resources
-Z:\Repos\cisc360\Tests\TestWindowsForms\TestWindowsForms\obj\Debug\TestWindowsForms.Properties.Resources.resources
-Z:\Repos\cisc360\Tests\TestWindowsForms\TestWindowsForms\obj\Debug\TestWindowsForms.csproj.GenerateResource.Cache
-Z:\Repos\cisc360\Tests\TestWindowsForms\TestWindowsForms\obj\Debug\TestWindowsForms.exe
-Z:\Repos\cisc360\Tests\TestWindowsForms\TestWindowsForms\obj\Debug\TestWindowsForms.pdb
