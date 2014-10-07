@@ -41,7 +41,7 @@ namespace Project2
             CleanLines(); //Get rid of all empty lines and comments
             BuildLabelMap(); //Prepare label map so I can use it with branching
             ParseCommands(); //Do actual instruction parsing and encoding
-            Console.WriteLine("Actual line count is: " + encodedInstructions.Count());
+            //Console.WriteLine("Actual line count is: " + encodedInstructions.Count());
         }
 
         /**
