@@ -1,4 +1,4 @@
-﻿namespace Project1
+﻿namespace Project2
 {
     partial class GeminiSimForm
     {

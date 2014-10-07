@@ -3,7 +3,6 @@
  * 
  * Desc: Parser for Assembler
  * 
- * 
  **/
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Project1
+namespace Project2
 {
     /**
      * Takes in list of strings (file lines)
@@ -42,6 +41,7 @@ namespace Project1
             CleanLines(); //Get rid of all empty lines and comments
             BuildLabelMap(); //Prepare label map so I can use it with branching
             ParseCommands(); //Do actual instruction parsing and encoding
+            Console.WriteLine("Actual line count is: " + encodedInstructions.Count());
         }
 
         /**
@@ -83,7 +83,7 @@ namespace Project1
             {
                 String line = instructions.ElementAt(i);
                 //Is it a label?
-                match = new Regex(@"^(?<label>.*?)\s*:$").Match(line);
+                match = new Regex(@"^\s*(?<label>[A-Za-z0-9]+)\s*:$").Match(line);
                 if (match.Success)
                 {
                     String label = match.Groups["label"].Value;
@@ -164,7 +164,14 @@ namespace Project1
                 String command = match.Groups["command"].Value;
                 String label = match.Groups["label"].Value;
                 //Console.WriteLine("Found command with branch [" + command + "] " + " [" + label + "]");
-                encodedInstructions.Add(Translator.Encode(command, labelMap[label]+"", false)); //Do call to encode here
+                try
+                {
+                    encodedInstructions.Add(Translator.Encode(command, labelMap[label] + "", false)); //Do call to encode here
+                }
+                catch (KeyNotFoundException)
+                {
+                    return false;
+                }
                 return true;
             }
             //Console.WriteLine("Invalid line"); //Should probably throw an exception if this happens
