@@ -109,5 +109,11 @@ namespace Project2
         {
             Simulator.resetSimulation(this);
         }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsForm form = new SettingsForm();
+            form.ShowDialog();
+        }
     }
 }
