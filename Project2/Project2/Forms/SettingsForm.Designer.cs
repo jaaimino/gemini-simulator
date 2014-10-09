@@ -36,6 +36,8 @@
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -54,18 +56,21 @@
             // 
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(252, 3);
+            this.comboBox1.Items.AddRange(new object[] {
+            "One-Way",
+            "Two-Way"});
+            this.comboBox1.Location = new System.Drawing.Point(253, 4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(244, 24);
+            this.comboBox1.Size = new System.Drawing.Size(242, 24);
             this.comboBox1.TabIndex = 0;
             // 
             // cacheTypeLabel
             // 
             this.cacheTypeLabel.AutoSize = true;
             this.cacheTypeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cacheTypeLabel.Location = new System.Drawing.Point(3, 0);
+            this.cacheTypeLabel.Location = new System.Drawing.Point(4, 1);
             this.cacheTypeLabel.Name = "cacheTypeLabel";
-            this.cacheTypeLabel.Size = new System.Drawing.Size(243, 30);
+            this.cacheTypeLabel.Size = new System.Drawing.Size(242, 30);
             this.cacheTypeLabel.TabIndex = 1;
             this.cacheTypeLabel.Text = "Cache Type";
             this.cacheTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
