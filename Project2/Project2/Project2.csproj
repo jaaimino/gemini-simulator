@@ -67,7 +67,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Simulator\ALU.cs" />
-    <Compile Include="Simulator\Block.cs" />
+    <Compile Include="Simulator\Address.cs" />
     <Compile Include="Simulator\Cache\Cache.cs" />
     <Compile Include="Simulator\Cache\TwoWayCache.cs" />
     <Compile Include="Simulator\CPU.cs" />
