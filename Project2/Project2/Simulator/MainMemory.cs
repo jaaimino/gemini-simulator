@@ -15,11 +15,11 @@ namespace Project2
 {
     class MainMemory
     {
-        public Block[] blocks;
+        public Addresses[] blocks;
 
         public MainMemory(int size)
         {
-            this.blocks = new Block[size];
+            this.blocks = new Addresses[size];
             initializeBlocks(size);
         }
 
@@ -27,7 +27,7 @@ namespace Project2
         {
             for (int i = 0; i < size; i++)
             {
-                blocks[i] = new Block(i);
+                blocks[i] = new Addresses(i);
             }
         }
     }

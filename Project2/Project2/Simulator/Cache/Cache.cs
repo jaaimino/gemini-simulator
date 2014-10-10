@@ -8,13 +8,21 @@ namespace Project2
 {
     class Cache
     {
-        int frameSize; //(Min of 1 word, Max of 2 words)
-        int frames; //(Min of 2 blocks, Max of 16 blocks)
+        int blockSize; //(Min of 1 word, Max of 2 words)
+        Addresses[] blocks; //(Min of 2 blocks, Max of 16 blocks)
 
-        public Cache(int frameSize, int frames)
+        /**
+         * Frame Size, num frames
+         */
+        public Cache(int blockSize, int blocks)
         {
-            this.frameSize = frameSize;
-            this.frames = frames;
+            this.blockSize = blockSize;
+            this.blocks = new Addresses[blocks];
+        }
+
+        Boolean containsBlock(int blockNumber)
+        {
+            return false;
         }
     }
 }

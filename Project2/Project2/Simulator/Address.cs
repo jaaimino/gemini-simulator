@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Project2
 {
-    class Block
+    class Addresses
     {
         private int id;
         public int data;
         public Boolean dirty;
 
-        public Block(int id)
+        public Addresses(int id)
         {
             this.id = id;
             this.data = 0;
