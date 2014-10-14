@@ -15,11 +15,15 @@ using System.Threading.Tasks;
 
 namespace Project2
 {
-    class OneWayCache : Cache
+    public class OneWayCache : Cache
     {
-        public OneWayCache() : base(1,12)
+        public OneWayCache(int blockSize, int blocks) : base(blockSize, blocks)
         {
+        }
 
+        public override int findAddress(int address)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -22,5 +22,10 @@ namespace Project2
         {
 
         }
+
+        public override int findAddress(int address)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

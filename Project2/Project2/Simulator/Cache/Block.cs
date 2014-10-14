@@ -6,17 +6,23 @@ using System.Threading.Tasks;
 
 namespace Project2
 {
-    class Addresses
+    public class Block
     {
-        private int id;
-        public int data;
+        int tag;
         public Boolean dirty;
+        public int data;
 
-        public Addresses(int id)
+        public Block(int tag)
         {
-            this.id = id;
-            this.data = 0;
+            this.tag = tag;
             this.dirty = false;
+            this.data = 0;
         }
+
+        public int getTag()
+        {
+            return this.tag;
+        }
+
     }
 }

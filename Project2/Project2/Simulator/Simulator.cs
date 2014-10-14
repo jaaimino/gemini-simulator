@@ -31,7 +31,7 @@ namespace Project2
             if (IsValidFile(fileName))
             {
                 Simulator.form = form;
-                memory = new Memory(readAllLines(fileName));
+                memory = new Memory(Project2.Memory.CacheType.ONEWAY, readAllLines(fileName)); //Should get cache type from settings
                 cpu = new CPU(memory);
                 form.updateViewElements(nextInstructionPreview(), cpu.getRegisterValues(), memory.getInstructionCount(), cpu.isDone());
             }
@@ -80,7 +80,7 @@ namespace Project2
         {
             if (null != memory && null != cpu)
             {
-                memory = new Memory(memory.getInstructions());
+                memory = new Memory(Project2.Memory.CacheType.ONEWAY, memory.getInstructions()); //Should get cache type from settings in future
                 cpu = new CPU(memory);
                 Simulator.form = form;
                 form.updateViewElements(nextInstructionPreview(), cpu.getRegisterValues(), memory.getInstructionCount(), cpu.isDone());
