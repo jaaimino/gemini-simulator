@@ -63,7 +63,7 @@ namespace Project2
             }
             else //Miss
             {
-                memory.blocks[address] = value;
+                memory.addresses[address] = value;
             }
         }
 

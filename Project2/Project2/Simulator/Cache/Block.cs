@@ -8,15 +8,19 @@ namespace Project2
 {
     public class Block
     {
-        int tag;
-        public Boolean dirty;
-        public int data;
+        private Boolean dirty;
+        private int[] addresses;
+        private int tag;
 
         public Block(int tag)
         {
             this.tag = tag;
-            this.dirty = false;
-            this.data = 0;
+        }
+
+        public void setAddress(int localAddress, int value)
+        {
+            this.dirty = true;
+            addresses[localAddress] = value;
         }
 
         public int getTag()

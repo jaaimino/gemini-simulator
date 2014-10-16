@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Project2
 {
-    public abstract class Cache
+    public class Cache
     {
-        protected int blockSize; //(Min of 1 word, Max of 2 words)
-        protected Block[] frames; //(Min of 2 blocks, Max of 16 blocks)
+        private int blockSize; //(Min of 1 word, Max of 2 words)
+        private Block[] blocks; //(Min of 2 blocks, Max of 16 blocks)
 
         /**
          * Find address as defined by mapping function
@@ -25,10 +25,10 @@ namespace Project2
         /**
          * Frame Size, num frames
          */
-        public Cache(int blockSize, int blocks)
+        public Cache(int blockSize, int numBlocks)
         {
             this.blockSize = blockSize;
-            this.frames = new Block[blocks];
+            this.blocks = new Block[numBlocks];
         }
 
         /**
@@ -36,7 +36,7 @@ namespace Project2
          */
         public void writeAddress(int address, int value)
         {
-            Block target = frames[findAddress(address)];
+            Frame target = blocks[findAddress(address)];
             target.data = value;
             target.dirty = true;
         }
@@ -46,7 +46,7 @@ namespace Project2
          */
         public int readAddress(int address)
         {
-            return frames[findAddress(address)].data;
+            return blocks[findAddress(address)].data;
         }
 
         /**
@@ -54,11 +54,11 @@ namespace Project2
          */
         public Boolean containsBlock(int address)
         {
-            if (null == frames[findAddress(address)])
+            if (null == blocks[findAddress(address)])
             {
                 return false;
             }
-            return frames[findAddress(address)].getTag() == address;
+            return blocks[findAddress(address)].getTag() == address;
         }
 
     }

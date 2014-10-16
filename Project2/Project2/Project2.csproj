@@ -70,11 +70,9 @@
     <Compile Include="Simulator\ALU.cs" />
     <Compile Include="Simulator\Cache\Block.cs" />
     <Compile Include="Simulator\Cache\Cache.cs" />
-    <Compile Include="Simulator\Cache\TwoWayCache.cs" />
     <Compile Include="Simulator\CPU.cs" />
     <Compile Include="Simulator\MainMemory.cs" />
     <Compile Include="Simulator\Memory.cs" />
-    <Compile Include="Simulator\Cache\OneWayCache.cs" />
     <Compile Include="Simulator\Simulator.cs" />
     <Compile Include="Shared\OpcodeMapper.cs" />
     <EmbeddedResource Include="Forms\GeminiSimForm.resx">
