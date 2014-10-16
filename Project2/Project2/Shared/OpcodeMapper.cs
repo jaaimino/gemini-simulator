@@ -65,7 +65,16 @@ namespace Project2
 
         public static String ShortToCode(short number)
         {
-            return shortToCodeMap[number];
+            String result = "";
+            try 
+            { 
+                result = shortToCodeMap[number]; 
+            }
+            catch (Exception)
+            {
+                Console.WriteLine(number);
+            }
+            return result;
         }
     }
 }

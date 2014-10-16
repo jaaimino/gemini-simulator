@@ -1,5 +1,4 @@
 ﻿/**
- * 
  * Author: Jacob Aimino
  * 
  * Desc: One-Way Associative (Direct Mapped) Cache Model
@@ -19,11 +18,17 @@ namespace Project2
     {
         public OneWayCache(int blockSize, int blocks) : base(blockSize, blocks)
         {
+
+        }
+
+        protected override void replaceBlock(int address, int cacheIndex)
+        {
+
         }
 
         public override int findAddress(int address)
         {
-            throw new NotImplementedException();
+            return address % this.frames.Length;
         }
     }
 }

@@ -8,8 +8,8 @@ namespace Project2
 {
     public abstract class Cache
     {
-        int blockSize; //(Min of 1 word, Max of 2 words)
-        Block[] blocks; //(Min of 2 blocks, Max of 16 blocks)
+        protected int blockSize; //(Min of 1 word, Max of 2 words)
+        protected Block[] frames; //(Min of 2 blocks, Max of 16 blocks)
 
         /**
          * Find address as defined by mapping function
@@ -17,20 +17,27 @@ namespace Project2
         abstract public int findAddress(int address);
 
         /**
+         * Handle when cache doesn't contain 
+         * asddress: address in main memory that is needed
+         * cacheIndex: index in cache that is to be replaced
+         */
+        abstract protected void replaceBlock(int address, int cacheIndex);
+
+        /**
          * Frame Size, num frames
          */
         public Cache(int blockSize, int blocks)
         {
             this.blockSize = blockSize;
-            this.blocks = new Block[blocks];
+            this.frames = new Block[blocks];
         }
 
         /**
          * Should always make sure block is in cache before calling this
          */
-        public void writeBlock(int address, int value)
+        public void writeAddress(int address, int value)
         {
-            Block target = blocks[findAddress(address)];
+            Block target = frames[findAddress(address)];
             target.data = value;
             target.dirty = true;
         }
@@ -38,19 +45,31 @@ namespace Project2
         /**
          * Should always make sure block is in cache before calling this
          */
-        public int readBlock(int address)
+        public int readAddress(int address)
         {
-            return blocks[findAddress(address)].data;
+            return frames[findAddress(address)].data;
         }
 
+        /**
+         * Check if cache contains specified block
+         */
         public Boolean containsBlock(int address)
         {
-            if (null == blocks[findAddress(address)])
+            if (null == frames[findAddress(address)])
             {
                 return false;
             }
-            return blocks[findAddress(address)].getTag() == address;
+            return frames[findAddress(address)].getTag() == address;
         }
-        
+
+        /**
+         * Should be called if address is not in cache
+         * and needs to be paged in
+         */
+        public void pageBlock(int address)
+        {
+            int cacheIndex = findAddress(address); //Target index in cache
+            replaceBlock(address, cacheIndex);
+        }
     }
 }

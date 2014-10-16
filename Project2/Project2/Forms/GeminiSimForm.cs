@@ -102,7 +102,8 @@ namespace Project2
 
         private void updateNextInstruction(short nextInstructionPreview, Boolean isDone)
         {
-            this.nextInstLabel.Text = "Instruction: " + (isDone ? "---" : Convert.ToString(nextInstructionPreview, 2).PadLeft(16, '0'));
+            this.nextInstLabel.Text = "Instruction: " + convertToHumanString(nextInstructionPreview);
+            convertToHumanString(nextInstructionPreview);
         }
 
         private void ResetButton_Click(object sender, EventArgs e)
@@ -114,6 +115,19 @@ namespace Project2
         {
             SettingsForm form = new SettingsForm();
             form.ShowDialog();
+        }
+
+        private String convertToHumanString(short instruction)
+        {
+            String commandString = "";
+            if(instruction < 0)
+            {
+                return "---";
+            }
+            commandString += OpcodeMapper.ShortToCode(Translator.decodeCommand(instruction));
+            commandString += Translator.decodeImmediateFlag(instruction) ? " #$" : " $";
+            commandString += Translator.decodeOperand(instruction);
+            return commandString;
         }
     }
 }

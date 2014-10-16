@@ -18,7 +18,12 @@ namespace Project2
     class TwoWayCache : Cache
     {
         public TwoWayCache()
-            : base(1,12)
+            : base(2,12)
+        {
+
+        }
+
+        protected override void replaceBlock(int address, int cacheIndex)
         {
 
         }

@@ -57,17 +57,32 @@ namespace Project2
          */
         public void setMemoryLocation(int address, int value)
         {
-            memory.blocks[address] = value;
+            if (cache.containsBlock(address)) //Hit
+            {
+                cache.writeAddress(address, value);
+            }
+            else //Miss
+            {
+                memory.blocks[address] = value;
+            }
         }
 
         /**
          * Will check cache for value first, if it's there, read from cache
          * If not, will grab data from main memory and put it in cache,
-         * randomly replacing a block
+         * randomly replacing a block (sorta)
          */
         public int getMemoryLocation(int address)
         {
-            return memory.blocks[address];
+            if (cache.containsBlock(address)) //Hit
+            {
+                return cache.readAddress(address);
+            }
+            else //Miss
+            {
+                cache.pageBlock(address);
+                return cache.readAddress(address);
+            }
         }
 
         public short getInstructionAtIndex(int index)
