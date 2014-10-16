@@ -21,8 +21,16 @@ namespace Project2
 
         }
 
-        protected override void replaceBlock(int address, int cacheIndex)
+        public override void pageBlock(int address, MainMemory memory)
         {
+            int cacheIndex = findAddress(address);
+            if (null != frames[cacheIndex] && frames[cacheIndex].dirty)
+            {
+                int oldAddress = frames[cacheIndex].getTag();
+                memory.blocks[oldAddress] = frames[cacheIndex].data;
+            }
+            frames[cacheIndex] = new Block(address);
+            frames[cacheIndex].data = memory.blocks[address];
 
         }
 

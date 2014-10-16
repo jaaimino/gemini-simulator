@@ -80,7 +80,7 @@ namespace Project2
             }
             else //Miss
             {
-                cache.pageBlock(address);
+                cache.pageBlock(address, memory);
                 return cache.readAddress(address);
             }
         }

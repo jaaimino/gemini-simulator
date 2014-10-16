@@ -23,7 +23,7 @@ namespace Project2
 
         }
 
-        protected override void replaceBlock(int address, int cacheIndex)
+        public override void pageBlock(int address, MainMemory memory)
         {
 
         }

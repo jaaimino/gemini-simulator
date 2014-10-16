@@ -17,11 +17,10 @@ namespace Project2
         abstract public int findAddress(int address);
 
         /**
-         * Handle when cache doesn't contain 
-         * asddress: address in main memory that is needed
-         * cacheIndex: index in cache that is to be replaced
+         * Should be called if address is not in cache
+         * and needs to be paged in
          */
-        abstract protected void replaceBlock(int address, int cacheIndex);
+        public abstract void pageBlock(int address, MainMemory memory);
 
         /**
          * Frame Size, num frames
@@ -62,14 +61,5 @@ namespace Project2
             return frames[findAddress(address)].getTag() == address;
         }
 
-        /**
-         * Should be called if address is not in cache
-         * and needs to be paged in
-         */
-        public void pageBlock(int address)
-        {
-            int cacheIndex = findAddress(address); //Target index in cache
-            replaceBlock(address, cacheIndex);
-        }
     }
 }

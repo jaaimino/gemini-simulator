@@ -22,6 +22,7 @@ namespace Project2
         private static GeminiSimForm form;
         private static Memory memory;
         private static CPU cpu;
+        private static String fileName;
 
         /*
          * Start a new cpuulation
@@ -31,6 +32,8 @@ namespace Project2
             if (IsValidFile(fileName))
             {
                 Simulator.form = form;
+                Logger.initialize(fileName); //Start logger
+                Simulator.fileName = fileName;
                 memory = new Memory(Project2.Memory.CacheType.ONEWAY, readAllLines(fileName)); //Should get cache type from settings
                 cpu = new CPU(memory);
                 form.updateViewElements(nextInstructionPreview(), cpu.getRegisterValues(), memory.getInstructionCount(), cpu.isDone());
@@ -80,6 +83,7 @@ namespace Project2
         {
             if (null != memory && null != cpu)
             {
+                Logger.initialize(fileName); //Start logger back up
                 memory = new Memory(Project2.Memory.CacheType.ONEWAY, memory.getInstructions()); //Should get cache type from settings in future
                 cpu = new CPU(memory);
                 Simulator.form = form;
@@ -96,7 +100,6 @@ namespace Project2
             while (pos < length)
             {
                 short s = (short)reader.ReadInt16();
-                //Console.WriteLine(Convert.ToString(s, 2));
                 lines.Add(s);
                 pos += sizeof(short);
             }

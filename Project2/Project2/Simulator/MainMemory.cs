@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Project2
 {
-    class MainMemory
+    public class MainMemory
     {
         public int[] blocks;
 
