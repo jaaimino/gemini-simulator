@@ -70,6 +70,7 @@
     <Compile Include="Simulator\ALU.cs" />
     <Compile Include="Simulator\Cache\Block.cs" />
     <Compile Include="Simulator\Cache\Cache.cs" />
+    <Compile Include="Simulator\Cache\Set.cs" />
     <Compile Include="Simulator\CPU.cs" />
     <Compile Include="Simulator\MainMemory.cs" />
     <Compile Include="Simulator\Memory.cs" />

@@ -8,8 +8,8 @@ namespace Project2
 {
     public class Cache
     {
-        private int blockSize; //(Min of 1 word, Max of 2 words)
-        private Block[] blocks; //(Min of 2 blocks, Max of 16 blocks)
+        private int setSize; //(Min of 1 word, Max of 2 words)
+        private Set[] blocks; //(Min of 2 blocks, Max of 16 blocks)
 
         /**
          * Find address as defined by mapping function
@@ -27,8 +27,8 @@ namespace Project2
          */
         public Cache(int blockSize, int numBlocks)
         {
-            this.blockSize = blockSize;
-            this.blocks = new Block[numBlocks];
+            this.setSize = blockSize;
+            this.blocks = new Set[numBlocks];
         }
 
         /**

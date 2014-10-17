@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace Project2
 {
-    public class Block
+    public class Set
     {
-        private int tag;
-        public int data;
+        private Block[] blocks;
 
-        public Block(int tag)
+        public Set(int setSize)
         {
-
+            this.blocks = new Block[setSize];
         }
     }
 }
