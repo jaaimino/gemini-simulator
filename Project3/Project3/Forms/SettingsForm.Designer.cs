@@ -1,4 +1,4 @@
-﻿namespace Project2
+﻿namespace Project3
 {
     partial class SettingsForm
     {

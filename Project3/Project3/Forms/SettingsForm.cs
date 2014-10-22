@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Project2
+namespace Project3
 {
     public partial class SettingsForm : Form
     {

@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
-namespace Project2
+namespace Project3
 {
     public partial class GeminiSimForm : Form
     {
