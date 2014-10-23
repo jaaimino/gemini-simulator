@@ -50,6 +50,12 @@
   <ItemGroup>
     <Compile Include="Assembler\Assembler.cs" />
     <Compile Include="Assembler\InvalidLineException.cs" />
+    <Compile Include="Forms\MemoryViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MemoryViewForm.Designer.cs">
+      <DependentUpon>MemoryViewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings\PropertiesFile.cs" />
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Forms\SettingsForm.cs">
@@ -78,8 +84,16 @@
     <Compile Include="Simulator\Memory.cs" />
     <Compile Include="Simulator\Simulator.cs" />
     <Compile Include="Shared\OpcodeMapper.cs" />
+    <Compile Include="Simulator\Threads\DecodeThread.cs" />
+    <Compile Include="Simulator\Threads\ExecuteThread.cs" />
+    <Compile Include="Simulator\Threads\FetchThread.cs" />
+    <Compile Include="Simulator\Threads\OperationThread.cs" />
+    <Compile Include="Simulator\Threads\StoreThread.cs" />
     <EmbeddedResource Include="Forms\GeminiSimForm.resx">
       <DependentUpon>GeminiSimForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MemoryViewForm.resx">
+      <DependentUpon>MemoryViewForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>

@@ -136,5 +136,10 @@ namespace Project3
             commandString += Translator.decodeOperand(instruction);
             return commandString;
         }
+
+        private void memoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new MemoryViewForm().Show();
+        }
     }
 }
