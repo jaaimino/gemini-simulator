@@ -93,5 +93,18 @@ namespace Project3
             if (bits < 0 || bits > 32) throw new ArgumentOutOfRangeException("bits");
             return (int)(((uint)value) & (0xFFFFFFFF >> (32 - bits)));
         }
+
+        public static String convertToHumanString(short instruction)
+        {
+            String commandString = "";
+            if (instruction < 0)
+            {
+                return "---";
+            }
+            commandString += OpcodeMapper.ShortToCode(Translator.decodeCommand(instruction));
+            commandString += Translator.decodeImmediateFlag(instruction) ? " #$" : " $";
+            commandString += Translator.decodeOperand(instruction);
+            return commandString;
+        }
     }
 }

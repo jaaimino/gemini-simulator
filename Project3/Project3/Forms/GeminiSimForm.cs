@@ -109,8 +109,8 @@ namespace Project3
 
         private void updateNextInstruction(short nextInstructionPreview, Boolean isDone)
         {
-            this.nextInstLabel.Text = "Instruction: " + convertToHumanString(nextInstructionPreview);
-            convertToHumanString(nextInstructionPreview);
+            this.nextInstLabel.Text = "Instruction: " + Translator.convertToHumanString(nextInstructionPreview);
+            Translator.convertToHumanString(nextInstructionPreview);
         }
 
         private void ResetButton_Click(object sender, EventArgs e)
@@ -124,22 +124,14 @@ namespace Project3
             form.ShowDialog();
         }
 
-        private String convertToHumanString(short instruction)
-        {
-            String commandString = "";
-            if(instruction < 0)
-            {
-                return "---";
-            }
-            commandString += OpcodeMapper.ShortToCode(Translator.decodeCommand(instruction));
-            commandString += Translator.decodeImmediateFlag(instruction) ? " #$" : " $";
-            commandString += Translator.decodeOperand(instruction);
-            return commandString;
-        }
-
         private void memoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new MemoryViewForm().Show();
+        }
+
+        private void pipelineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new PipelineForm().Show();
         }
     }
 }
