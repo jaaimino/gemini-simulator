@@ -99,6 +99,13 @@ namespace Project3
             this.missesValue.Text = memory.missCount + "";
             this.missrateValue.Text = ((float)memory.missCount / total) + "";
             this.hitrateValue.Text = ((float)memory.hitCount / total) + "";
+
+            //Show instructions in pipeline
+            Instruction[] queue = cpu.getQueue();
+            this.inst1Title.Text = (null == queue[0]) ? "---" : Translator.convertToHumanString(queue[0].inst);
+            this.inst2Title.Text = (null == queue[1]) ? "---" : Translator.convertToHumanString(queue[1].inst);
+            this.inst3Title.Text = (null == queue[2]) ? "---" : Translator.convertToHumanString(queue[2].inst);
+            this.inst4Title.Text = (null == queue[3]) ? "---" : Translator.convertToHumanString(queue[3].inst);
         }
 
         private void updateInstructionIndex(int linenumber, int totalInstructions)
@@ -123,14 +130,19 @@ namespace Project3
             form.ShowDialog();
         }
 
-        private void memoryToolStripMenuItem_Click(object sender, EventArgs e)
+        private void StepButton_Click(object sender, EventArgs e)
         {
-            new MemoryViewForm().Show();
+            Simulator.stepSimulation();
         }
 
-        private void pipelineToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RunButton_Click(object sender, EventArgs e)
         {
-            new PipelineForm().Show();
+            Simulator.runSimulation();
+        }
+
+        private void ResetButton_Click_1(object sender, EventArgs e)
+        {
+            Simulator.resetSimulation(this);
         }
     }
 }

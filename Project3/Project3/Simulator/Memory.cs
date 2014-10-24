@@ -56,13 +56,13 @@ namespace Project3
         {
             if (cache.containsBlock(address)) //Hit
             {
-                Logger.writeLine("[Cache] Write hit at memory address " + address);
+                //Logger.writeLine("[Cache] Write hit at memory address " + address);
                 hitCount++;
                 cache.writeAddress(address, value);
             }
             else //Miss
             {
-                Logger.writeLine("[Cache] Write miss at memory address " + address);
+                //Logger.writeLine("[Cache] Write miss at memory address " + address);
                 missCount++;
                 memory.addresses[address] = value;
             }
@@ -77,13 +77,13 @@ namespace Project3
         {
             if (cache.containsBlock(address)) //Hit
             {
-                Logger.writeLine("[Cache] Read hit at memory address " + address);
+                //Logger.writeLine("[Cache] Read hit at memory address " + address);
                 hitCount++;
                 return cache.readAddress(address);
             }
             else //Miss
             {
-                Logger.writeLine("[Cache] Read miss at memory address " + address + " going to page it in");
+                //Logger.writeLine("[Cache] Read miss at memory address " + address + " going to page it in");
                 missCount++;
                 cache.pageBlock(address, memory);
                 return cache.readAddress(address);

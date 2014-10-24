@@ -37,7 +37,6 @@ namespace Project3
 
         //For pipelining
         private Instruction[] queue;
-        private List<Instruction> viewList;
         private int delay;
 
         public CPU(Memory memory)
@@ -45,7 +44,6 @@ namespace Project3
             this.memory = memory;
             this.delay = 0;
             this.queue = new Instruction[4];
-            this.viewList = new List<Instruction>();
             registers = new short[11];
             registers[0] = 0; //A
             registers[1] = 0; //B
@@ -64,13 +62,12 @@ namespace Project3
         {
             if (true) //Read from settings file to see if pipelining is activated
             {
-                //Do any setup first
+                //Move everything in the queue along
+                queue[3] = queue[2];
+                queue[2] = queue[1];
+                queue[1] = queue[0];
                 short inst = FindNextInstruction();
                 queue[0] = (inst < 0) ? null : new Instruction(inst);
-                if (null != queue[0])
-                {
-                    viewList.Add(queue[0]);
-                }
 
                 //Console.WriteLine("Starting threads.");
                 OperationThread pipe1 = (null == queue[0]) ? null : new FetchThread(queue[0], registers); //Fetch - Get the instruction into the IR...
@@ -102,15 +99,6 @@ namespace Project3
                     pipe4.thrd.Join();
                     //Console.WriteLine(pipe4.thrd.Name + " reported back.");
                 }
-
-                //Do post execute stuff
-                if (null != queue[3])
-                {
-                    viewList.Remove(queue[3]);
-                }
-                queue[3] = queue[2];
-                queue[2] = queue[1];
-                queue[1] = queue[0];
                 //Console.WriteLine("All threads finished.");
 
                 //Add one to PC
@@ -158,7 +146,7 @@ namespace Project3
         public Boolean isDone()
         {
             
-            return (registers[5] > memory.getInstructionCount()-1) && queueIsEmpty();
+            return (getPC() > memory.getInstructionCount()-1) && queueIsEmpty();
         }
 
         //-------------------------------------------------
@@ -194,9 +182,9 @@ namespace Project3
             this.registers[5] = pc;
         }
 
-        public List<Instruction> getViewList()
+        public Instruction[] getQueue()
         {
-            return this.viewList;
+            return this.queue;
         }
     }
 }

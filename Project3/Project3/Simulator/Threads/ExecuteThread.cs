@@ -19,7 +19,7 @@ namespace Project3
         public override void run()
         {
             base.run();
-            Console.WriteLine("Opcode for exec: " + inst.opcode + " flag for exec " + inst.flag + " operand for exec: " + inst.operand);
+            //Console.WriteLine("Opcode for exec: " + inst.opcode + " flag for exec " + inst.flag + " operand for exec: " + inst.operand);
             ALU.execute(cpu, inst.opcode, inst.flag, inst.operand);
         }
     }

@@ -20,7 +20,6 @@ namespace Project3
     {
         public const String OUTPUT_FILE_TYPE = ".out";
         private static GeminiSimForm form;
-        private static PipelineForm pipeForm;
         private static Memory memory;
         private static CPU cpu;
         private static String fileName;
@@ -33,19 +32,6 @@ namespace Project3
             if (IsValidFile(fileName))
             {
                 Simulator.form = form;
-                if (true)//Make sure pipelining is enabled
-                {
-                    if (pipeForm != null)
-                    {
-                        pipeForm.Dispose();
-                    }
-                    Simulator.pipeForm = new PipelineForm();
-                    pipeForm.Show();//Pipeline form
-                }
-                Logger.initialize(fileName); //Start logger
-                Logger.writeLine("Starting simulation with cache type " + 
-                    Settings.cacheOptions[Convert.ToInt32(Settings.getValue("cachetype"))] + 
-                    " and cache size " + Settings.getValue("cachesize"));
                 Simulator.fileName = fileName;
                 memory = new Memory(Settings.getValue("cachetype"), Convert.ToInt32(Settings.getValue("cachesize")), 
                     readAllLines(fileName));
@@ -75,12 +61,7 @@ namespace Project3
                     resetSimulation(Simulator.form);
                     return false;
                 }
-
                 form.updateViewElements(nextInstructionPreview(), cpu, memory);
-                if (null != pipeForm)
-                {
-                    pipeForm.updateViewElements(cpu.getViewList());
-                }
             }
             return true;
         }
@@ -102,23 +83,10 @@ namespace Project3
         {
             if (null != memory && null != cpu)
             {
-                Logger.initialize(fileName); //Start logger back up
-                Logger.writeLine("Starting simulation with cache type " +
-                    Settings.cacheOptions[Convert.ToInt32(Settings.getValue("cachetype"))] +
-                    " and cache size " + Settings.getValue("cachesize"));
-                memory = new Memory(Settings.getValue("cachetype"), Convert.ToInt32(Settings.getValue("cachesize")), 
-                    memory.getInstructions());
+                memory = new Memory(Settings.getValue("cachetype"), Convert.ToInt32(Settings.getValue("cachesize")),
+                    readAllLines(fileName));
                 cpu = new CPU(memory);
                 Simulator.form = form;
-                if (true)//Make sure pipelining is enabled
-                {
-                    if (pipeForm != null)
-                    {
-                        pipeForm.Dispose();
-                    }
-                    Simulator.pipeForm = new PipelineForm();
-                    pipeForm.Show();//Pipeline form
-                }
                 form.updateViewElements(nextInstructionPreview(), cpu, memory);
             }
         }
