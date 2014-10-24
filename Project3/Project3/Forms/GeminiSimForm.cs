@@ -73,7 +73,6 @@ namespace Project3
 
         public void updateViewElements(short nextInstructionPreview, CPU cpu, Memory memory)
         {
-
             //Base for register value view
             int BASE = 16; //Only supports 2, 8, 10, 16
             String prefix = "0x";

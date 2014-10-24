@@ -1,0 +1,9 @@
+Starting simulation with cache type Direct Mapped and cache size 10
+[Cache] Write miss at memory address 0
+[Cache] Write miss at memory address 255
+[Cache] Read miss at memory address 0 going to page it in
+[Cache] Read hit at memory address 0
+[Cache] Read hit at memory address 0
+[Cache] Read hit at memory address 0
+[Cache] Read miss at memory address 255 going to page it in
+[Cache] Read hit at memory address 0

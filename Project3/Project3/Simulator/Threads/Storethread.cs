@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace Project3
 {
-    class StoreThread
+    class StoreThread : OperationThread
     {
+        public StoreThread() : base()
+        {
+            thrd.Name = "Store Thread";
+        }
+        public override void run()
+        {
+            base.run();
+        }
     }
 }

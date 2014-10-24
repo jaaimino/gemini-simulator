@@ -9,30 +9,17 @@ namespace Project3
 {
     class OperationThread
     {
-        public int count;
         public Thread thrd;
 
-        public OperationThread(string name)
+        public OperationThread()
         {
-            count = 0;
             thrd = new Thread(this.run);
-            thrd.Name = name;
             thrd.Start();
         }
 
-        void run()
+        public virtual void run()
         {
-            Console.WriteLine(thrd.Name + " starting.");
-
-            do
-            {
-                Thread.Sleep(500);
-                Console.WriteLine("In " + thrd.Name +
-                                  ", count is " + count);
-                count++;
-            } while (count < 10);
-
-            Console.WriteLine(thrd.Name + " terminating.");
+            Thread.Sleep(4);
         }
 
     }
