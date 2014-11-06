@@ -6,21 +6,25 @@ using System.Threading.Tasks;
 
 namespace Project3
 {
-    class FetchThread : OperationThread
+    /**
+     * Need to 
+     */
+    public class FetchThread : OperationThread
     {
         Instruction instruction;
         short[] registers;
 
-        public FetchThread(Instruction instruction, short[] registers) : base()
-        {
-            thrd.Name = "Fetch Thread";
-            this.instruction = instruction;
-            this.registers = registers;
-        }
+        public FetchThread() : base(){}
+
         public override void run()
         {
-            base.run();
-            registers[9] = this.instruction.inst;
+            while (true)
+            {
+                if (done)
+                    break;
+                listener.WaitOne();//Wait until main threads says to go
+                registers[9] = this.instruction.inst;
+            }
         }
     }
 }

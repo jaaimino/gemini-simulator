@@ -16,10 +16,16 @@ namespace Project3
         }
         public override void run() //Do decoding inside here
         {
-            base.run();
-            inst.opcode = (short)Translator.decodeCommand(inst.inst);
-            inst.flag = Translator.decodeImmediateFlag(inst.inst);
-            inst.operand = (short)Translator.decodeOperand(inst.inst);
+            while (true)
+            {
+                if (base.done)
+                {
+                    break;
+                }
+                inst.opcode = (short)Translator.decodeCommand(inst.inst);
+                inst.flag = Translator.decodeImmediateFlag(inst.inst);
+                inst.operand = (short)Translator.decodeOperand(inst.inst);
+            }
         }
     }
 }

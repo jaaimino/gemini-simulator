@@ -7,19 +7,17 @@ using System.Threading.Tasks;
 
 namespace Project3
 {
-    class OperationThread
+    public class OperationThread
     {
-        public Thread thrd;
+        public AutoResetEvent listener; //Set by main to start doing next task
+        protected Boolean done;
 
         public OperationThread()
         {
-            thrd = new Thread(this.run);
-            thrd.Start();
         }
 
         public virtual void run()
         {
-            Thread.Sleep(4);
         }
 
     }

@@ -20,12 +20,15 @@
       address for each machine instruction's microprogram
   - CC: Condition Code Register
  * 
+ * Autoresetevent
+ * 
  **/
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Project3
@@ -38,6 +41,8 @@ namespace Project3
         //For pipelining
         private Instruction[] queue;
         private int delay;
+        public AutoResetEvent[] threadListeners;
+        private OperationThread[] pipeThreads;
 
         public CPU(Memory memory)
         {
@@ -56,6 +61,9 @@ namespace Project3
             registers[8] = 0; //TEMP
             registers[9] = 0; //IR (Get first instruction ready to process)
             registers[10] = 0; //CC
+            threadListeners = new AutoResetEvent[4];
+            pipeThreads[0] = new FetchThread();
+
         }
 
         public void Cycle()
@@ -69,37 +77,16 @@ namespace Project3
                 short inst = FindNextInstruction();
                 queue[0] = (inst < 0) ? null : new Instruction(inst);
 
-                //Console.WriteLine("Starting threads.");
-                OperationThread pipe1 = (null == queue[0]) ? null : new FetchThread(queue[0], registers); //Fetch - Get the instruction into the IR...
-                OperationThread pipe2 = (null == queue[1]) ? null : new DecodeThread(queue[1]); //Decode - Determine what the instruction wants to do...
-                OperationThread pipe3 = (null == queue[2]) ? null : new ExecuteThread(queue[2], this); //Execute - Perform the instruction
-                OperationThread pipe4 = (null == queue[3]) ? null : new StoreThread(); //Store - If needed, write back any data to registers AND memory.
-
-                if (null != pipe1)
-                {
-                    pipe1.thrd.Join();
-                    //Console.WriteLine(pipe1.thrd.Name + " reported back.");
-                    //Console.WriteLine("IR Has: " + registers[9]);
+                //Set all other threads so they can execute
+                foreach (OperationThread t in pipeThreads){
+                    t.listener.Set();
                 }
 
-                if (null != pipe2)
+                //Set all other threads so they can execute
+                foreach (AutoResetEvent a in threadListeners)
                 {
-                    pipe2.thrd.Join();
-                    //Console.WriteLine(pipe2.thrd.Name + " reported back.");
+                    a.WaitOne();
                 }
-
-                if (null != pipe3)
-                {
-                    pipe3.thrd.Join();
-                    //Console.WriteLine(pipe3.thrd.Name + " reported back.");
-                }
-
-                if (null != pipe4)
-                {
-                    pipe4.thrd.Join();
-                    //Console.WriteLine(pipe4.thrd.Name + " reported back.");
-                }
-                //Console.WriteLine("All threads finished.");
 
                 //Add one to PC
                 registers[5]++;
