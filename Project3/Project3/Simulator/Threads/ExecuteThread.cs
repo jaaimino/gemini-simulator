@@ -2,25 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Project3
 {
     class ExecuteThread : OperationThread
     {
-        Instruction inst;
-        CPU cpu;
-        public ExecuteThread(Instruction inst, CPU cpu) : base()
+        public CPU cpu;
+        public ExecuteThread(AutoResetEvent mainListener) : base(mainListener)
         {
-            thrd.Name = "Execute Thread";
-            this.inst = inst;
-            this.cpu = cpu;
         }
         public override void run()
         {
-            base.run();
-            //Console.WriteLine("Opcode for exec: " + inst.opcode + " flag for exec " + inst.flag + " operand for exec: " + inst.operand);
-            ALU.execute(cpu, inst.opcode, inst.flag, inst.operand);
+            while (true)
+            {
+                listener.WaitOne();
+                if (base.done)
+                {
+                    break;
+                }
+                if (null != inst)
+                {
+                    //Console.WriteLine("Opcode for exec: " + inst.opcode + " flag for exec " + inst.flag + " operand for exec: " + inst.operand);
+                    ALU.execute(cpu, inst.opcode, inst.flag, inst.operand);
+                }
+                mainListener.Set();
+            }
         }
     }
 }

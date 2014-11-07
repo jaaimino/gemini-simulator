@@ -43,6 +43,7 @@ namespace Project3
         private int delay;
         public AutoResetEvent[] threadListeners;
         private OperationThread[] pipeThreads;
+        private Thread[] threads;
 
         public CPU(Memory memory)
         {
@@ -62,8 +63,21 @@ namespace Project3
             registers[9] = 0; //IR (Get first instruction ready to process)
             registers[10] = 0; //CC
             threadListeners = new AutoResetEvent[4];
-            pipeThreads[0] = new FetchThread();
-
+            threadListeners[0] = new AutoResetEvent(false);
+            threadListeners[1] = new AutoResetEvent(false);
+            threadListeners[2] = new AutoResetEvent(false);
+            threadListeners[3] = new AutoResetEvent(false);
+            pipeThreads = new OperationThread[4];
+            pipeThreads[0] = new FetchThread(threadListeners[0]);
+            pipeThreads[1] = new DecodeThread(threadListeners[1]);
+            pipeThreads[2] = new ExecuteThread(threadListeners[2]);
+            pipeThreads[3] = new StoreThread(threadListeners[3]);
+            threads = new Thread[4];
+            for (int i = 0; i < threads.Count(); i++)
+            {
+                threads[i] = new Thread(pipeThreads[i].run);
+                threads[i].Start();
+            }
         }
 
         public void Cycle()
@@ -77,12 +91,24 @@ namespace Project3
                 short inst = FindNextInstruction();
                 queue[0] = (inst < 0) ? null : new Instruction(inst);
 
+                //Set up threads to do next step
+                ((FetchThread)pipeThreads[0]).registers = this.registers;
+                ((FetchThread)pipeThreads[0]).inst = queue[0];
+
+                ((DecodeThread)pipeThreads[1]).inst = queue[1];
+
+                ((ExecuteThread)pipeThreads[2]).inst = queue[2];
+                ((ExecuteThread)pipeThreads[2]).cpu = this;
+
+                ((StoreThread)pipeThreads[3]).inst = queue[3];
+                ((StoreThread)pipeThreads[3]).cpu = this;
+
                 //Set all other threads so they can execute
                 foreach (OperationThread t in pipeThreads){
                     t.listener.Set();
                 }
 
-                //Set all other threads so they can execute
+                //Waits on other threads
                 foreach (AutoResetEvent a in threadListeners)
                 {
                     a.WaitOne();
@@ -90,6 +116,14 @@ namespace Project3
 
                 //Add one to PC
                 registers[5]++;
+
+                if (isDone())
+                {
+                    foreach (OperationThread o in pipeThreads)
+                    {
+                        o.done = true;
+                    }
+                }
             }
             else //Do non-pipeline stuff here
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Project3
@@ -11,19 +12,24 @@ namespace Project3
      */
     public class FetchThread : OperationThread
     {
-        Instruction instruction;
-        short[] registers;
+        public short[] registers;
 
-        public FetchThread() : base(){}
+        public FetchThread(AutoResetEvent mainListener) : base(mainListener){}
 
         public override void run()
         {
             while (true)
             {
+                listener.WaitOne();
                 if (done)
+                {
                     break;
-                listener.WaitOne();//Wait until main threads says to go
-                registers[9] = this.instruction.inst;
+                }
+                if (null != inst)
+                {
+                    registers[9] = this.inst.inst;
+                }
+                mainListener.Set();
             }
         }
     }

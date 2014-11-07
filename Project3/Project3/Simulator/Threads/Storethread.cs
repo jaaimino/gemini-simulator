@@ -2,19 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Project3
 {
     class StoreThread : OperationThread
     {
-        public StoreThread() : base()
+        public CPU cpu;
+
+        public StoreThread(AutoResetEvent mainListener) : base(mainListener)
         {
-            thrd.Name = "Store Thread";
         }
+
         public override void run()
         {
-            base.run();
+            while (true)
+            {
+                listener.WaitOne();
+                if (base.done)
+                {
+                    break;
+                }
+                mainListener.Set();
+            }
         }
     }
 }
