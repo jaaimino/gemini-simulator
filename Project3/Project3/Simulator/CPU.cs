@@ -39,7 +39,7 @@ namespace Project3
         private Memory memory;
 
         //For pipelining
-        private Instruction[] queue;
+        private InstructionData[] queue;
         private int delay;
         public AutoResetEvent[] threadListeners;
         private OperationThread[] pipeThreads;
@@ -49,7 +49,7 @@ namespace Project3
         {
             this.memory = memory;
             this.delay = 0;
-            this.queue = new Instruction[4];
+            this.queue = new InstructionData[4];
             registers = new short[11];
             registers[0] = 0; //A
             registers[1] = 0; //B
@@ -89,7 +89,7 @@ namespace Project3
                 queue[2] = queue[1];
                 queue[1] = queue[0];
                 short inst = FindNextInstruction();
-                queue[0] = (inst < 0) ? null : new Instruction(inst);
+                queue[0] = (inst < 0) ? null : new InstructionData(inst);
 
                 //Set up threads to do next step
                 ((FetchThread)pipeThreads[0]).registers = this.registers;
@@ -203,7 +203,7 @@ namespace Project3
             this.registers[5] = pc;
         }
 
-        public Instruction[] getQueue()
+        public InstructionData[] getQueue()
         {
             return this.queue;
         }

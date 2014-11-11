@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project3
 {
-    public class Instruction
+    public class InstructionData
     {
         public short inst;
         public short opcode;
@@ -14,7 +14,7 @@ namespace Project3
         public Boolean flag;
         public Boolean complete;
 
-        public Instruction(short inst)
+        public InstructionData(short inst)
         {
             this.inst = inst;
         }
