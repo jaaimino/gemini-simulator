@@ -74,7 +74,7 @@
     <Compile Include="Simulator\Cache\Cache.cs" />
     <Compile Include="Simulator\Cache\Set.cs" />
     <Compile Include="Simulator\CPU.cs" />
-    <Compile Include="Simulator\Instruction.cs" />
+    <Compile Include="Simulator\InstructionData.cs" />
     <Compile Include="Simulator\MainMemory.cs" />
     <Compile Include="Simulator\Memory.cs" />
     <Compile Include="Simulator\Simulator.cs" />
