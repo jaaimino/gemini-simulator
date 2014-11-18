@@ -92,14 +92,19 @@ namespace Project3
                 queue[0] = (inst < 0) ? null : new InstructionData(inst);
 
                 //Set up threads to do next step
+
+                //Fetch Thread
                 ((FetchThread)pipeThreads[0]).registers = this.registers;
                 ((FetchThread)pipeThreads[0]).inst = queue[0];
 
+                //Decode Thread
                 ((DecodeThread)pipeThreads[1]).inst = queue[1];
 
+                //Execute Thread
                 ((ExecuteThread)pipeThreads[2]).inst = queue[2];
                 ((ExecuteThread)pipeThreads[2]).cpu = this;
 
+                //Store Thread
                 ((StoreThread)pipeThreads[3]).inst = queue[3];
                 ((StoreThread)pipeThreads[3]).cpu = this;
 
@@ -115,7 +120,10 @@ namespace Project3
                 }
 
                 //Add one to PC
-                registers[5]++;
+                if (!isDone())
+                {
+                    registers[5]++;
+                }
 
                 if (isDone())
                 {

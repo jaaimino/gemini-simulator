@@ -13,10 +13,14 @@ namespace Project3
         public short operand;
         public Boolean flag;
         public Boolean complete;
+        public Boolean memop;
 
         public InstructionData(short inst)
         {
             this.inst = inst;
+            this.memop = false;
+            this.flag = false;
+            this.complete = false;
         }
     }
 }

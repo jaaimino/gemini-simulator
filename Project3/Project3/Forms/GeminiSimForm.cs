@@ -1,5 +1,4 @@
-﻿
-/**
+﻿/**
  * 
  * Author: Jacob Aimino
  * 
@@ -102,10 +101,10 @@ namespace Project3
 
             //Show instructions in pipeline
             InstructionData[] queue = cpu.getQueue();
-            this.inst1Title.Text = (null == queue[0]) ? "---" : Translator.convertToHumanString(queue[0].inst);
-            this.inst2Title.Text = (null == queue[1]) ? "---" : Translator.convertToHumanString(queue[1].inst);
-            this.inst3Title.Text = (null == queue[2]) ? "---" : Translator.convertToHumanString(queue[2].inst);
-            this.inst4Title.Text = (null == queue[3]) ? "---" : Translator.convertToHumanString(queue[3].inst);
+            this.instF.Text = (null == queue[0]) ? "---" : Translator.convertToHumanString(queue[0].inst);
+            this.instD.Text = (null == queue[1]) ? "---" : Translator.convertToHumanString(queue[1].inst);
+            this.instX.Text = (null == queue[2]) ? "---" : Translator.convertToHumanString(queue[2].inst);
+            this.instM.Text = (null == queue[3]) ? "---" : Translator.convertToHumanString(queue[3].inst);
         }
 
         private void updateInstructionIndex(int linenumber, int totalInstructions)

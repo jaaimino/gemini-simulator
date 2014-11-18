@@ -1,4 +1,11 @@
-﻿using System;
+﻿/**
+ * 
+ * Author: Jacob Aimino
+ * 
+ * Desc: Execute Thread
+ * 
+ **/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +17,12 @@ namespace Project3
     class ExecuteThread : OperationThread
     {
         public CPU cpu;
-        public ExecuteThread(AutoResetEvent mainListener) : base(mainListener)
-        {
-        }
+        public ExecuteThread(AutoResetEvent mainListener) : base(mainListener){}
+
+        /**
+         * Run exectute thread.
+         * Should check for any issues/stalls/missed branches
+         */
         public override void run()
         {
             while (true)

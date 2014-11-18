@@ -26,6 +26,7 @@ namespace Project3
                     inst.opcode = (short)Translator.decodeCommand(inst.inst);
                     inst.flag = Translator.decodeImmediateFlag(inst.inst);
                     inst.operand = (short)Translator.decodeOperand(inst.inst);
+                    inst.memop = Translator.isMemOp(inst.inst);
                 }
                 mainListener.Set();
             }

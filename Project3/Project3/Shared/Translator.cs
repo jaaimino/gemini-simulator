@@ -106,5 +106,11 @@ namespace Project3
             commandString += Translator.decodeOperand(instruction);
             return commandString;
         }
+
+        public static Boolean isMemOp(short p)
+        {
+
+            return false;
+        }
     }
 }
