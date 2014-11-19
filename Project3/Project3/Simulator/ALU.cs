@@ -3,6 +3,8 @@
  * 
  * Desc: Will contain functions for executing arbitrary binary things
  * 
+ * Should catch data hazards inside execute helper functions
+ * 
  **/
 using System;
 using System.Collections.Generic;
@@ -17,51 +19,50 @@ namespace Project3
         /**
          * There's probably a better way of doing this.. but oh well ;)
          */
-        public static void execute(CPU cpu, short opcode, Boolean immediateflag, short operand)
+        public static void execute(CPU cpu, InstructionData inst)
         {
-            switch (opcode)
+            switch (inst.opcode)
             {
                 case 0:
-                    LDA(cpu, immediateflag, operand);
+                    LDA(cpu, inst);
                     break;
                 case 1:
-                    STA(cpu, operand);
                     break;
                 case 2:
-                    ADD(cpu, immediateflag, operand);
+                    ADD(cpu, inst);
                     break;
                 case 3:
-                    SUB(cpu, immediateflag, operand);
+                    SUB(cpu, inst);
                     break;
                 case 4:
-                    MUL(cpu, immediateflag, operand);
+                    MUL(cpu, inst);
                     break;
                 case 5:
-                    DIV(cpu, immediateflag, operand);
+                    DIV(cpu, inst);
                     break;
                 case 6:
-                    AND(cpu, immediateflag, operand);
+                    AND(cpu, inst);
                     break;
                 case 7:
-                    OR(cpu, immediateflag, operand);
+                    OR(cpu, inst);
                     break;
                 case 8:
-                    SHL(cpu, operand);
+                    SHL(cpu, inst);
                     break;
                 case 9:
-                    NOTA(cpu);
+                    NOTA(cpu, inst);
                     break;
                 case 10:
-                    BA(cpu, operand);
+                    BA(cpu, inst);
                     break;
                 case 11:
-                    BE(cpu, operand);
+                    BE(cpu, inst);
                     break;
                 case 12:
-                    BL(cpu, operand);
+                    BL(cpu, inst);
                     break;
                 case 13:
-                    BG(cpu, operand);
+                    BG(cpu, inst);
                     break;
                 case 14:
                     NOP();
@@ -72,46 +73,107 @@ namespace Project3
             }
         }
 
+        /**
+         * There's probably a better way of doing this.. but oh well ;)
+         */
+        public static void memoryoperation(CPU cpu, InstructionData inst)
+        {
+            switch (inst.opcode)
+            {
+                case 0:
+                    break;
+                case 1:
+                    MemSTA(cpu, inst);
+                    break;
+                case 2:
+                    SetResult(cpu, inst);
+                    break;
+                case 3:
+                    SetResult(cpu, inst);
+                    break;
+                case 4:
+                    SetResult(cpu, inst);
+                    break;
+                case 5:
+                    SetResult(cpu, inst);
+                    break;
+                case 6:
+                    SetResult(cpu, inst);
+                    break;
+                case 7:
+                    SetResult(cpu, inst);
+                    break;
+                case 8:
+                    SetResult(cpu, inst);
+                    break;
+                case 9:
+                    SetResult(cpu, inst);
+                    break;
+                case 10:
+                    break;
+                case 11:
+                    break;
+                case 12:
+                    break;
+                case 13:
+                    break;
+                case 14:
+                    break;
+                case 15:
+                    break;
+            }
+        }
+
+        /*
+         * - Sets result in memory of generic accumulator function
+         */
+        private static void SetResult(CPU cpu, InstructionData inst)
+        {
+            cpu.setRegisterValue(2, inst.result);
+        }
+
         /*
          * - LDA #$val Sets the accumulator with the value
          * - LDA $m	Sets the accumulator from a memory location
+         * 
+         * IMPORTANT: should stall pipeline by one cycle
          */
-        private static void LDA(CPU cpu, Boolean immediate, short operand)
+        private static void LDA(CPU cpu, InstructionData inst)
         {
-            if (immediate)
+            if (inst.immediate)
             {
-                cpu.setRegisterValue(2, operand);
+                cpu.setRegisterValue(2, inst.operand);
             }
             else
             {
-                cpu.setRegisterValue(2, (short)cpu.getMemory().getMemoryLocation(operand));
+                cpu.setRegisterValue(2, (short)cpu.getMemory().getMemoryLocation(inst.operand));
             }
         }
 
         /*
          * - STA $m  Store the accumulator to a memory location
          */
-        private static void STA(CPU cpu, short operand)
+        private static void MemSTA(CPU cpu, InstructionData inst)
         {
             int acc = (int)(cpu.getRegisterValue(2)); //Get accumulator value
-            cpu.getMemory().setMemoryLocation(operand, acc);
+            cpu.getMemory().setMemoryLocation(inst.operand, acc);
         }
 
         /*
          * - ADD $m	Add the value in memory to the accumulator
          * - ADD #$val     Add the value to the accumulator
          */
-        private static void ADD(CPU cpu, Boolean immediate, short operand)
+        private static void ADD(CPU cpu, InstructionData inst)
         {
             short acc = cpu.getRegisterValue(2);
-            if (immediate)
+            if (inst.immediate)
             {
-                cpu.setRegisterValue(2, (short)(acc + operand));
+                inst.result = (short)(acc + inst.operand);
             }
             else
             {
-                short value = (short)cpu.getMemory().getMemoryLocation(operand);
-                cpu.setRegisterValue(2, (short)(acc + value));
+                short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
+                inst.result = (short)(acc + value);
             }
         }
 
@@ -119,17 +181,17 @@ namespace Project3
          * - SUB $m	Subtract the value in memory to the accumulator
          * - SUB #$val     Subtract the value to the accumulator
          */
-        private static void SUB(CPU cpu, Boolean immediate, short operand)
+        private static void SUB(CPU cpu, InstructionData inst)
         {
             short acc = cpu.getRegisterValue(2);
-            if (immediate)
+            if (inst.immediate)
             {
-                cpu.setRegisterValue(2, (short)(acc - operand));
+                inst.result = (short)(acc - inst.operand);
             }
             else
             {
-                short value = (short)cpu.getMemory().getMemoryLocation(operand);
-                cpu.setRegisterValue(2, (short)(acc - value));
+                short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
+                inst.result = (short)(acc - value);
             }
         }
 
@@ -137,17 +199,17 @@ namespace Project3
          * - AND $m	Logical "and" of memory and accumulator
          * - AND #$val     Logical "and" of value and accumulator
          */
-        private static void AND(CPU cpu, Boolean immediate, short operand)
+        private static void AND(CPU cpu, InstructionData inst)
         {
             short acc = cpu.getRegisterValue(2);
-            if (immediate)
+            if (inst.immediate)
             {
-                cpu.setRegisterValue(2, (short)(acc & operand));
+                inst.result = (short)(acc & inst.operand);
             }
             else
             {
-                short value = (short)cpu.getMemory().getMemoryLocation(operand);
-                cpu.setRegisterValue(2, (short)(acc & value));
+                short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
+                inst.result = (short)(acc & value);
             }
         }
 
@@ -155,53 +217,53 @@ namespace Project3
          * - OR  $m	Logical "or" of memory and accumulator
          * - OR  #$val     Logical "or" or value and the accumulator
          */
-        private static void OR(CPU cpu, Boolean immediate, short operand)
+        private static void OR(CPU cpu, InstructionData inst)
         {
             short acc = cpu.getRegisterValue(2);
-            if (immediate)
+            if (inst.immediate)
             {
-                cpu.setRegisterValue(2, (short)(acc | operand));
+                inst.result = (short)(acc | inst.operand);
             }
             else
             {
-                short value = (short)cpu.getMemory().getMemoryLocation(operand);
-                cpu.setRegisterValue(2, (short)(acc | value));
+                short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
+                inst.result = (short)(acc | value);
             }
         }
 
         /*
          * - SHL #$val Shift the accumulator by the number of bits to the left
          */
-        private static void SHL(CPU cpu, short operand)
+        private static void SHL(CPU cpu, InstructionData inst)
         {
             short acc = cpu.getRegisterValue(2);
-            cpu.setRegisterValue(2, (short)(acc << operand));
+            inst.result = (short)(acc << inst.operand);
         }
 
         /*
          * - NOTA		Logical "not" of accumulator
          */
-        private static void NOTA(CPU cpu)
+        private static void NOTA(CPU cpu, InstructionData inst)
         {
             short acc = cpu.getRegisterValue(2);
-            cpu.setRegisterValue(2, (short)~cpu.getRegisterValue(2));
+            inst.result = (short)~cpu.getRegisterValue(2);
         }
 
         /*
          * - MUL $m        Multiply the accumulator by the value in memory
          * - MUL #$val     Multiply the accumulator by the value 
          */
-        private static void MUL(CPU cpu, Boolean immediate, short operand)
+        private static void MUL(CPU cpu, InstructionData inst)
         {
             short acc = cpu.getRegisterValue(2);
-            if (immediate)
+            if (inst.immediate)
             {
-                cpu.setRegisterValue(2, (short)(acc * operand));
+                inst.result = (short)(acc * inst.operand);
             }
             else
             {
-                short value = (short)cpu.getMemory().getMemoryLocation(operand);
-                cpu.setRegisterValue(2, (short)(acc * value));
+                short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
+                inst.result = (short)(acc * value);
             }
         }
 
@@ -209,61 +271,61 @@ namespace Project3
          * - DIV $m        Divide the accumulator by the value in memory
          * - DIV #$val     Divide the accumulator by the value
          */
-        private static void DIV(CPU cpu, Boolean immediate, short operand)
+        private static void DIV(CPU cpu, InstructionData inst)
         {
             short acc = cpu.getRegisterValue(2);
-            if (immediate)
+            if (inst.immediate)
             {
-                cpu.setRegisterValue(2, (short)(acc / operand));
+                inst.result = (short)(acc / inst.operand);
             }
             else
             {
-                short value = (short)cpu.getMemory().getMemoryLocation(operand);
-                cpu.setRegisterValue(2, (short)(acc / value));
+                short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
+                inst.result = (short)(acc / value);
             }
         }
 
         /*
          * - BA lbl        Always branch to label (goto)
          */
-        private static void BA(CPU cpu, short operand)
+        private static void BA(CPU cpu, InstructionData inst)
         {
-            cpu.setRegisterValue(5, operand);
+            cpu.setRegisterValue(5, inst.operand);
         }
 
         /*
          * - BE lbl	Branch to label if operation resulted in 0
          */
-        private static void BE(CPU cpu, short operand)
+        private static void BE(CPU cpu, InstructionData inst)
         {
             short acc = cpu.getRegisterValue(2);
             if (acc == 0)
             {
-                cpu.setRegisterValue(5, operand);
+                cpu.setRegisterValue(5, inst.operand);
             }
         }
 
         /*
          * - BL lbl        Branch to label if operation resulted in Negative
          */
-        private static void BL(CPU cpu, short operand)
+        private static void BL(CPU cpu, InstructionData inst)
         {
             short acc = cpu.getRegisterValue(2);
             if (acc < 0)
             {
-                cpu.setRegisterValue(5, operand);
+                cpu.setRegisterValue(5, inst.operand);
             }
         }
 
         /*
          * - BG lbl        Branch to label if operation resulted in Positive 
          */
-        private static void BG(CPU cpu, short operand)
+        private static void BG(CPU cpu, InstructionData inst)
         {
             short acc = cpu.getRegisterValue(2);
             if (acc >= 0)
             {
-                cpu.setRegisterValue(5, operand);
+                cpu.setRegisterValue(5, inst.operand);
             }
         }
 

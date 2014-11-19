@@ -24,7 +24,7 @@ namespace Project3
                 if (null != inst)
                 {
                     inst.opcode = (short)Translator.decodeCommand(inst.inst);
-                    inst.flag = Translator.decodeImmediateFlag(inst.inst);
+                    inst.immediate = Translator.decodeImmediateFlag(inst.inst);
                     inst.operand = (short)Translator.decodeOperand(inst.inst);
                     inst.memop = Translator.isMemOp(inst.inst);
                 }

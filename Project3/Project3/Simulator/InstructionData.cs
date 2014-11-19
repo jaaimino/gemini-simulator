@@ -11,15 +11,16 @@ namespace Project3
         public short inst;
         public short opcode;
         public short operand;
-        public Boolean flag;
+        public Boolean immediate;
         public Boolean complete;
         public Boolean memop;
+        public short result;
 
         public InstructionData(short inst)
         {
             this.inst = inst;
             this.memop = false;
-            this.flag = false;
+            this.immediate = false;
             this.complete = false;
         }
     }

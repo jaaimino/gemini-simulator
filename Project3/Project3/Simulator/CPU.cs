@@ -147,7 +147,7 @@ namespace Project3
                 registers[5]++;
 
                 //Carry out instruction
-                ALU.execute(this, opcode, immediate, operand);
+                //ALU.execute(this, inst);
             }
         }
 

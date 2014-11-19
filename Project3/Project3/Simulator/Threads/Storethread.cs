@@ -24,6 +24,11 @@ namespace Project3
                 {
                     break;
                 }
+                if (null != inst)
+                {
+                    //Console.WriteLine("Opcode for exec: " + inst.opcode + " flag for exec " + inst.flag + " operand for exec: " + inst.operand);
+                    ALU.memoryoperation(cpu, inst);
+                }
                 mainListener.Set();
             }
         }
