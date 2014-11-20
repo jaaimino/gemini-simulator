@@ -93,11 +93,15 @@ namespace Project3
             //Show current instruction code
             updateNextInstruction(nextInstructionPreview, cpu.isDone());
 
+            //Cache stats
             int total = memory.hitCount + memory.missCount;
             this.hitsValue.Text = memory.hitCount + "";
             this.missesValue.Text = memory.missCount + "";
             this.missrateValue.Text = ((float)memory.missCount / total) + "";
             this.hitrateValue.Text = ((float)memory.hitCount / total) + "";
+
+            //Pipeline stats
+            this.nopsCount.Text = cpu.delays+"";
 
             //Show instructions in pipeline
             InstructionData[] queue = cpu.getQueue();
@@ -114,7 +118,7 @@ namespace Project3
 
         private void updateNextInstruction(short nextInstructionPreview, Boolean isDone)
         {
-            this.nextInstLabel.Text = "Instruction: " + Translator.convertToHumanString(nextInstructionPreview);
+            this.nextInstLabel.Text = "Next Instruction: " + Translator.convertToHumanString(nextInstructionPreview);
             Translator.convertToHumanString(nextInstructionPreview);
         }
 

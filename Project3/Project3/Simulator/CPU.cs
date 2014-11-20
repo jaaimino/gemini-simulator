@@ -41,6 +41,10 @@ namespace Project3
         //For pipelining
         private InstructionData[] queue;
         private int stall;
+        private int flush;
+
+        //Stats
+        public int delays;
 
         public CPU(Memory memory)
         {
@@ -60,89 +64,90 @@ namespace Project3
             registers[9] = 0; //IR (Get first instruction ready to process)
             registers[10] = 0; //CC
             this.stall = 0;
+            this.flush = 0;
         }
 
         public void Cycle()
         {
-            if (true) //Read from settings file to see if pipelining is activated
+            //If stall is set, don't move everything
+            if (stall > 0)
             {
-                //If stall is set, don't move everything
-                if (stall >= 1)
-                {
-                    queue[3] = queue[2];
-                    queue[2] = NOPFactory();
-                    stall = stall - 1;
-                    Console.WriteLine("Delay is " + stall);
-                }
-                else //No stall, so move along
-                {
-                    queue[3] = queue[2];
-                    queue[2] = queue[1];
-                    queue[1] = queue[0];
-                    short inst = FindNextInstruction();
-                    queue[0] = (inst < 0) ? null : new InstructionData(inst);
-                }
-
-                //Set up threads to do next step
-
-                //Fetch Thread
-                ((FetchThread)ThreadManager.pipeThreads[0]).registers = this.registers;
-                ((FetchThread)ThreadManager.pipeThreads[0]).inst = queue[0];
-
-                //Decode Thread
-                ((DecodeThread)ThreadManager.pipeThreads[1]).inst = queue[1];
-
-                //Execute Thread
-                ((ExecuteThread)ThreadManager.pipeThreads[2]).inst = queue[2];
-                ((ExecuteThread)ThreadManager.pipeThreads[2]).cpu = this;
-
-                //Store Thread
-                ((StoreThread)ThreadManager.pipeThreads[3]).inst = queue[3];
-                ((StoreThread)ThreadManager.pipeThreads[3]).cpu = this;
-
-                //Set all other threads so they can execute
-                foreach (OperationThread t in ThreadManager.pipeThreads)
-                {
-                    t.listener.Set();
-                }
-
-                //Waits on other threads
-                foreach (AutoResetEvent a in ThreadManager.threadListeners)
-                {
-                    a.WaitOne();
-                }
-
-                //Add one to PC
-                if (!isDone() && (stall <= 0))
-                {
-                    registers[5]++;
-                }
-
-                if (isDone())
-                {
-                }
+                delays++;
+                queue[3] = queue[2];
+                queue[2] = NOPFactory();
+                stall = stall - 1;
+                Console.WriteLine("Delay is " + stall);
             }
-            else //Do non-pipeline stuff here
+            else if (flush > 0)
             {
-                short instruction = FindNextInstruction();
-                registers[9] = instruction;
+                delays++;
+                Console.WriteLine("Flushing pipeline.");
+                queue[1] = NOPFactory();
+                queue[0] = NOPFactory();
 
-                //Break apart short value to parts
-                short opcode = (short)Translator.decodeCommand(instruction);
-                Boolean immediate = Translator.decodeImmediateFlag(instruction);
-                short operand = (short)Translator.decodeOperand(instruction);
+                //For now, just stop
+                queue[3] = queue[2];
+                queue[2] = queue[1];
+                queue[1] = queue[0];
 
-                //Add one to PC
+                short inst = FindNextInstruction();
+                queue[0] = (inst < 0) ? null : new InstructionData(inst);
+
+                flush-=1;
+            }
+            else //No stall, so move along
+            {
+                queue[3] = queue[2];
+                queue[2] = queue[1];
+                queue[1] = queue[0];
+                short inst = FindNextInstruction();
+                queue[0] = (inst < 0) ? null : new InstructionData(inst);
+            }
+
+            //Set up threads to do next step
+
+            //Fetch Thread
+            ((FetchThread)ThreadManager.pipeThreads[0]).registers = this.registers;
+            ((FetchThread)ThreadManager.pipeThreads[0]).inst = queue[0];
+
+            //Decode Thread
+            ((DecodeThread)ThreadManager.pipeThreads[1]).inst = queue[1];
+
+            //Execute Thread
+            ((ExecuteThread)ThreadManager.pipeThreads[2]).inst = queue[2];
+            ((ExecuteThread)ThreadManager.pipeThreads[2]).cpu = this;
+
+            //Store Thread
+            ((StoreThread)ThreadManager.pipeThreads[3]).inst = queue[3];
+            ((StoreThread)ThreadManager.pipeThreads[3]).cpu = this;
+
+            //Set all other threads so they can execute
+            foreach (OperationThread t in ThreadManager.pipeThreads)
+            {
+                t.listener.Set();
+            }
+
+            //Waits on other threads
+            foreach (AutoResetEvent a in ThreadManager.threadListeners)
+            {
+                a.WaitOne();
+            }
+
+            //Add one to PC
+            if (!(getPC()>memory.getInstructionCount()) && !(stall > 0) && !(flush > 0))
+            {
                 registers[5]++;
-
-                //Carry out instruction
-                //ALU.execute(this, inst);
             }
         }
 
         public void stallPipeLine(int cycles)
         {
             this.stall += cycles;
+        }
+
+        public void flushPipeline()
+        {
+            this.flush += 1;
         }
 
         private InstructionData NOPFactory()

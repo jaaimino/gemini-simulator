@@ -294,6 +294,7 @@ namespace Project3
         private static void BA(CPU cpu, InstructionData inst)
         {
             cpu.setRegisterValue(5, inst.operand);
+            cpu.flushPipeline();
         }
 
         /*
@@ -305,6 +306,7 @@ namespace Project3
             if (acc == 0)
             {
                 cpu.setRegisterValue(5, inst.operand);
+                cpu.flushPipeline();
             }
         }
 
@@ -317,6 +319,7 @@ namespace Project3
             if (acc < 0)
             {
                 cpu.setRegisterValue(5, inst.operand);
+                cpu.flushPipeline();
             }
         }
 
@@ -329,6 +332,7 @@ namespace Project3
             if (acc >= 0)
             {
                 cpu.setRegisterValue(5, inst.operand);
+                cpu.flushPipeline();
             }
         }
 
@@ -346,6 +350,7 @@ namespace Project3
         private static void HLT(CPU cpu)
         {
             cpu.setPC((short)(cpu.getMemory().getInstructionCount()+1));
+            cpu.flushPipeline();
         }
 
     }
