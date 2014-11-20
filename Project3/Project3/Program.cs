@@ -16,9 +16,11 @@ namespace Project3
         {
             Settings.initialize();
             OpcodeMapper.initialize();
+            ThreadManager.initialize();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new GeminiSimForm());
+            ThreadManager.stopAllThreads();
         }
     }
 }

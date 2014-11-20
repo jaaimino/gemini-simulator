@@ -148,6 +148,7 @@ namespace Project3
             {
                 cpu.setRegisterValue(2, (short)cpu.getMemory().getMemoryLocation(inst.operand));
             }
+            cpu.stallPipeLine(1);
         }
 
         /*
@@ -265,6 +266,7 @@ namespace Project3
                 short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
                 inst.result = (short)(acc * value);
             }
+            cpu.stallPipeLine(4);
         }
 
         /*
@@ -283,6 +285,7 @@ namespace Project3
                 short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
                 inst.result = (short)(acc / value);
             }
+            cpu.stallPipeLine(4);
         }
 
         /*
@@ -334,7 +337,7 @@ namespace Project3
          */
         private static void NOP()
         {
-
+            Console.WriteLine("NOP executed");
         }
 
         /*

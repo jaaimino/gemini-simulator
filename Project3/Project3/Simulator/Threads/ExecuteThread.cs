@@ -35,6 +35,7 @@ namespace Project3
                 if (null != inst)
                 {
                     //Console.WriteLine("Opcode for exec: " + inst.opcode + " flag for exec " + inst.flag + " operand for exec: " + inst.operand);
+                    Console.WriteLine(Translator.convertToHumanString(inst.inst));
                     ALU.execute(cpu, inst);
                 }
                 mainListener.Set();

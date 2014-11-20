@@ -40,15 +40,12 @@ namespace Project3
 
         //For pipelining
         private InstructionData[] queue;
-        private int delay;
-        public AutoResetEvent[] threadListeners;
-        private OperationThread[] pipeThreads;
-        private Thread[] threads;
+        private int stall;
 
         public CPU(Memory memory)
         {
             this.memory = memory;
-            this.delay = 0;
+            this.stall = 0;
             this.queue = new InstructionData[4];
             registers = new short[11];
             registers[0] = 0; //A
@@ -62,75 +59,67 @@ namespace Project3
             registers[8] = 0; //TEMP
             registers[9] = 0; //IR (Get first instruction ready to process)
             registers[10] = 0; //CC
-            threadListeners = new AutoResetEvent[4];
-            threadListeners[0] = new AutoResetEvent(false);
-            threadListeners[1] = new AutoResetEvent(false);
-            threadListeners[2] = new AutoResetEvent(false);
-            threadListeners[3] = new AutoResetEvent(false);
-            pipeThreads = new OperationThread[4];
-            pipeThreads[0] = new FetchThread(threadListeners[0]);
-            pipeThreads[1] = new DecodeThread(threadListeners[1]);
-            pipeThreads[2] = new ExecuteThread(threadListeners[2]);
-            pipeThreads[3] = new StoreThread(threadListeners[3]);
-            threads = new Thread[4];
-            for (int i = 0; i < threads.Count(); i++)
-            {
-                threads[i] = new Thread(pipeThreads[i].run);
-                threads[i].Start();
-            }
+            this.stall = 0;
         }
 
         public void Cycle()
         {
             if (true) //Read from settings file to see if pipelining is activated
             {
-                //Move everything in the queue along
-                queue[3] = queue[2];
-                queue[2] = queue[1];
-                queue[1] = queue[0];
-                short inst = FindNextInstruction();
-                queue[0] = (inst < 0) ? null : new InstructionData(inst);
+                //If stall is set, don't move everything
+                if (stall >= 1)
+                {
+                    queue[3] = queue[2];
+                    queue[2] = NOPFactory();
+                    stall = stall - 1;
+                    Console.WriteLine("Delay is " + stall);
+                }
+                else //No stall, so move along
+                {
+                    queue[3] = queue[2];
+                    queue[2] = queue[1];
+                    queue[1] = queue[0];
+                    short inst = FindNextInstruction();
+                    queue[0] = (inst < 0) ? null : new InstructionData(inst);
+                }
 
                 //Set up threads to do next step
 
                 //Fetch Thread
-                ((FetchThread)pipeThreads[0]).registers = this.registers;
-                ((FetchThread)pipeThreads[0]).inst = queue[0];
+                ((FetchThread)ThreadManager.pipeThreads[0]).registers = this.registers;
+                ((FetchThread)ThreadManager.pipeThreads[0]).inst = queue[0];
 
                 //Decode Thread
-                ((DecodeThread)pipeThreads[1]).inst = queue[1];
+                ((DecodeThread)ThreadManager.pipeThreads[1]).inst = queue[1];
 
                 //Execute Thread
-                ((ExecuteThread)pipeThreads[2]).inst = queue[2];
-                ((ExecuteThread)pipeThreads[2]).cpu = this;
+                ((ExecuteThread)ThreadManager.pipeThreads[2]).inst = queue[2];
+                ((ExecuteThread)ThreadManager.pipeThreads[2]).cpu = this;
 
                 //Store Thread
-                ((StoreThread)pipeThreads[3]).inst = queue[3];
-                ((StoreThread)pipeThreads[3]).cpu = this;
+                ((StoreThread)ThreadManager.pipeThreads[3]).inst = queue[3];
+                ((StoreThread)ThreadManager.pipeThreads[3]).cpu = this;
 
                 //Set all other threads so they can execute
-                foreach (OperationThread t in pipeThreads){
+                foreach (OperationThread t in ThreadManager.pipeThreads)
+                {
                     t.listener.Set();
                 }
 
                 //Waits on other threads
-                foreach (AutoResetEvent a in threadListeners)
+                foreach (AutoResetEvent a in ThreadManager.threadListeners)
                 {
                     a.WaitOne();
                 }
 
                 //Add one to PC
-                if (!isDone())
+                if (!isDone() && (stall <= 0))
                 {
                     registers[5]++;
                 }
 
                 if (isDone())
                 {
-                    foreach (OperationThread o in pipeThreads)
-                    {
-                        o.done = true;
-                    }
                 }
             }
             else //Do non-pipeline stuff here
@@ -149,6 +138,21 @@ namespace Project3
                 //Carry out instruction
                 //ALU.execute(this, inst);
             }
+        }
+
+        public void stallPipeLine(int cycles)
+        {
+            this.stall += cycles;
+        }
+
+        private InstructionData NOPFactory()
+        {
+            const short NOP = 28672;
+            InstructionData inst = new InstructionData(28672);
+            inst.opcode = Translator.decodeCommand(NOP);
+            inst.immediate = false;
+            inst.operand = Translator.decodeOperand(NOP);
+            return inst;
         }
 
         /**

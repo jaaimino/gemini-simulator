@@ -84,6 +84,7 @@
     <Compile Include="Simulator\Threads\FetchThread.cs" />
     <Compile Include="Simulator\Threads\OperationThread.cs" />
     <Compile Include="Simulator\Threads\StoreThread.cs" />
+    <Compile Include="Simulator\Threads\ThreadManager.cs" />
     <EmbeddedResource Include="Forms\GeminiSimForm.resx">
       <DependentUpon>GeminiSimForm.cs</DependentUpon>
     </EmbeddedResource>
