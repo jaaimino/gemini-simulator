@@ -40,8 +40,8 @@ namespace Project3
 
         //For pipelining
         private InstructionData[] queue;
+        private Boolean flushing;
         private int stall;
-        private int flush;
 
         //Stats
         public int delays;
@@ -64,36 +64,24 @@ namespace Project3
             registers[9] = 0; //IR (Get first instruction ready to process)
             registers[10] = 0; //CC
             this.stall = 0;
-            this.flush = 0;
+            this.flushing = false;
         }
 
         public void Cycle()
         {
-            //If stall is set, don't move everything
             if (stall > 0)
             {
                 delays++;
+                if (flushing)
+                {
+                    Console.WriteLine("Handling flush.");
+                    queue[1] = null;
+                    queue[0] = null;
+                    flushing = false;
+                }
                 queue[3] = queue[2];
                 queue[2] = NOPFactory();
-                stall = stall - 1;
                 Console.WriteLine("Delay is " + stall);
-            }
-            else if (flush > 0)
-            {
-                delays++;
-                Console.WriteLine("Flushing pipeline.");
-                queue[1] = NOPFactory();
-                queue[0] = NOPFactory();
-
-                //For now, just stop
-                queue[3] = queue[2];
-                queue[2] = queue[1];
-                queue[1] = queue[0];
-
-                short inst = FindNextInstruction();
-                queue[0] = (inst < 0) ? null : new InstructionData(inst);
-
-                flush-=1;
             }
             else //No stall, so move along
             {
@@ -121,6 +109,17 @@ namespace Project3
             ((StoreThread)ThreadManager.pipeThreads[3]).inst = queue[3];
             ((StoreThread)ThreadManager.pipeThreads[3]).cpu = this;
 
+            //Add one to PC
+            if (!(getPC() > memory.getInstructionCount()) && !(stall > 0))
+            {
+                registers[5]++;
+            }
+
+            if (stall > 0)
+            {
+                stall = stall - 1;
+            }
+
             //Set all other threads so they can execute
             foreach (OperationThread t in ThreadManager.pipeThreads)
             {
@@ -132,12 +131,6 @@ namespace Project3
             {
                 a.WaitOne();
             }
-
-            //Add one to PC
-            if (!(getPC()>memory.getInstructionCount()) && !(stall > 0) && !(flush > 0))
-            {
-                registers[5]++;
-            }
         }
 
         public void stallPipeLine(int cycles)
@@ -147,7 +140,9 @@ namespace Project3
 
         public void flushPipeline()
         {
-            this.flush += 1;
+            Console.WriteLine("Flushing called.");
+            this.stall += 1;
+            this.flushing = true;
         }
 
         private InstructionData NOPFactory()

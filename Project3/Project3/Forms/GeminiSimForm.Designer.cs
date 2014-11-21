@@ -918,7 +918,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(171, 25);
             this.label2.TabIndex = 12;
-            this.label2.Text = "Delays";
+            this.label2.Text = "Added Cycles";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel4
