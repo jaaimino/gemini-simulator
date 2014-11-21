@@ -74,14 +74,14 @@ namespace Project3
                 delays++;
                 if (flushing)
                 {
-                    Console.WriteLine("Handling flush.");
+                    //Console.WriteLine("Handling flush.");
                     queue[1] = null;
                     queue[0] = null;
                     flushing = false;
                 }
                 queue[3] = queue[2];
                 queue[2] = NOPFactory();
-                Console.WriteLine("Delay is " + stall);
+                //Console.WriteLine("Delay is " + stall);
             }
             else //No stall, so move along
             {
@@ -140,7 +140,6 @@ namespace Project3
 
         public void flushPipeline()
         {
-            Console.WriteLine("Flushing called.");
             this.stall += 1;
             this.flushing = true;
         }

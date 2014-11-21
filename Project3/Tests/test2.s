@@ -1,6 +1,6 @@
 main:
-  add #$1
-  add #$1
+  add #$5
+  add #$2
   ba test
   add #$7
   add #$100

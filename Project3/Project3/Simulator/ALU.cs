@@ -86,28 +86,28 @@ namespace Project3
                     MemSTA(cpu, inst);
                     break;
                 case 2:
-                    SetResult(cpu, inst);
+                    //SetResult(cpu, inst);
                     break;
                 case 3:
-                    SetResult(cpu, inst);
+                    //SetResult(cpu, inst);
                     break;
                 case 4:
-                    SetResult(cpu, inst);
+                    //SetResult(cpu, inst);
                     break;
                 case 5:
-                    SetResult(cpu, inst);
+                    //SetResult(cpu, inst);
                     break;
                 case 6:
-                    SetResult(cpu, inst);
+                    //SetResult(cpu, inst);
                     break;
                 case 7:
-                    SetResult(cpu, inst);
+                    //SetResult(cpu, inst);
                     break;
                 case 8:
-                    SetResult(cpu, inst);
+                    //SetResult(cpu, inst);
                     break;
                 case 9:
-                    SetResult(cpu, inst);
+                    //SetResult(cpu, inst);
                     break;
                 case 10:
                     break;
@@ -176,6 +176,7 @@ namespace Project3
                 short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
                 inst.result = (short)(acc + value);
             }
+            cpu.setRegisterValue(2, inst.result);
         }
 
         /*
@@ -194,6 +195,7 @@ namespace Project3
                 short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
                 inst.result = (short)(acc - value);
             }
+            cpu.setRegisterValue(2, inst.result);
         }
 
         /*
@@ -212,6 +214,7 @@ namespace Project3
                 short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
                 inst.result = (short)(acc & value);
             }
+            cpu.setRegisterValue(2, inst.result);
         }
 
         /*
@@ -230,6 +233,7 @@ namespace Project3
                 short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
                 inst.result = (short)(acc | value);
             }
+            cpu.setRegisterValue(2, inst.result);
         }
 
         /*
@@ -239,6 +243,7 @@ namespace Project3
         {
             short acc = cpu.getRegisterValue(2);
             inst.result = (short)(acc << inst.operand);
+            cpu.setRegisterValue(2, inst.result);
         }
 
         /*
@@ -248,6 +253,7 @@ namespace Project3
         {
             short acc = cpu.getRegisterValue(2);
             inst.result = (short)~cpu.getRegisterValue(2);
+            cpu.setRegisterValue(2, inst.result);
         }
 
         /*
@@ -266,6 +272,7 @@ namespace Project3
                 short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
                 inst.result = (short)(acc * value);
             }
+            cpu.setRegisterValue(2, inst.result);
             cpu.stallPipeLine(4);
         }
 
@@ -285,6 +292,7 @@ namespace Project3
                 short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
                 inst.result = (short)(acc / value);
             }
+            cpu.setRegisterValue(2, inst.result);
             cpu.stallPipeLine(4);
         }
 
