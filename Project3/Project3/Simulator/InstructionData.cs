@@ -15,6 +15,7 @@ namespace Project3
         public Boolean complete;
         public Boolean memop;
         public short result;
+        public Boolean predictedBranch;
 
         public InstructionData(short inst)
         {
@@ -22,6 +23,7 @@ namespace Project3
             this.memop = false;
             this.immediate = false;
             this.complete = false;
+            this.predictedBranch = false;
         }
     }
 }

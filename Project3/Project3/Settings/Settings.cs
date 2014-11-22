@@ -22,6 +22,10 @@ namespace Project3
             {
                 settingsFile.set("cachesize", 10);
             }
+            if (!settingsFile.containsKey("branchpredict"))
+            {
+                settingsFile.set("branchpredict", false);
+            }
             settingsFile.Save();
         }
 

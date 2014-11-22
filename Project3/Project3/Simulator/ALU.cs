@@ -27,6 +27,7 @@ namespace Project3
                     LDA(cpu, inst);
                     break;
                 case 1:
+                    MemSTA(cpu, inst);
                     break;
                 case 2:
                     ADD(cpu, inst);
@@ -83,7 +84,6 @@ namespace Project3
                 case 0:
                     break;
                 case 1:
-                    MemSTA(cpu, inst);
                     break;
                 case 2:
                     //SetResult(cpu, inst);
@@ -146,9 +146,11 @@ namespace Project3
             }
             else
             {
-                cpu.setRegisterValue(2, (short)cpu.getMemory().getMemoryLocation(inst.operand));
+                short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
+                //Console.WriteLine("Location[" + inst.operand + "] = " + value);
+                cpu.setRegisterValue(2, value);
+                cpu.stallPipeLine(1);
             }
-            cpu.stallPipeLine(1);
         }
 
         /*
@@ -157,7 +159,9 @@ namespace Project3
         private static void MemSTA(CPU cpu, InstructionData inst)
         {
             int acc = (int)(cpu.getRegisterValue(2)); //Get accumulator value
+            //Console.WriteLine("Location[" + inst.operand + "] = " + acc);
             cpu.getMemory().setMemoryLocation(inst.operand, acc);
+            cpu.stallPipeLine(1);
         }
 
         /*
@@ -302,7 +306,24 @@ namespace Project3
         private static void BA(CPU cpu, InstructionData inst)
         {
             cpu.setRegisterValue(5, inst.operand);
-            cpu.flushPipeline();
+            if (Boolean.Parse(Settings.getValue("branchpredict"))) //Branch prediction, so we assume things are fine
+            {
+                cpu.predictor.logBranch(inst.inst, true); //No flushing here :)
+                if (! inst.predictedBranch) //Weren't pro-active, so need to flush
+                {
+                    //Console.WriteLine("Didn't predict correctly :(");
+                    cpu.flushPipeline();
+                }
+                else
+                {
+                    //Console.WriteLine("Predicted correctly :)");
+                }
+            }
+            else
+            {
+                //Console.WriteLine("Should flush.");
+                cpu.flushPipeline();
+            }
         }
 
         /*
@@ -314,7 +335,30 @@ namespace Project3
             if (acc == 0)
             {
                 cpu.setRegisterValue(5, inst.operand);
-                cpu.flushPipeline();
+                if (Boolean.Parse(Settings.getValue("branchpredict"))) //Branch prediction, so we assume things are fine
+                {
+                    cpu.predictor.logBranch(inst.inst, true); //No flushing here :)
+                    if (!inst.predictedBranch) //Weren't pro-active, so need to flush
+                    {
+                        //Console.WriteLine("Didn't predict correctly :(");
+                        cpu.flushPipeline();
+                    }
+                    else
+                    {
+                        //Console.WriteLine("Predicted correctly :)");
+                    }
+                }
+                else
+                {
+                    cpu.flushPipeline();
+                }
+            }
+            else
+            {
+                if (Boolean.Parse(Settings.getValue("branchpredict"))) //Branch prediction, so we assume things are fine
+                {
+                    cpu.predictor.logBranch(inst.inst, false); //No flushing here :)
+                }
             }
         }
 
@@ -327,7 +371,30 @@ namespace Project3
             if (acc < 0)
             {
                 cpu.setRegisterValue(5, inst.operand);
-                cpu.flushPipeline();
+                if (Boolean.Parse(Settings.getValue("branchpredict"))) //Branch prediction, so we assume things are fine
+                {
+                    cpu.predictor.logBranch(inst.inst, true); //No flushing here :)
+                    if (!inst.predictedBranch) //Weren't pro-active, so need to flush
+                    {
+                        //Console.WriteLine("Didn't predict correctly :(");
+                        cpu.flushPipeline();
+                    }
+                    else
+                    {
+                        //Console.WriteLine("Predicted correctly :)");
+                    }
+                }
+                else
+                {
+                    cpu.flushPipeline();
+                }
+            }
+            else
+            {
+                if (Boolean.Parse(Settings.getValue("branchpredict"))) //Branch prediction, so we assume things are fine
+                {
+                    cpu.predictor.logBranch(inst.inst, false); //No flushing here :)
+                }
             }
         }
 
@@ -340,7 +407,30 @@ namespace Project3
             if (acc >= 0)
             {
                 cpu.setRegisterValue(5, inst.operand);
-                cpu.flushPipeline();
+                if (Boolean.Parse(Settings.getValue("branchpredict"))) //Branch prediction, so we assume things are fine
+                {
+                    cpu.predictor.logBranch(inst.inst, true); //No flushing here :)
+                    if (!inst.predictedBranch) //Weren't pro-active, so need to flush
+                    {
+                        //Console.WriteLine("Didn't predict correctly :(");
+                        cpu.flushPipeline();
+                    }
+                    else
+                    {
+                        //Console.WriteLine("Predicted correctly :)");
+                    }
+                }
+                else
+                {
+                    cpu.flushPipeline();
+                }
+            }
+            else
+            {
+                if (Boolean.Parse(Settings.getValue("branchpredict"))) //Branch prediction, so we assume things are fine
+                {
+                    cpu.predictor.logBranch(inst.inst, false); //No flushing here :)
+                }
             }
         }
 
@@ -349,7 +439,6 @@ namespace Project3
          */
         private static void NOP()
         {
-            Console.WriteLine("NOP executed");
         }
 
         /*
@@ -357,7 +446,7 @@ namespace Project3
          */
         private static void HLT(CPU cpu)
         {
-            cpu.setPC((short)(cpu.getMemory().getInstructionCount()+1));
+            cpu.setPC((short)(cpu.getMemory().getInstructionCount() + 1));
             cpu.flushPipeline();
         }
 

@@ -107,10 +107,10 @@ namespace Project3
             return commandString;
         }
 
-        public static Boolean isMemOp(short p)
+        public static Boolean isBranch(short instruction)
         {
-
-            return false;
+            short command = Translator.decodeCommand(instruction);
+            return (command > 9 && command < 14);
         }
     }
 }

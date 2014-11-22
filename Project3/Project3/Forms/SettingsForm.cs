@@ -15,12 +15,13 @@ namespace Project3
         public SettingsForm()
         {
             InitializeComponent();
-            foreach(String s in Settings.cacheOptions)
+            foreach (String s in Settings.cacheOptions)
             {
                 cacheTypeBox.Items.Add(s);
             }
             cacheTypeBox.SelectedIndex = Convert.ToInt32(Settings.getValue("cachetype"));
             cacheSizeSelector.Value = Convert.ToInt32(Settings.getValue("cachesize"));
+            checkBox1.Checked = Boolean.Parse(Settings.getValue("branchpredict"));
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -45,8 +46,28 @@ namespace Project3
 
         private Boolean validData()
         {
-            return (cacheSizeSelector.Value % 2 == 0 && 
+            return (cacheSizeSelector.Value % 2 == 0 &&
                 (cacheTypeBox.Text.Equals(Settings.cacheOptions[0]) || cacheTypeBox.Text.Equals(Settings.cacheOptions[1])));
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            // Acquire the state of the CheckBox.
+            CheckState state = checkBox1.CheckState;
+
+            // Demonstrate how the CheckBox can be switched upon.
+            switch (state)
+            {
+                case CheckState.Checked:
+                    Settings.setValue("branchpredict", true);
+                    break;
+                case CheckState.Indeterminate:
+                    Settings.setValue("branchpredict", false);
+                    break;
+                case CheckState.Unchecked:
+                    Settings.setValue("branchpredict", false);
+                    break;
+            }
         }
     }
 }

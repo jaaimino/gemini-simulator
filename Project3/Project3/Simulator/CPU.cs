@@ -37,15 +37,20 @@ namespace Project3
     {
         private short[] registers; //[0=A][1=B][2=Acc][3=Zero][4=One][5=PC][6=MAR][7=MDR][8=TEMP][9=IR][10=CC]
         private Memory memory;
+        public int cycles;
 
         //For pipelining
         private InstructionData[] queue;
         private Boolean flushing;
         private int stall;
+        public BranchPredictor predictor;
 
         //Stats
         public int delays;
 
+        /**
+         * Giant constructor ;)
+         */
         public CPU(Memory memory)
         {
             this.memory = memory;
@@ -65,13 +70,16 @@ namespace Project3
             registers[10] = 0; //CC
             this.stall = 0;
             this.flushing = false;
+            this.predictor = new BranchPredictor();
         }
 
         public void Cycle()
         {
+            //Count cycles
+            cycles++;
+
             if (stall > 0)
             {
-                delays++;
                 if (flushing)
                 {
                     //Console.WriteLine("Handling flush.");
@@ -97,6 +105,7 @@ namespace Project3
             //Fetch Thread
             ((FetchThread)ThreadManager.pipeThreads[0]).registers = this.registers;
             ((FetchThread)ThreadManager.pipeThreads[0]).inst = queue[0];
+            ((FetchThread)ThreadManager.pipeThreads[0]).cpu = this;
 
             //Decode Thread
             ((DecodeThread)ThreadManager.pipeThreads[1]).inst = queue[1];
@@ -133,15 +142,25 @@ namespace Project3
             }
         }
 
+        private readonly object syncLock2 = new object();
         public void stallPipeLine(int cycles)
         {
-            this.stall += cycles;
+            lock (syncLock2)
+            {
+                //Console.WriteLine("Delays: " + delays);
+                delays += cycles;
+                this.stall += cycles;
+            }
         }
 
+        private readonly object syncLock = new object();
         public void flushPipeline()
         {
-            this.stall += 1;
-            this.flushing = true;
+            lock (syncLock)
+            {
+                stallPipeLine(1);
+                this.flushing = true;
+            }
         }
 
         private InstructionData NOPFactory()
@@ -181,6 +200,7 @@ namespace Project3
             return (getPC() > memory.getInstructionCount()-1) && queueIsEmpty();
         }
 
+        #region getters/setters
         //-------------------------------------------------
         // Boring getters and setters below here
         //-------------------------------------------------
@@ -218,5 +238,6 @@ namespace Project3
         {
             return this.queue;
         }
+        #endregion
     }
 }

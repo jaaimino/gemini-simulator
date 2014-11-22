@@ -101,7 +101,7 @@ namespace Project3
             this.hitrateValue.Text = ((float)memory.hitCount / total) + "";
 
             //Pipeline stats
-            this.nopsCount.Text = cpu.delays+"";
+            this.nopsCount.Text = cpu.cycles+"";
 
             //Show instructions in pipeline
             InstructionData[] queue = cpu.getQueue();
