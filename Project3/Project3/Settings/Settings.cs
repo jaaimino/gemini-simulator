@@ -26,6 +26,10 @@ namespace Project3
             {
                 settingsFile.set("branchpredict", false);
             }
+            if (!settingsFile.containsKey("bypassing"))
+            {
+                settingsFile.set("bypassing", false);
+            }
             settingsFile.Save();
         }
 

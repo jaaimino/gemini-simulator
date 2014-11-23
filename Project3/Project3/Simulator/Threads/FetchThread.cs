@@ -36,8 +36,6 @@ namespace Project3
                                 inst.operand = (short)Translator.decodeOperand(inst.inst);
                                 inst.predictedBranch = true;
                                 cpu.setRegisterValue(5, inst.operand);
-                                Console.WriteLine("Predicted branch.");
-                                //Console.WriteLine("Should be " + inst.operand + " Found " + cpu.getRegisterValue(5));
                             }
                         }
                     }

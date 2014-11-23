@@ -22,6 +22,7 @@ namespace Project3
             cacheTypeBox.SelectedIndex = Convert.ToInt32(Settings.getValue("cachetype"));
             cacheSizeSelector.Value = Convert.ToInt32(Settings.getValue("cachesize"));
             checkBox1.Checked = Boolean.Parse(Settings.getValue("branchpredict"));
+            checkBox2.Checked = Boolean.Parse(Settings.getValue("bypassing"));
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -50,6 +51,7 @@ namespace Project3
                 (cacheTypeBox.Text.Equals(Settings.cacheOptions[0]) || cacheTypeBox.Text.Equals(Settings.cacheOptions[1])));
         }
 
+        //Branch Prediction
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             // Acquire the state of the CheckBox.
@@ -66,6 +68,27 @@ namespace Project3
                     break;
                 case CheckState.Unchecked:
                     Settings.setValue("branchpredict", false);
+                    break;
+            }
+        }
+
+        //Bypassing
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            // Acquire the state of the CheckBox.
+            CheckState state = checkBox2.CheckState;
+
+            // Demonstrate how the CheckBox can be switched upon.
+            switch (state)
+            {
+                case CheckState.Checked:
+                    Settings.setValue("bypassing", true);
+                    break;
+                case CheckState.Indeterminate:
+                    Settings.setValue("bypassing", false);
+                    break;
+                case CheckState.Unchecked:
+                    Settings.setValue("bypassing", false);
                     break;
             }
         }

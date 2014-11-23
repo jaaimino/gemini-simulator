@@ -149,7 +149,12 @@ namespace Project3
                 short value = (short)cpu.getMemory().getMemoryLocation(inst.operand);
                 //Console.WriteLine("Location[" + inst.operand + "] = " + value);
                 cpu.setRegisterValue(2, value);
-                cpu.stallPipeLine(1);
+
+                //Don't use bypassing if it's not enabled :O
+                if (!Boolean.Parse(Settings.getValue("bypassing")))
+                {
+                    cpu.stallPipeLine(1);
+                }
             }
         }
 
@@ -305,23 +310,24 @@ namespace Project3
          */
         private static void BA(CPU cpu, InstructionData inst)
         {
-            cpu.setRegisterValue(5, inst.operand);
             if (Boolean.Parse(Settings.getValue("branchpredict"))) //Branch prediction, so we assume things are fine
             {
                 cpu.predictor.logBranch(inst.inst, true); //No flushing here :)
                 if (! inst.predictedBranch) //Weren't pro-active, so need to flush
                 {
-                    //Console.WriteLine("Didn't predict correctly :(");
+                    //Console.WriteLine("Didn't predict correctly :(
+                    cpu.setRegisterValue(5, inst.operand);
                     cpu.flushPipeline();
                 }
                 else
                 {
-                    //Console.WriteLine("Predicted correctly :)");
+                    //Console.WriteLine("Predicted correctly :)
                 }
             }
             else
             {
                 //Console.WriteLine("Should flush.");
+                cpu.setRegisterValue(5, inst.operand);
                 cpu.flushPipeline();
             }
         }
@@ -334,13 +340,13 @@ namespace Project3
             short acc = cpu.getRegisterValue(2);
             if (acc == 0)
             {
-                cpu.setRegisterValue(5, inst.operand);
                 if (Boolean.Parse(Settings.getValue("branchpredict"))) //Branch prediction, so we assume things are fine
                 {
                     cpu.predictor.logBranch(inst.inst, true); //No flushing here :)
                     if (!inst.predictedBranch) //Weren't pro-active, so need to flush
                     {
                         //Console.WriteLine("Didn't predict correctly :(");
+                        cpu.setRegisterValue(5, inst.operand);
                         cpu.flushPipeline();
                     }
                     else
@@ -350,6 +356,7 @@ namespace Project3
                 }
                 else
                 {
+                    cpu.setRegisterValue(5, inst.operand);
                     cpu.flushPipeline();
                 }
             }
@@ -370,22 +377,23 @@ namespace Project3
             short acc = cpu.getRegisterValue(2);
             if (acc < 0)
             {
-                cpu.setRegisterValue(5, inst.operand);
                 if (Boolean.Parse(Settings.getValue("branchpredict"))) //Branch prediction, so we assume things are fine
                 {
                     cpu.predictor.logBranch(inst.inst, true); //No flushing here :)
                     if (!inst.predictedBranch) //Weren't pro-active, so need to flush
                     {
-                        //Console.WriteLine("Didn't predict correctly :(");
+                        //Console.WriteLine("Didn't predict correctly :(
+                        cpu.setRegisterValue(5, inst.operand);
                         cpu.flushPipeline();
                     }
                     else
                     {
-                        //Console.WriteLine("Predicted correctly :)");
+                        //Console.WriteLine("Predicted correctly :)
                     }
                 }
                 else
                 {
+                    cpu.setRegisterValue(5, inst.operand);
                     cpu.flushPipeline();
                 }
             }
@@ -406,22 +414,23 @@ namespace Project3
             short acc = cpu.getRegisterValue(2);
             if (acc >= 0)
             {
-                cpu.setRegisterValue(5, inst.operand);
                 if (Boolean.Parse(Settings.getValue("branchpredict"))) //Branch prediction, so we assume things are fine
                 {
                     cpu.predictor.logBranch(inst.inst, true); //No flushing here :)
                     if (!inst.predictedBranch) //Weren't pro-active, so need to flush
                     {
-                        //Console.WriteLine("Didn't predict correctly :(");
+                        //Console.WriteLine("Didn't predict correctly :(
+                        cpu.setRegisterValue(5, inst.operand);
                         cpu.flushPipeline();
                     }
                     else
                     {
-                        //Console.WriteLine("Predicted correctly :)");
+                        //Console.WriteLine("Predicted correctly :)
                     }
                 }
                 else
                 {
+                    cpu.setRegisterValue(5, inst.operand);
                     cpu.flushPipeline();
                 }
             }
